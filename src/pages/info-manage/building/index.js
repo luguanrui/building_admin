@@ -12,6 +12,15 @@ export default {
         bb: undefined,
       },
       loading: false,
+      columnsVisible: false, // 自定义列
+      checkedColumn: [],
+      columnList: [
+        { key: '楼宇名称', value: 'aa' },
+        { key: '建设单位', value: 'bb' },
+        { key: '楼宇地址', value: 'ccc' },
+        { key: '物业该公司', value: 'dd' },
+        { key: '建筑面积范围', value: 'ee' },
+      ],
       data: [
         {
           id: 1,
@@ -80,7 +89,35 @@ export default {
     },
     // 导出
     handleExport() {},
-    // 自定义查询
-    handleAutoSearch() {},
+    // 取消查询列
+    hideColumns() {
+      this.columnsVisible = false
+    },
+    // 查询列
+    handleAutoSearch() {
+      this.columnsVisible = false
+    },
+    // 列表
+    // async getCaseList() {
+    //   this.data = []
+    //   this.loading = true
+    //   try {
+    //     const { pageSize, current } = this.pagination
+    //     const params = { ...this.form, pageSize, pageNum: current }
+    //     const { code, rs } = await getCaseList(params)
+    //     if (code === 200) {
+    //       this.data = rs.data
+    //       this.loading = false
+    //       const { pageSize, current, total } = rs
+    //       if (total > pageSize) {
+    //         const pageObject = { pageSize, current, total }
+    //         this.pagination = _.cloneDeep(pageObject)
+    //       }
+    //     }
+    //   } catch (error) {
+    //     this.loading = false
+    //     console.log(error)
+    //   }
+    // },
   },
 }

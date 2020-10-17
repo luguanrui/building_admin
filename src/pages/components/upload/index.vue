@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { upload } from "@/api/common";
+// import { upload } from "@/api/common";
 import _ from "lodash";
 
 function getBase64(file) {
@@ -104,14 +104,14 @@ export default {
       const formData = new FormData();
       formData.append("file", data.file);
 
-      const { code, rs } = await upload(formData);
-      if (code === 200) {
-        console.log(rs, "rs");
-        let fileFormate = this.fileFormatter(rs.name, rs.url);
-        this.fileList.push(fileFormate);
-        // console.log(this.fileList, "this.fileList");
-        this.$emit("uploadSuccess", this.fileList);
-      }
+      // const { code, rs } = await upload(formData);
+      // if (code === 200) {
+      //   console.log(rs, "rs");
+      //   let fileFormate = this.fileFormatter(rs.name, rs.url);
+      //   this.fileList.push(fileFormate);
+      //   // console.log(this.fileList, "this.fileList");
+      //   this.$emit("uploadSuccess", this.fileList);
+      // }
     },
 
     // 图片格式化

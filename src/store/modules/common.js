@@ -1,11 +1,11 @@
-import {
-  getIndustryList,
-  getConstructionList,
-  getShelveReason,
-  getAllOrgList,
-  getRoleList,
-  getPermissionAreaList,
-} from "@/api/common";
+// import {
+//   getIndustryList,
+//   getConstructionList,
+//   getShelveReason,
+//   getAllOrgList,
+//   getRoleList,
+//   getPermissionAreaList,
+// } from "@/api/index";
 export default {
   namespaced: true,
   state: {
@@ -116,46 +116,46 @@ export default {
   },
   actions: {
     // 产业类别
-    async getIndustryList({ commit }) {
-      const { code, rs } = await getIndustryList();
-      if (code === 200) {
-        commit("SET_INDUSTRI_LIST", rs);
-      }
-    },
-    // 建设性质
-    async getConstructionList({ commit }) {
-      const { code, rs } = await getConstructionList();
-      if (code === 200) {
-        commit("SET_CONSTRUCTION_LIST", rs);
-      }
-    },
-    // 搁置原因
-    async getShelveReason({ commit }) {
-      const { code, rs } = await getShelveReason();
-      if (code === 200) {
-        commit("SET_SHELVE_REASON_LIST", rs);
-      }
-    },
-    // 机构街道
-    async getAllOrgList({ commit }) {
-      const { code, rs } = await getAllOrgList();
-      if (code === 200) {
-        commit("SET_ALL_ORIGIN_LIST", rs);
-      }
-    },
-    // 角色
-    async getRoleList({ commit }) {
-      const { code, rs } = await getRoleList();
-      if (code === 200) {
-        commit("SET_ROLE_LIST", rs);
-      }
-    },
-    // 机构街道权限
-    async getPermissionAreaList({ commit }) {
-      const { code, rs } = await getPermissionAreaList();
-      if (code === 200) {
-        commit("SET_PERMISSION_AREA_LIST", rs);
-      }
-    },
+    // async getIndustryList({ commit }) {
+    //   const { code, rs } = await getIndustryList();
+    //   if (code === 200) {
+    //     commit("SET_INDUSTRI_LIST", rs);
+    //   }
+    // },
+    // // 建设性质
+    // async getConstructionList({ commit }) {
+    //   const { code, rs } = await getConstructionList();
+    //   if (code === 200) {
+    //     commit("SET_CONSTRUCTION_LIST", rs);
+    //   }
+    // },
+    // // 搁置原因
+    // async getShelveReason({ commit }) {
+    //   const { code, rs } = await getShelveReason();
+    //   if (code === 200) {
+    //     commit("SET_SHELVE_REASON_LIST", rs);
+    //   }
+    // },
+    // // 机构街道
+    // async getAllOrgList({ commit }) {
+    //   const { code, rs } = await getAllOrgList();
+    //   if (code === 200) {
+    //     commit("SET_ALL_ORIGIN_LIST", rs);
+    //   }
+    // },
+    // // 角色
+    // async getRoleList({ commit }) {
+    //   const { code, rs } = await getRoleList();
+    //   if (code === 200) {
+    //     commit("SET_ROLE_LIST", rs);
+    //   }
+    // },
+    // // 机构街道权限
+    // async getPermissionAreaList({ commit }) {
+    //   const { code, rs } = await getPermissionAreaList();
+    //   if (code === 200) {
+    //     commit("SET_PERMISSION_AREA_LIST", rs);
+    //   }
+    // },
   },
 };

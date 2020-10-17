@@ -29,9 +29,28 @@
       </a-form-model>
     </div>
     <div class="opreation-wrapper">
-      <a-button type="primary" @click="handleAdd">新增</a-button>
-      <a-button type="primary" @click="handleExport">导出</a-button>
-      <a-button type="primary" @click="handleAutoSearch">自定义查询</a-button>
+      <div>
+        <a-button type="primary" @click="handleAdd">新增</a-button>
+        <a-button type="primary" @click="handleExport">导出</a-button>
+      </div>
+      <a-popover v-model="columnsVisible" trigger="click" placement="bottom">
+        <template slot="content">
+          <a-checkbox-group v-model="checkedColumn">
+            <a-row v-for="item in columnList" :key="item.value">
+              <a-col :span="24">
+                <a-checkbox :value="item.value">
+                  {{ item.key }}
+                </a-checkbox>
+              </a-col>
+            </a-row>
+          </a-checkbox-group>
+          <div style="display: flex; align-items: center; justify-content: space-between;margin-top: 10px;">
+            <a-button @click="hideColumns" size="small">取消</a-button>
+            <a-button type="primary" @click="handleAutoSearch" size="small">确定</a-button>
+          </div>
+        </template>
+        <a-button type="primary">自定义列</a-button>
+      </a-popover>
     </div>
     <div class="table-wrapper">
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="pagination" :loading="loading">
@@ -42,7 +61,7 @@
       </a-table>
     </div>
     <!-- 新增，编辑，查看 -->
-    <AddUpdate ref="addUpdate"/>
+    <AddUpdate ref="addUpdate" />
   </a-card>
 </template>
 
@@ -54,6 +73,9 @@
   margin-bottom: 20px;
 }
 .opreation-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   .ant-btn {
     margin-right: 20px;
     margin-bottom: 20px;

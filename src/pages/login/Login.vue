@@ -60,7 +60,7 @@ import { getRoutesConfig } from '@/services/user'
 import { setAuthorization } from '@/utils/request'
 import { loadRoutes } from '@/utils/routerUtil'
 import { mapMutations } from 'vuex'
-import { login } from '@/api/common'
+// import { login } from '@/api/common'
 
 export default {
   name: 'Login',
@@ -85,19 +85,19 @@ export default {
   },
   methods: {
     ...mapMutations('account', ['setUser', 'setPermissions', 'setRoles']),
-    async login() {
-      const params = {
-        userName: this.form.userName,
-        password: this.form.password,
-      }
-      const { code, rs } = await login(params)
-      if (code === 200) {
-        localStorage.setItem('sessionId', rs.sessionId)
-        this.setUser(rs)
+    // async login() {
+    //   const params = {
+    //     userName: this.form.userName,
+    //     password: this.form.password,
+    //   }
+    //   const { code, rs } = await login(params)
+    //   if (code === 200) {
+    //     localStorage.setItem('sessionId', rs.sessionId)
+    //     this.setUser(rs)
 
-        this.$router.push('/workplace')
-      }
-    },
+    //     this.$router.push('/workplace')
+    //   }
+    // },
     onSubmit() {
       // this.login()
       this.$router.push('/info-manage/building')

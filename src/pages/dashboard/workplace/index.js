@@ -6,19 +6,9 @@ import {
   getDownRankList,
   getTodoList,
 } from "@/api/common";
-import ProgressItem from "./components/progress-item.vue";
-import ProjectRank from "./components/project-rank.vue";
-import caseCountByArea from "./components/caseCountByArea.vue";
-import caseCountByOutTeam from "./components/caseCountByOutTeam.vue";
 import dayjs from "dayjs";
 
 export default {
-  components: {
-    ProgressItem,
-    ProjectRank,
-    caseCountByArea,
-    caseCountByOutTeam,
-  },
   data() {
     return {
       pagination: {

@@ -2,6 +2,7 @@ let path = require('path')
 const ThemeColorReplacer = require('webpack-theme-color-replacer')
 const {getThemeColors, modifyVars} = require('./src/utils/themeUtil')
 const {resolveCss} = require('./src/utils/theme-color-replacer-extend')
+
 module.exports = {
   devServer: {
     // proxy: {
@@ -13,6 +14,13 @@ module.exports = {
     //     }
     //   }
     // }
+    proxy: {
+      '/tlzsj': {
+        target: process.env.VUE_APP_API_BASE_URL,
+        changeOrigin: true,
+        logLevel: 'debug'
+      }
+    }
   },
   pluginOptions: {
     'style-resources-loader': {

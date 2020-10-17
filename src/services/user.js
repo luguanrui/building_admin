@@ -7,14 +7,15 @@ import {request, METHOD, removeAuthorization} from '@/utils/request'
  * @param password 账户密码
  * @returns {Promise<AxiosResponse<T>>}
  */
-export async function login(name, password) {
+export async function login(userName, password) {
   return request(LOGIN, METHOD.POST, {
-    name: name,
+    userName: userName,
     password: password
   })
 }
 
 export async function getRoutesConfig() {
+  console.log(ROUTES, 'ROUTES')
   return request(ROUTES, METHOD.GET)
 }
 

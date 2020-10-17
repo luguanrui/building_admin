@@ -4,7 +4,6 @@ import {initRouter} from './router'
 import './theme/index.less'
 import Antd from 'ant-design-vue'
 import Viser from 'viser-vue'
-import '@/mock'
 import store from './store'
 import 'animate.css/source/animate.css'
 import Plugins from '@/plugins'
@@ -13,6 +12,8 @@ import bootstrap from '@/bootstrap'
 
 const router = initRouter(store.state.setting.asyncRoutes)
 const i18n = initI18n('CN', 'US')
+
+// console.log(router, 'router main')
 bootstrap({router, store, i18n})
 
 Vue.config.productionTip = false

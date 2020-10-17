@@ -94,6 +94,7 @@ export default {
     .admin-layout-content{
       padding: 24px 24px 0;
       min-height: auto;
+      min-width: 1100px;
     }
     .setting{
       background-color: @primary-color;

@@ -2,7 +2,7 @@ import routerMap from '@/router/router.map'
 import {mergeI18nFromRoutes} from '@/utils/i18n'
 import Router from 'vue-router'
 import {loginIgnore} from '@/router'
-import {checkAuthorization} from '@/utils/request'
+// import {checkAuthorization} from '@/utils/request'
 
 /**
  * 根据 路由配置 和 路由组件注册 解析路由
@@ -102,8 +102,9 @@ function mergeRoutes(target, source) {
  * @param router 应用路由实例
  */
 function loginGuard(router) {
+  console.log(router, 'router')
   router.beforeEach((to, from, next) => {
-    if (!loginIgnore.includes(to) && !checkAuthorization()) {
+    if (!loginIgnore.includes(to)) {
       next({path: '/login'})
     } else {
       next()

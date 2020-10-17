@@ -13,9 +13,9 @@ module.exports = {
   fixedSideBar: true,                   //固定侧边栏，true:固定，false:不固定
   weekMode: false,                      //色弱模式，true:开启，false:不开启
   multiPage: false,                     //多页签模式，true:开启，false:不开启
-  hideSetting: false,                   //隐藏设置抽屉，true:隐藏，false:不隐藏
-  systemName: '管理系统',         //系统名称
-  copyright: new Date().getFullYear() + '卢冠睿工作室出品',    //copyright
+  hideSetting: true,                   //隐藏设置抽屉，true:隐藏，false:不隐藏
+  systemName: '招商管理系统',         //系统名称
+  copyright: new Date().getFullYear() + '楼宇管理系统',    //copyright
   asyncRoutes: false,                    //异步加载路由，true:开启，false:不开启
   animate: {                            //动画设置
     disabled: false,                    //禁用动画，true:禁用，false:启用
@@ -23,8 +23,8 @@ module.exports = {
     direction: 'left'                   //动画方向，切换页面时动画的方向，参考 ./animate.config.js
   },
   footerLinks: [                        //页面底部链接，{link: '链接地址', name: '名称/显示文字', icon: '图标，支持 ant design vue 图标库'}
-    {link: 'https://pro.ant.design', name: 'Pro首页'},
-    {link: 'https://github.com/iczer/vue-antd-admin', icon: 'github'},
-    {link: 'https://ant.design', name: 'Ant Design'}
+    // {link: 'https://pro.ant.design', name: 'Pro首页'},
+    // {link: 'https://github.com/iczer/vue-antd-admin', icon: 'github'},
+    // {link: 'https://ant.design', name: 'Ant Design'}
   ],
 }

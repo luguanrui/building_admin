@@ -33,7 +33,7 @@
         <a-button type="primary" @click="handleAdd">新增</a-button>
         <a-button type="primary" @click="handleExport">导出</a-button>
       </div>
-      <a-popover v-model="columnsVisible" trigger="click" placement="bottom">
+      <a-popover v-model="columnsVisible" trigger="click" placement="bottomRight">
         <template slot="content">
           <a-checkbox-group v-model="checkedColumn">
             <a-row v-for="item in columnList" :key="item.value">

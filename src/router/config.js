@@ -47,20 +47,20 @@ const options = {
               component: () => import("@/pages/info-manage/building/index.vue"),
             },
             {
-              path: "enterprise-base",
-              name: "企业基础信息",
-              component: () => import("@/pages/info-manage/enterprise-base/index.vue"),
+              path: "enterprise",
+              name: "企业信息",
+              component: () => import("@/pages/info-manage/enterprise/index.vue"),
             },
             {
               path: "household",
               name: "住户信息",
               component: () => import("@/pages/info-manage/household/index.vue"),
             },
-            {
-              path: "enterprise-other",
-              name: "企业其他信息",
-              component: () => import("@/pages/info-manage/enterprise-other/index.vue"),
-            },
+            // {
+            //   path: "enterprise-other",
+            //   name: "企业其他信息",
+            //   component: () => import("@/pages/info-manage/enterprise-other/index.vue"),
+            // },
             {
               path: "owner",
               name: "业主信息",
@@ -117,7 +117,7 @@ const options = {
             },
             {
               path: "role",
-              name: "角色权限管理",
+              name: "角色管理",
               component: () => import("@/pages/system-manage/role/index.vue"),
             },
             {
@@ -125,7 +125,16 @@ const options = {
               name: "公告管理",
               component: () => import("@/pages/system-manage/announcement/index.vue"),
             },
-
+            {
+              path: "images",
+              name: "图片管理",
+              component: () => import("@/pages/system-manage/images/index.vue"),
+            },
+            {
+              path: "building",
+              name: "楼宇管理",
+              component: () => import("@/pages/system-manage/building/index.vue"),
+            },
           ],
         },
       ],

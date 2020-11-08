@@ -101,7 +101,7 @@ export default {
           ellipsis: true,
         },
         {
-          title: "所属机构",
+          title: "所属角色",
           dataIndex: "orgName",
           key: "orgName",
           ellipsis: true,
@@ -110,12 +110,6 @@ export default {
           title: "联系方式",
           dataIndex: "phone",
           key: "phone",
-          ellipsis: true,
-        },
-        {
-          title: "是否小分队",
-          dataIndex: "isOutTeam",
-          key: "isOutTeam",
           ellipsis: true,
         },
         {

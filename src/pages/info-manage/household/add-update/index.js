@@ -59,7 +59,8 @@ export default {
     onClose() {
       Object.assign(this.$data, this.$options.data())
     },
-
+    // 新增用户
+    handleAddHousehold() {},
     // 提交信息
     handleSubmit() {
       // 新增

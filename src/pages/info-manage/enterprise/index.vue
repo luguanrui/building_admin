@@ -2,7 +2,7 @@
   <a-card>
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
-        <a-form-model-item label="楼宇名称" prop="">
+        <a-form-model-item label="企业名称" prop="">
           <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 120px" />
         </a-form-model-item>
         <a-form-model-item label="房产地址" prop="">

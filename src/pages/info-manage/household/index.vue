@@ -3,10 +3,10 @@
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
         <a-form-model-item label="楼宇名称" prop="">
-          <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 120px" />
+          <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 180px" />
         </a-form-model-item>
         <a-form-model-item label="证件号码" prop="">
-          <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 120px" />
+          <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 180px" />
           <!-- <a-select
             v-model="form.bb"
             placeholder="请选择"
@@ -33,7 +33,7 @@
         <a-button type="primary" @click="handleAdd">新增</a-button>
         <a-button type="primary" @click="handleExport">导出</a-button>
       </div>
-      <a-popover v-model="columnsVisible" trigger="click" placement="bottomRight">
+      <!-- <a-popover v-model="columnsVisible" trigger="click" placement="bottomRight">
         <template slot="content">
           <a-checkbox-group v-model="checkedColumn">
             <a-row v-for="item in columnList" :key="item.value">
@@ -50,7 +50,7 @@
           </div>
         </template>
         <a-button type="primary">自定义列</a-button>
-      </a-popover>
+      </a-popover> -->
     </div>
     <div class="table-wrapper">
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="pagination" :loading="loading">

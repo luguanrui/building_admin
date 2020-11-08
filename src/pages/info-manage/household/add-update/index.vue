@@ -104,7 +104,7 @@
               <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
-             <a-col :span="span">
+          <a-col :span="span">
             <a-form-model-item label="籍贯" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
               <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
@@ -114,7 +114,7 @@
               </a-select>
             </a-form-model-item>
           </a-col>
-             <a-col :span="span">
+          <a-col :span="span">
             <a-form-model-item label="民族" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
               <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
@@ -124,7 +124,7 @@
               </a-select>
             </a-form-model-item>
           </a-col>
-             <a-col :span="span">
+          <a-col :span="span">
             <a-form-model-item label="政治面貌" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
               <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
@@ -134,18 +134,36 @@
               </a-select>
             </a-form-model-item>
           </a-col>
-           <a-col :span="span">
+          <a-col :span="span">
             <a-form-model-item label="户籍地址" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
               <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
-           <a-col :span="span">
+          <a-col :span="span">
             <a-form-model-item label="联系电话" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
               <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="入住时间" prop="aa">
+              <span v-if="disabled">{{ form.aa }}</span>
+               <a-date-picker
+                v-model="form.aa"
+                format="YYYY/MM/DD"
+                valueFormat="YYYY-MM-DD"
+                :allowClear="true"
+                style="width: 100%"
+                :getPopupContainer="trigger => trigger.parentNode"
+              />
+            </a-form-model-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <div style="margin: 20px 20px">
+            <a-button type="primary" block @click="handleAddHousehold">新增住户</a-button>
+          </div>
         </a-row>
       </a-form-model>
     </div>

@@ -37,12 +37,17 @@ export default {
           customRender: (text, record, index) => index + 1,
         },
         {
-          title: '房产地址',
+          title: '企业名称',
           dataIndex: 'address',
           ellipsis: true,
         },
         {
-          title: '物业公司',
+          title: '楼宇名称',
+          dataIndex: 'company',
+          ellipsis: true,
+        },
+        {
+          title: '办公地址',
           dataIndex: 'company',
           ellipsis: true,
         },
@@ -51,7 +56,7 @@ export default {
           dataIndex: 'time',
           ellipsis: true,
           //   customRender: (text, record) =>
-          //     dayjs(record.createAt).format("YYYY-MM-DD"),
+          //     dayjs(record.createAt).format("YYYY年MM月DD日"),
         },
         {
           title: '操作',

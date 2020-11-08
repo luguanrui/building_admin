@@ -5,13 +5,6 @@
         <a-form-model-item label="主题名">
           <a-input v-model="form.a" placeholder="请输入" allowClear style="width: 120px" />
         </a-form-model-item>
-        <a-form-model-item label="公告类型">
-          <a-select v-model="form.b" placeholder="请选择" style="min-width: 120px" allowClear>
-            <a-select-option v-for="item in list" :key="item.key" :value="item.key">
-              {{ item.value }}
-            </a-select-option>
-          </a-select>
-        </a-form-model-item>
         <a-form-model-item label="关键字">
           <a-input v-model="form.c" placeholder="请输入" allowClear style="width: 120px" />
         </a-form-model-item>
@@ -55,7 +48,6 @@ export default {
       wrapperCol: { span: 14 },
       form: {
         a: '',
-        b: undefined,
         c: '',
       },
       list: [
@@ -95,11 +87,6 @@ export default {
           dataIndex: 'a',
           ellipsis: true,
           scopedSlots: { customRender: 'name' },
-        },
-        {
-          title: '类型',
-          dataIndex: 'b',
-          ellipsis: true,
         },
         {
           title: '发布人',

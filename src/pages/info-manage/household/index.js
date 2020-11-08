@@ -9,24 +9,25 @@ export default {
     return {
       form: {
         aa: '',
-        bb: undefined,
+        bb: '',
       },
       loading: false,
-      columnsVisible: false, // 自定义列
-      checkedColumn: [],
-      columnList: [
-        { key: '楼宇名称', value: 'aa' },
-        { key: '建设单位', value: 'bb' },
-        { key: '楼宇地址', value: 'ccc' },
-        { key: '物业该公司', value: 'dd' },
-        { key: '建筑面积范围', value: 'ee' },
-      ],
+      // columnsVisible: false, // 自定义列
+      // checkedColumn: [],
+      // columnList: [
+      //   { key: '楼宇名称', value: 'aa' },
+      //   { key: '建设单位', value: 'bb' },
+      //   { key: '楼宇地址', value: 'ccc' },
+      //   { key: '物业该公司', value: 'dd' },
+      //   { key: '建筑面积范围', value: 'ee' },
+      // ],
       data: [
         {
-          id: 1,
-          address: '11',
-          company: '11',
-          time: '11',
+          a: 1,
+          b: '11',
+          c: '11',
+          d: '11',
+          e: '11',
         },
       ],
       columns: [
@@ -37,18 +38,28 @@ export default {
           customRender: (text, record, index) => index + 1,
         },
         {
-          title: '房产地址',
-          dataIndex: 'address',
+          title: '楼宇名称',
+          dataIndex: 'a',
           ellipsis: true,
         },
         {
-          title: '物业公司',
-          dataIndex: 'company',
+          title: '楼宇地址',
+          dataIndex: 'b',
           ellipsis: true,
         },
         {
-          title: '创建时间',
-          dataIndex: 'time',
+          title: '住户联系人',
+          dataIndex: 'c',
+          ellipsis: true,
+        },
+        {
+          title: '房屋性质',
+          dataIndex: 'd',
+          ellipsis: true,
+        },
+        {
+          title: '入住时间',
+          dataIndex: 'e',
           ellipsis: true,
           //   customRender: (text, record) =>
           //     dayjs(record.createAt).format("YYYY-MM-DD"),
@@ -89,14 +100,14 @@ export default {
     },
     // 导出
     handleExport() {},
-    // 取消查询列
-    hideColumns() {
-      this.columnsVisible = false
-    },
-    // 查询列
-    handleAutoSearch() {
-      this.columnsVisible = false
-    },
+    // // 取消查询列
+    // hideColumns() {
+    //   this.columnsVisible = false
+    // },
+    // // 查询列
+    // handleAutoSearch() {
+    //   this.columnsVisible = false
+    // },
     // 列表
     // async getCaseList() {
     //   this.data = []

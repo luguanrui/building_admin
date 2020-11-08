@@ -1,84 +1,72 @@
 <template>
   <a-card>
-    <div class="search-wrapper">
-      <a-form-model :model="form" :layout="'inline'">
-        <a-form-model-item label="楼宇名称" prop="">
-          <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 120px" />
-        </a-form-model-item>
-        <a-form-model-item label="物业公司" prop="">
-          <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 120px" />
-          <!-- <a-select
-            v-model="form.bb"
-            placeholder="请选择"
-            style="min-width: 120px"
-            allowClear
-          >
-            <a-select-option
-              v-for="item in allOriginList"
-              :key="item.key"
-              :value="item.key"
-            >
-              {{ item.value }}
-            </a-select-option>
-          </a-select> -->
-        </a-form-model-item>
-        <a-form-model-item>
-          <a-button type="primary" @click="handleSearch" icon="search">查询</a-button>
-          <a-button style="margin-left: 10px;" @click="handleReset">重置</a-button>
-        </a-form-model-item>
-      </a-form-model>
-    </div>
-    <div class="opreation-wrapper">
-      <div>
-        <a-button type="primary" @click="handleAdd">新增</a-button>
-        <a-button type="primary" @click="handleExport">导出</a-button>
+    <div class="building-wrapper">
+      <div class="left-wrapper">
+        <img :src="image" alt="" />
       </div>
-      <a-popover v-model="columnsVisible" trigger="click" placement="bottomRight">
-        <template slot="content">
-          <a-checkbox-group v-model="checkedColumn">
-            <a-row v-for="item in columnList" :key="item.value">
-              <a-col :span="24">
-                <a-checkbox :value="item.value">
-                  {{ item.key }}
-                </a-checkbox>
-              </a-col>
-            </a-row>
-          </a-checkbox-group>
-          <div style="display: flex; align-items: center; justify-content: space-between;margin-top: 10px;">
-            <a-button @click="hideColumns" size="small">取消</a-button>
-            <a-button type="primary" @click="handleAutoSearch" size="small">确定</a-button>
-          </div>
-        </template>
-        <a-button type="primary">自定义列</a-button>
-      </a-popover>
+      <div class="right-wrapper">
+        <a-form-model ref="ruleForm" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
+          <h3 class="title">楼宇信息</h3>
+          <a-form-model-item label="楼宇名称" prop="name">
+            <span class="detail-text">物业公司</span>
+          </a-form-model-item>
+          <a-form-model-item label="建设单位" prop="name">
+            <span class="detail-text">浙江省中天</span>
+          </a-form-model-item>
+          <a-form-model-item label="地址" prop="name">
+            <span class="detail-text">桐庐县迎春南路28号</span>
+          </a-form-model-item>
+          <a-form-model-item label="负责人" prop="name">
+            <span class="detail-text">王肖二</span>
+          </a-form-model-item>
+          <a-form-model-item label="联系电话" prop="name">
+            <span class="detail-text">0571-88993456</span>
+          </a-form-model-item>
+          <h3 class="title">建筑面积</h3>
+          <a-form-model-item label="主楼" prop="name">
+            <span class="detail-text">4530.32平方米</span>
+          </a-form-model-item>
+          <a-form-model-item label="企业" prop="name">
+            <span class="detail-text">3210平方米</span>
+          </a-form-model-item>
+          <a-form-model-item label="单身公寓" prop="name">
+            <span class="detail-text">3210平方米</span>
+          </a-form-model-item>
+          <a-form-model-item label="空置" prop="name">
+            <span class="detail-text">3210平方米</span>
+          </a-form-model-item>
+          <a-form-model-item label="副楼" prop="name">
+            <span class="detail-text">3210平方米</span>
+          </a-form-model-item>
+          <a-form-model-item label="企业" prop="name">
+            <span class="detail-text">3210平方米</span>
+          </a-form-model-item>
+          <a-form-model-item label="空置" prop="name">
+            <span class="detail-text">3210平方米</span>
+          </a-form-model-item>
+        </a-form-model>
+      </div>
     </div>
-    <div class="table-wrapper">
-      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="pagination" :loading="loading">
-        <template slot="operation" slot-scope="record">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
-          <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)">删除</a-button>
-        </template>
-      </a-table>
-    </div>
-    <!-- 新增，编辑，查看 -->
-    <AddUpdate ref="addUpdate" />
   </a-card>
 </template>
 
 <script src="./index"></script>
-
 <style lang="less" scoped>
-.search-wrapper {
-  border-bottom: 1px solid #dcdfe6;
-  margin-bottom: 20px;
-}
-.opreation-wrapper {
+.building-wrapper {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .ant-btn {
-    margin-right: 20px;
-    margin-bottom: 20px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  .left-wrapper {
+    padding: 0 20px;
+  }
+  .right-wrapper {
+    flex: 1;
+    padding: 0 20px;
+    .title {
+      color: #000;
+      padding: 10px 0;
+      border-bottom: 1px solid #ccc;
+    }
   }
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
   <div class="login-wrapper">
     <div class="bg"></div>
-    <div class="login-content">
+      <div class="login-content">
       <div class="header">
         <!-- <img alt="logo" class="logo" src="@/assets/img/logo.png" /> -->
         <span class="title">楼宇管理系统</span>
       </div>
       <div class="left-bg"></div>
       <div class="login">
-        <a-form-model @submit="onSubmit" :model="form">
+        <a-form-model :model="form">
           <a-alert
             type="error"
             :closable="true"
@@ -45,6 +45,7 @@
               size="large"
               htmlType="submit"
               type="primary"
+              @click="onSubmit"
               >登录</a-button
             >
           </a-form-model-item>
@@ -70,8 +71,8 @@ export default {
       logging: false,
       error: '',
       form: {
-        userName: 'abc', // shenhe
-        password: '123456',
+        userName: '',
+        password: '',
       },
     }
   },
@@ -94,13 +95,12 @@ export default {
     //   if (code === 200) {
     //     localStorage.setItem('sessionId', rs.sessionId)
     //     this.setUser(rs)
-
     //     this.$router.push('/workplace')
     //   }
     // },
     onSubmit() {
-      // this.login()
       this.$router.push('/info-manage/building')
+      // this.login()
       // this.$router.push("/workplace");
       // e.preventDefault();
       // this.form.validateFields((err) => {
@@ -126,7 +126,7 @@ export default {
           expireAt: new Date(loginRes.data.expireAt),
         })
         // 获取路由配置
-        getRoutesConfig().then((result) => {
+        getRoutesConfig().then(result => {
           const routesConfig = result.data.data
           loadRoutes({ router: this.$router, store: this.$store, i18n: this.$i18n }, routesConfig)
           this.$router.push('/workplace')

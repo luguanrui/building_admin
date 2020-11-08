@@ -24,14 +24,15 @@ const options = {
       component: TabsView,
       redirect: "/login",
       children: [
-        // {
-        //   path: "workplace",
-        //   name: "工作台",
-        //   meta: {
-        //     icon: "dashboard",
-        //   },
-        //   component: () => import("@/pages/dashboard/workplace/index.vue"),
-        // },
+        {
+          path: "index",
+          name: "欢迎页",
+          meta: {
+            icon: "dashboard",
+            invisible: true,
+          },
+          component: () => import("@/pages/hello/index.vue"),
+        },
 
         {
           path: "info-manage",

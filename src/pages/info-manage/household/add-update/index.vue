@@ -9,31 +9,31 @@
           <a-col :span="span">
             <a-form-model-item label="楼宇名称" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200">
+                <a-select slot="addonAfter" v-model="form.aa" style="width: 70px">
+                  <a-select-option v-for="item in buildingList" :value="item.key" :key="item.key">
+                    {{ item.value }}
+                  </a-select-option>
+                </a-select>
+              </a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="楼层" prop="aa">
-              <!-- <span v-if="disabled">{{ form.aa }}</span>
-              <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="(trigger) => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
-                  {{ item.value }}
-                </a-select-option>
-              </a-select> -->
               <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" addon-after="层" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="房号" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="面积" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
             </a-form-model-item>
           </a-col>
 
@@ -101,7 +101,8 @@
           <a-col :span="span">
             <a-form-model-item label="车牌号码" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" style="width: 218px;margin-right: 10px" />
+              <a><a-icon type="plus-circle"/></a>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -149,7 +150,7 @@
           <a-col :span="span">
             <a-form-model-item label="入住时间" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
-               <a-date-picker
+              <a-date-picker
                 v-model="form.aa"
                 format="YYYY/MM/DD"
                 valueFormat="YYYY-MM-DD"

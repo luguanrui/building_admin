@@ -1,3 +1,5 @@
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -20,6 +22,7 @@ export default {
   },
 
   computed: {
+    ...mapState('common', ['buildingList']),
     title() {
       switch (this.dialogStatus) {
         case 'add':

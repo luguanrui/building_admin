@@ -1,6 +1,7 @@
 // import dayjs from "dayjs";
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
+import { downFile } from '@/utils/utils'
 
 export default {
   mixins: [pagination],
@@ -93,7 +94,9 @@ export default {
       this.$refs.addUpdate.handleVisible('', 'add')
     },
     // 导出
-    handleExport() {},
+    handleExport() {
+      downFile()
+    },
     // // 取消查询列
     // hideColumns() {
     //   this.columnsVisible = false

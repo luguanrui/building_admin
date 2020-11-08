@@ -11,6 +11,9 @@
       @edit="editPage"
       @contextmenu="onContextmenu"
     >
+     <!-- <a-tab-pane key="/index">
+        <span slot="tab" pagekey="/index">欢迎页</span>
+      </a-tab-pane> -->
       <a-tab-pane :key="page.fullPath" v-for="page in pageList">
         <span slot="tab" :pagekey="page.fullPath">{{pageName(page)}}</span>
       </a-tab-pane>
@@ -63,6 +66,7 @@ export default {
   created () {
     const route = this.$route
     this.pageList.push(route)
+    console.log(this.pageList, 'this.pageList')
     this.activePage = route.fullPath
     if (this.multiPage) {
       window.addEventListener('page:close', this.closePageListener)

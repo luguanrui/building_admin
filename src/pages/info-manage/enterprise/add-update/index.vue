@@ -15,7 +15,25 @@
           <a-col :span="span">
             <a-form-model-item label="办公地址" prop="aa">
               <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200">
+                <a-select slot="addonAfter" v-model="form.aa" style="width: 70px">
+                  <a-select-option v-for="item in buildingList" :value="item.key" :key="item.key">
+                    {{ item.value }}
+                  </a-select-option>
+                </a-select>
+              </a-input>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="楼层" prop="aa">
+              <span v-if="disabled">{{ form.aa }}</span>
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" addon-after="层" />
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="房号" prop="aa">
+              <span v-if="disabled">{{ form.aa }}</span>
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -126,7 +144,7 @@
                 </a-select-option>
               </a-select> -->
               <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -145,9 +163,7 @@
           <a-col :span="24"
             ><h3 class="title">入驻企业员工信息列表<a-button type="primary">增加员工</a-button></h3></a-col
           >
-          <a-col :span="24">
-            
-          </a-col>
+          <a-col :span="24"> </a-col>
         </a-row>
       </a-form-model>
     </div>

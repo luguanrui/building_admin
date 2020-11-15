@@ -4,11 +4,11 @@
       <div class="login-content">
       <div class="header">
         <!-- <img alt="logo" class="logo" src="@/assets/img/logo.png" /> -->
-        <span class="title">楼宇管理系统</span>
+        <span class="title">桐庐县楼宇管理系统</span>
       </div>
       <div class="left-bg"></div>
       <div class="login">
-        <a-form-model :model="form">
+        <a-form-model :model="form" ref="form">
           <a-alert
             type="error"
             :closable="true"
@@ -61,7 +61,7 @@ import { getRoutesConfig } from '@/services/user'
 import { setAuthorization } from '@/utils/request'
 import { loadRoutes } from '@/utils/routerUtil'
 import { mapMutations } from 'vuex'
-// import { login } from '@/api/common'
+import { login } from '@/api/index'
 
 export default {
   name: 'Login',
@@ -86,22 +86,20 @@ export default {
   },
   methods: {
     ...mapMutations('account', ['setUser', 'setPermissions', 'setRoles']),
-    // async login() {
-    //   const params = {
-    //     userName: this.form.userName,
-    //     password: this.form.password,
-    //   }
-    //   const { code, rs } = await login(params)
-    //   if (code === 200) {
-    //     localStorage.setItem('sessionId', rs.sessionId)
-    //     this.setUser(rs)
-    //     this.$router.push('/workplace')
-    //   }
-    // },
+    async login() {
+      const params = {
+        userName: this.form.userName,
+        password: this.form.password,
+      }
+      const { code, rs } = await login(params)
+      if (code === 200) {
+        localStorage.setItem('sessionId', rs.sessionId)
+        this.setUser(rs)
+        this.$router.push("/info-manage/building");
+      }
+    },
     onSubmit() {
-      this.$router.push('/info-manage/building')
-      // this.login()
-      // this.$router.push("/workplace");
+      this.login()
       // e.preventDefault();
       // this.form.validateFields((err) => {
       //   if (!err) {

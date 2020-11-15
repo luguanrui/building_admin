@@ -71,7 +71,7 @@
 
 <script>
 import AddUser from "./add-user.vue";
-import { getUserList, delUser, resetPwd } from "@/api/user";
+import { getUserList, delUser, resetPwd } from "@/api/index";
 import { mapActions, mapState } from "vuex";
 
 export default {

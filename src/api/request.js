@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
 axios.baseURL = process.env.VUE_APP_API_BASE_URL
-const baseApi = '/tlzsj/'
+const baseApi = '/building/'
 
 axios.defaults.retry = 4
 axios.defaults.retryDelay = 1000

@@ -22,12 +22,12 @@
           <a-input v-model="form.realName" placeholder="请输入" allowClear />
         </a-form-model-item>
         <a-form-model-item label="手机号码" prop="phone">
-          <a-input v-model="form.phone" placeholder="请输入" allowClear />
+          <a-input v-model="form.phone" placeholder="请输入" allowClear :maxLength="11"/>
         </a-form-model-item>
         <a-form-model-item label="所属机构" prop="deptId">
           <a-select v-model="form.deptId" placeholder="请选择" allowClear>
             <a-select-option
-              v-for="item in allOriginList"
+              v-for="item in allOrgList"
               :key="item.key"
               :value="item.key"
             >
@@ -71,7 +71,7 @@
   </a-drawer>
 </template>
 <script>
-import { addUser } from "@/api/user";
+import { addUser } from "@/api/index";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -106,7 +106,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("common", ["allOriginList", "roleList"]),
+    ...mapState("common", ["allOrgList", "roleList"]),
   },
   methods: {
     ...mapActions("common", ["getAllOrgList", "getRoleList"]),

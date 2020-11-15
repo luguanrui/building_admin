@@ -26,10 +26,10 @@ const options = {
       children: [
         {
           path: "index",
-          name: "欢迎页",
+          name: "首页",
           meta: {
-            icon: "dashboard",
-            invisible: true,
+            icon: "home",
+            // invisible: true,
           },
           component: () => import("@/pages/hello/index.vue"),
         },

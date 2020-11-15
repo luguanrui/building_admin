@@ -15,7 +15,7 @@ module.exports = {
     //   }
     // }
     proxy: {
-      '/tlzsj': {
+      '/building': {
         target: process.env.VUE_APP_API_BASE_URL,
         changeOrigin: true,
         logLevel: 'debug'

@@ -30,6 +30,30 @@ export function resetPwd(params) {
 export function getBuildList() {
   //   return axios.get(`${baseApi}project/caseList`, { params })
 }
+// 查询企业列表
+export function getCompanyList(params) {
+  return axios.get(`${baseApi}company/list`, { params })
+}
+// 查询单个企业信息
+export function getCompany(params) {
+  return axios.get(`${baseApi}company/get`, { params })
+}
+// 删除企业
+export function removeCompany(params) {
+  return axios.post(`${baseApi}company/remove`, params)
+}
+// 保存企业信息
+export function saveCompany(params) {
+  return axios.post(`${baseApi}company/save`, params)
+}
+// 保存入驻企业其他信息
+export function saveCompanyOther(params) {
+  return axios.post(`${baseApi}company/other`, params)
+}
+// 入驻企业其他信息列表
+export function getCompanyOtherList(params) {
+  return axios.get(`${baseApi}company/other/list`, { params })
+}
 
 /***************************** 数据分析 *************************** */
 
@@ -37,11 +61,10 @@ export function getBuildList() {
 
 /***************************** 公告管理 *************************** */
 
-
 /***************************** 通用 *************************** */
 // 上传
 export function upload(params) {
-  return axios.post(`${baseApi}file/upload`, params);
+  return axios.post(`${baseApi}file/upload`, params)
 }
 // 获取省市区数据
 export function getRegionList() {
@@ -63,7 +86,7 @@ export function getPermissionAreaList() {
 export function getIndustryList() {
   return axios.get(`${baseApi}industry/list`)
 }
-// 
+// 返回所有建设类型枚举
 export function getConstructionList() {
   return axios.get(`${baseApi}construction/list`)
 }
@@ -91,7 +114,16 @@ export function getAbilityList() {
 export function getCompanyTypeList() {
   return axios.get(`${baseApi}companyType/list`)
 }
-// 
+// 返回所有的民族列表枚举
 export function getNationList() {
   return axios.get(`${baseApi}nation/list`)
+}
+// 国籍列表
+export function getCountryList() {
+  return axios.get(`${baseApi}country//list`)
+}
+
+// 查询所有楼宇（不分页）
+export function getBuildAllList() {
+  return axios.get(`${baseApi}build/all`)
 }

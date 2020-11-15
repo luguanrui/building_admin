@@ -1,21 +1,26 @@
 <template>
   <a-card>
     <div class="wrapper">
-      <a-carousel arrows>
+      <a-carousel arrows autoplay>
         <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
-          <a-icon type="left-circle" />
+          <a-icon type="left" />
         </div>
         <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
-          <a-icon type="right-circle" />
+          <a-icon type="right" />
         </div>
         <div v-for="(item, index) in carouselList" :key="index">
-          <div style="height: 300px"><img :src="item.imgSrc" alt="" style="width: 100%;height: 100%"/></div>
+          <div class="carousel-item" @mouseenter="handleEnter(index)" @mouseleave="handleLeave(index)">
+            <img :src="item.imgSrc" alt="" />
+            <div class="hover-content" v-if="showInfo === index">
+              {{ item.text }}
+            </div>
+          </div>
         </div>
       </a-carousel>
       <div class="msg-wrapper">
         <div class="msg-content">
           <h3 class="title">消息中心</h3>
-          <table>
+          <table style="width: 100%">
             <tbody>
               <tr v-for="(item, index) in msgList" :key="index">
                 <td class="number">{{ index + 1 }}</td>
@@ -25,10 +30,13 @@
               </tr>
             </tbody>
           </table>
+          <div style="text-align: right;padding-right: 15px;">
+            <a-button type="link">更多</a-button>
+          </div>
         </div>
         <div class="announcement-content">
           <h3 class="title">通知公告</h3>
-          <table>
+          <table style="width: 100%">
             <tbody>
               <tr v-for="(item, index) in announcementList" :key="index">
                 <td class="content">{{ item.content }}</td>
@@ -37,6 +45,9 @@
               </tr>
             </tbody>
           </table>
+          <div style="text-align: right;padding-right: 10px;">
+            <a-button type="link">更多</a-button>
+          </div>
         </div>
       </div>
     </div>
@@ -92,30 +103,37 @@
   }
 }
 
-// .ant-carousel /deep/ .slick-slide {
-//   text-align: center;
-//   height: 160px;
-//   line-height: 160px;
-//   background: #364d79;
-//   overflow: hidden;
-// }
-
-// .ant-carousel /deep/ .custom-slick-arrow {
-//   width: 25px;
-//   height: 25px;
-//   font-size: 25px;
-//   color: #fff;
-//   background-color: rgba(31, 45, 61, 0.11);
-//   opacity: 0.3;
-// }
-// .ant-carousel /deep/ .custom-slick-arrow:before {
-//   display: none;
-// }
-// .ant-carousel /deep/ .custom-slick-arrow:hover {
-//   opacity: 0.5;
-// }
-
-// .ant-carousel /deep/ .slick-slide h3 {
-//   color: #fff;
-// }
+.ant-carousel /deep/ .custom-slick-arrow {
+  width: 30px;
+  height: 30px;
+  font-size: 30px;
+  color: #fff;
+  background-color: rgba(31, 45, 61, 0.11);
+  opacity: 0.3;
+}
+.ant-carousel /deep/ .custom-slick-arrow:before {
+  display: none;
+}
+.ant-carousel /deep/ .custom-slick-arrow:hover {
+  opacity: 0.5;
+}
+.carousel-item {
+  height: 350px;
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hover-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    padding: 10px 50px;
+  }
+}
 </style>

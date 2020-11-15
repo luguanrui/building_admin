@@ -12,12 +12,14 @@ import {
   getAbilityList,
   getCompanyTypeList,
   getNationList,
+  getCountryList,
+  getBuildAllList,
 } from '@/api/index'
 export default {
   namespaced: true,
   state: {
     // 主楼副楼
-    buildingList: [
+    buildTypeList: [
       { key: 1, value: '主楼' },
       { key: 2, value: '副楼' },
     ],
@@ -27,7 +29,8 @@ export default {
       { key: 2, value: '女' },
     ],
     // 所属权
-    ownershipList: [
+    workRoomTypeList: [
+      { key: 0, value: '无' },
       { key: 1, value: '自住' },
       { key: 2, value: '租赁' },
     ],
@@ -47,14 +50,16 @@ export default {
     allOrgList: [], // 获取所有的机构列表
     permissionAreaList: [], // 获取当前登录用户有权限的街道/镇
     industryList: [], // 返回所有的产业列表枚举
-    constructionList: [], //
+    constructionList: [], //返回所有建设类型枚举
     belongList: [], // 返回所有的企业属地性质枚举
     carTypeList: [], // 返回所有的证件类型枚举
     educationList: [], // 返回所有的学历枚举
     politicalList: [], // 返回所有的政治面貌枚举
     abilityList: [], // 返回所有的人才类别枚举
     companyTypeList: [], // 返回所有的企业性质枚举
-    nationList: [], //
+    nationList: [], // 民族列表枚举
+    countryList: [], // 国籍
+    buildingAllList: [], // 楼宇列表（不分页）
   },
   getters: {
     // 年度
@@ -113,6 +118,12 @@ export default {
     SET_NATION_LIST(state, val) {
       state.nationList = val
     },
+    SET_COUNTRY_LIST(state, val) {
+      state.countryList = val
+    },
+    SET_BUILDING_ALL_LIST(state, val) {
+      state.buildingAllList = val
+    },
   },
   actions: {
     // 获取省市区数据
@@ -150,7 +161,7 @@ export default {
         commit('SET_INDUSTRY_LIST', rs)
       }
     },
-    //
+    // 返回所有建设类型枚举
     async getConstructionList({ commit }) {
       const { code, rs } = await getConstructionList()
       if (code === 200) {
@@ -199,11 +210,25 @@ export default {
         commit('SET_COMPANY_TYPE_LIST', rs)
       }
     },
-    //
+    // 返回所有的民族列表枚举
     async getNationList({ commit }) {
       const { code, rs } = await getNationList()
       if (code === 200) {
         commit('SET_NATION_LIST', rs)
+      }
+    },
+    // 返回所有的国籍列表
+    async getCountryList({ commit }) {
+      const { code, rs } = await getCountryList()
+      if (code === 200) {
+        commit('SET_COUNTRY_LIST', rs)
+      }
+    },
+    //  查询所有楼宇（不分页）
+    async getBuildAllList({ commit }) {
+      const { code, rs } = await getBuildAllList()
+      if (code === 200) {
+        commit('SET_BUILDING_ALL_LIST', rs)
       }
     },
   },

@@ -1,6 +1,8 @@
-// import dayjs from "dayjs";
+import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
+import { getCompanyList } from '@/api/index'
+import _ from 'lodash'
 
 export default {
   mixins: [pagination],
@@ -12,23 +14,7 @@ export default {
         bb: undefined,
       },
       loading: false,
-      columnsVisible: false, // 自定义列
-      checkedColumn: [],
-      columnList: [
-        { key: '楼宇名称', value: 'aa' },
-        { key: '建设单位', value: 'bb' },
-        { key: '楼宇地址', value: 'ccc' },
-        { key: '物业该公司', value: 'dd' },
-        { key: '建筑面积范围', value: 'ee' },
-      ],
-      data: [
-        {
-          id: 1,
-          address: '11',
-          company: '11',
-          time: '11',
-        },
-      ],
+      data: [],
       columns: [
         {
           title: '序号',
@@ -38,25 +24,24 @@ export default {
         },
         {
           title: '企业名称',
-          dataIndex: 'address',
-          ellipsis: true,
+          dataIndex: 'name',
         },
         {
           title: '楼宇名称',
-          dataIndex: 'company',
-          ellipsis: true,
+          dataIndex: 'buildName',
         },
         {
           title: '办公地址',
-          dataIndex: 'company',
-          ellipsis: true,
+          dataIndex: 'companyAddress',
+        },
+        {
+          title: '企业联系人',
+          dataIndex: 'contactName',
         },
         {
           title: '创建时间',
-          dataIndex: 'time',
-          ellipsis: true,
-          //   customRender: (text, record) =>
-          //     dayjs(record.createAt).format("YYYY年MM月DD日"),
+          dataIndex: 'createAt',
+          customRender: (text, record) => dayjs(record.createAt).format('YYYY年MM月DD日'),
         },
         {
           title: '操作',
@@ -66,19 +51,28 @@ export default {
       ],
     }
   },
+  activated() {
+    this.getCompanyList()
+  },
+  mounted() {
+    this.getCompanyList()
+  },
   methods: {
     // 查询
     handleSearch() {
-      //   this.form = data;
+      this.pagination.current = 1
+      this.pagination.pageSize = 10
+      this.getCompanyList()
     },
     // 重置
     handleReset() {
       Object.assign(this.$data, this.$options.data())
+      this.getCompanyList()
     },
     // 分页
     handleChange(pagination) {
       Object.assign(this.pagination, pagination)
-      // 获取列表
+      this.getCompanyList()
     },
     // 修改
     handleUpdate(record) {
@@ -92,37 +86,35 @@ export default {
     handleAdd() {
       this.$refs.addUpdate.handleVisible('', 'add')
     },
+    // 新增成功
+    handleSuccess() {
+      this.pagination.current = 1
+      this.pagination.pageSize = 10
+      this.getCompanyList()
+    },
     // 导出
     handleExport() {},
-    // 取消查询列
-    hideColumns() {
-      this.columnsVisible = false
-    },
-    // 查询列
-    handleAutoSearch() {
-      this.columnsVisible = false
-    },
     // 列表
-    // async getCaseList() {
-    //   this.data = []
-    //   this.loading = true
-    //   try {
-    //     const { pageSize, current } = this.pagination
-    //     const params = { ...this.form, pageSize, pageNum: current }
-    //     const { code, rs } = await getCaseList(params)
-    //     if (code === 200) {
-    //       this.data = rs.data
-    //       this.loading = false
-    //       const { pageSize, current, total } = rs
-    //       if (total > pageSize) {
-    //         const pageObject = { pageSize, current, total }
-    //         this.pagination = _.cloneDeep(pageObject)
-    //       }
-    //     }
-    //   } catch (error) {
-    //     this.loading = false
-    //     console.log(error)
-    //   }
-    // },
+    async getCompanyList() {
+      this.data = []
+      this.loading = true
+      try {
+        const { pageSize, current } = this.pagination
+        const params = { ...this.form, pageSize, pageNum: current }
+        const { code, rs } = await getCompanyList(params)
+        if (code === 200) {
+          this.data = rs.data
+          this.loading = false
+          const { pageSize, current, total } = rs
+          if (total > pageSize) {
+            const pageObject = { pageSize, current, total }
+            this.pagination = _.cloneDeep(pageObject)
+          }
+        }
+      } catch (error) {
+        this.loading = false
+        console.log(error)
+      }
+    },
   },
 }

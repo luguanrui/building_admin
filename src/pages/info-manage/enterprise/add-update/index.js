@@ -184,24 +184,26 @@ export default {
     },
     // 新增员工
     handleAddEmployee() {
-      this.$refs.employeeAdd.handleVisible(this.form.id, '', 'add')
+      this.$refs.employeeAdd.handleVisible(this.form.id, undefined, 'add')
     },
     // 修改员工信息
     handleUpdate(record) {
-      this.$refs.employeeAdd.handleVisible(this.form.id, record.id, 'edit')
+      this.$refs.employeeAdd.handleVisible(this.form.id, record, 'edit')
     },
     // 删除员工
     handleDel(record) {
       console.log(record)
     },
     // 新增员工成功
-    handleSuccess(obj) {
-      this.form.employeeList.push({
-        name: obj.name,
-        cardNum: obj.cardNum,
-        createAt: new Date(),
-      })
-      console.log(obj)
+    handleSuccess(dialogStatus, obj) {
+      if (dialogStatus === 'add') {
+        this.form.employeeList.push({
+          ...obj,
+          createAt: new Date(),
+        })
+      } else if (dialogStatus === 'edit') {
+        // 编辑
+      }
     },
     // 详情
     async getCompany() {

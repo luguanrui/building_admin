@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
-import { getCompanyList } from '@/api/index'
+import { getCompanyList, removeCompany } from '@/api/index'
 import _ from 'lodash'
 
 export default {
@@ -80,7 +80,12 @@ export default {
     },
     // 删除
     handleDel(record) {
-      console.log(record)
+      removeCompany({ id: record.id }).then(res => {
+        const { code } = res
+        if (code === 200) {
+          this.handleSearch()
+        }
+      })
     },
     // 新增
     handleAdd() {
@@ -88,9 +93,7 @@ export default {
     },
     // 新增成功
     handleSuccess() {
-      this.pagination.current = 1
-      this.pagination.pageSize = 10
-      this.getCompanyList()
+      this.handleSearch()
     },
     // 导出
     handleExport() {},

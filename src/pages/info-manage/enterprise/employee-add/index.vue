@@ -53,7 +53,14 @@
         <a-col :span="span">
           <a-form-model-item label="籍贯" prop="employeeFrom">
             <span v-if="disabled">{{ form.employeeFrom }}</span>
-            <a-cascader v-else placeholder="请选择" allowClear v-model="form.employeeFrom" :options="regionList" :field-names="{ label: 'name', value: 'id', children: 'childList' }" />
+            <a-cascader
+              v-else
+              placeholder="请选择"
+              allowClear
+              v-model="form.employeeFromCopy"
+              :options="regionList"
+              :field-names="{ label: 'name', value: 'id', children: 'childList' }"
+            />
           </a-form-model-item>
         </a-col>
         <a-col :span="span">
@@ -105,7 +112,7 @@
         <a-col :span="span">
           <a-form-model-item label="有效期限" prop="outLimitDateStart">
             <span v-if="disabled">{{ form.outLimitDateStart }}</span>
-            <a-range-picker v-else v-model="form.outLimitDate" valueFormat="YYYY-MM-DD" allowClear/>
+            <a-range-picker v-else v-model="form.outLimitDate" valueFormat="YYYY-MM-DD" allowClear />
             <!-- <a-input v-else v-model="form.outLimitDateStart" placeholder="请输入" allowClear :maxLength="200" /> -->
           </a-form-model-item>
         </a-col>

@@ -38,12 +38,14 @@
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="pagination" :loading="loading">
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
-          <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)">删除</a-button>
+          <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
+            <a-button type="danger" size="small" style="margin-right: 10px">删除</a-button>
+          </a-popconfirm>
         </template>
       </a-table>
     </div>
     <!-- 新增，编辑，查看 -->
-    <AddUpdate ref="addUpdate" @handleSuccess="handleSuccess"/>
+    <AddUpdate ref="addUpdate" @handleSuccess="handleSuccess" />
   </a-card>
 </template>
 

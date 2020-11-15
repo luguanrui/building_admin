@@ -224,7 +224,7 @@
       </a-button>
     </div>
     <!-- 员工 -->
-    <EmployeeAdd ref="employeeAdd" @handleSuccess="handleSuccess"/>
+    <EmployeeAdd ref="employeeAdd" @handleSuccess="handleSuccess" />
   </a-drawer>
 </template>
 <script src="./index"></script>

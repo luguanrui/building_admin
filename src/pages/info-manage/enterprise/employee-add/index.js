@@ -18,6 +18,7 @@ export default {
         sex: 1, // 性别
         age: '', // 年龄
         employeeFrom: undefined, // 籍贯
+        employeeFromCopy: [],
         nation: undefined, // 名族
         politicalType: undefined, // 政治面貌
         address: '', // 居住地址
@@ -61,10 +62,10 @@ export default {
   },
   methods: {
     ...mapActions('common', ['getCardTypeList', 'getCountryList', 'getRegionList', 'getNationList', 'getPoliticalList', 'getEducationList', 'getAbilityList']),
-    handleVisible(enterpriseId, employeeId, dialogStatus) {
+    handleVisible(enterpriseId, employeeObj, dialogStatus) {
       Object.assign(this.$data, this.$options.data())
       this.enterpriseId = enterpriseId || ''
-      this.employeeId = employeeId || ''
+      this.employeeId = employeeObj ? employeeObj.id : ''
       //   this.form.id = id || ''
       this.visible = true
       this.dialogStatus = dialogStatus
@@ -83,10 +84,18 @@ export default {
       this.getEducationList()
       // 人才列表
       this.getAbilityList()
-      // 详情/编辑
-      if (this.form.id) {
-        // this.getCompany()
+
+      if (this.employeeId) {
+        this.form = Object.assign(this.form, employeeObj)
+        // 有效期限
+        this.form.outLimitDate = [employeeObj.outLimitDateStart, employeeObj.outLimitDateEnd]
+        // 籍贯
+        this.form.employeeFromCopy = []
       }
+
+      //   if (this.form.id) {
+      //     // this.getCompany()
+      //   }
     },
     // 关闭
     handleClose() {
@@ -101,7 +110,9 @@ export default {
           //     // this.saveCompany()
 
           //   }
-          this.$emit('handleSuccess', this.form)
+          //   const employeeFrom = this.form.employeeFromCopy.length ? this.form.employeeFromCopy.join() : ''
+          //   this.form.employeeFrom = employeeFrom
+          this.$emit('handleSuccess', this.dialogStatus, this.form)
           this.handleClose()
         } else {
           console.log('error submit!!')

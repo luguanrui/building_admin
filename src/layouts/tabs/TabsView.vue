@@ -11,9 +11,9 @@
       @edit="editPage"
       @contextmenu="onContextmenu"
     >
-     <!-- <a-tab-pane key="/index">
-        <span slot="tab" pagekey="/index">欢迎页</span>
-      </a-tab-pane> -->
+      <a-tab-pane :key="'/index'" :closable="false">
+        <span slot="tab" :pagekey="'/index'">首页</span>
+      </a-tab-pane>
       <a-tab-pane :key="page.fullPath" v-for="page in pageList">
         <span slot="tab" :pagekey="page.fullPath">{{pageName(page)}}</span>
       </a-tab-pane>
@@ -65,8 +65,9 @@ export default {
   },
   created () {
     const route = this.$route
-    this.pageList.push(route)
-    console.log(this.pageList, 'this.pageList')
+    if (route.fullPath !== '/index') {
+      this.pageList.push(route)
+    }
     this.activePage = route.fullPath
     if (this.multiPage) {
       window.addEventListener('page:close', this.closePageListener)
@@ -89,7 +90,9 @@ export default {
         this.$nextTick(() => {
           this.cachedKeys.push(this.$refs.tabContent.$vnode.key)
         })
-        this.pageList.push(newRoute)
+        if (newRoute.fullPath !== '/index') {
+          this.pageList.push(newRoute)
+        }
       }
     },
     'multiPage': function (newVal) {
@@ -114,7 +117,8 @@ export default {
     },
     remove (key, next) {
       if (this.pageList.length === 1) {
-        return this.$message.warning(this.$t('warn'))
+        // return this.$message.warning(this.$t('warn'))
+        this.$router.push('/index')
       }
       let index = this.pageList.findIndex(item => item.fullPath === key)
       //清除缓存

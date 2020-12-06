@@ -26,10 +26,6 @@ export function resetPwd(params) {
 }
 
 /***************************** 信息管理 *************************** */
-// 楼宇信息列表
-export function getBuildList() {
-  //   return axios.get(`${baseApi}project/caseList`, { params })
-}
 // 查询企业列表
 export function getCompanyList(params) {
   return axios.get(`${baseApi}company/list`, { params })
@@ -58,9 +54,56 @@ export function getCompanyOtherList(params) {
 /***************************** 数据分析 *************************** */
 
 /***************************** 系统管理 *************************** */
-
+// 保存楼宇信息
+export function saveBuild(params) {
+  return axios.post(`${baseApi}build/save`, params)
+}
+// 楼宇列表
+export function getBuildList(params) {
+  return axios.get(`${baseApi}build/list`, { params })
+}
+// 删除楼宇
+export function removeBuild(params) {
+  return axios.post(`${baseApi}build/remove`, params)
+}
+// 楼宇主页
+export function getBuildHome(params) {
+  return axios.get(`${baseApi}build/home`, { params })
+}
 /***************************** 公告管理 *************************** */
-
+// 保存公告
+export function saveNotice(params) {
+  return axios.post(`${baseApi}notice/save`, params)
+}
+// 公告列表查询
+export function getNoticeList(params) {
+  return axios.get(`${baseApi}notice/list`, { params })
+}
+// 删除公告
+export function removeNotice(params) {
+  return axios.post(`${baseApi}notice/del`, params)
+}
+// 查询单个公告信息
+export function getNoticeDetail(params) {
+  return axios.get(`${baseApi}notice/get`, { params })
+}
+/***************************** 图片 *************************** */
+// 保存公告
+export function saveImg(params) {
+  return axios.post(`${baseApi}img/save`, params)
+}
+// 公告列表查询
+export function getImgList(params) {
+  return axios.get(`${baseApi}img/list`, { params })
+}
+// 删除公告
+export function removeImg(params) {
+  return axios.post(`${baseApi}notimgice/del`, params)
+}
+// 查询单个公告信息
+export function getImgDetail(params) {
+  return axios.get(`${baseApi}img/get`, { params })
+}
 /***************************** 通用 *************************** */
 // 上传
 export function upload(params) {

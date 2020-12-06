@@ -44,7 +44,11 @@ export default {
       { key: 1, value: '是' },
       { key: 0, value: '否' },
     ],
-
+    noticeTypeList: [
+      { key: 1, value: '政策' },
+      { key: 2, value: '通知' },
+      // { key: 3, value: '图片' },
+    ],
     regionList: [], // 省市区数据
     roleList: [], // 获取所有角色列表
     allOrgList: [], // 获取所有的机构列表

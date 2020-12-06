@@ -2,14 +2,14 @@
   <a-drawer :title="title" :width="720" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false">
     <div class="wrapper">
       <a-form-model ref="ruleForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <a-form-model-item label="主题名" prop="a">
-          <a-input v-model="form.a" placeholder="请输入" allowClear :maxLength="200" />
+        <a-form-model-item label="主题名" prop="title">
+          <a-input v-model="form.title" placeholder="请输入" allowClear :maxLength="200" />
         </a-form-model-item>
-        <a-form-model-item label="上传" prop="name">
-          <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.c" :disabled="disabled" />
+        <a-form-model-item label="上传" prop="fileList">
+          <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" :disabled="disabled" />
         </a-form-model-item>
-        <a-form-model-item label="正文" prop="d">
-          <a-input v-model="form.d" placeholder="请输入" type="textarea" :rows="4" style="width: 100%" :maxLength="2000" allowClear />
+        <a-form-model-item label="正文" prop="content">
+          <a-input v-model="form.content" placeholder="请输入" type="textarea" :rows="6" style="width: 100%" :maxLength="2000" allowClear />
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -37,12 +37,13 @@
 </template>
 <script>
 import Upload from '@/pages/components/upload'
+import { saveImg, getImgDetail } from '@/api/index'
 
 export default {
   components: { Upload },
   data() {
     return {
-      status: 'add',
+      dialogStatus: 'add',
       obj: {},
       visible: false,
       loading: false,
@@ -50,36 +51,44 @@ export default {
       wrapperCol: { span: 18 },
       list: [],
       form: {
-        a: '',
-        c: [],
-        d: '',
+        id: '',
+        title: '',
+        fileList: '',
+        content: '',
       },
       rules: {
-        a: [{ required: true, message: '请输入', trigger: 'blur' }],
-        d: [{ required: true, message: '请输入', trigger: 'blur' }],
+        title: [{ required: true, message: '请输入', trigger: 'blur' }],
+        fileList: [{ required: true, message: '请上传', trigger: 'blur' }],
+        content: [{ required: true, message: '请输入', trigger: 'blur' }],
       },
       disabled: false,
     }
   },
   computed: {
     title() {
-      switch (this.status) {
+      switch (this.dialogStatus) {
         case 'add':
-          return '公告新增'
+          return '图片新增'
         case 'update':
-          return '公告修改'
+          return '图片修改'
         case 'detail':
-          return '公告详情'
+          return '图片详情'
         default:
-          return '公告新增'
+          return '图片新增'
       }
     },
   },
   methods: {
-    handleVisible(status, obj) {
-      this.status = status
-      this.obj = obj
+    handleVisible(id, dialogStatus) {
+      Object.assign(this.$data, this.$options.data())
+      this.form.id = id || ''
       this.visible = true
+      this.dialogStatus = dialogStatus
+
+      // 详情/编辑
+      if (this.form.id) {
+        this.getImgDetail()
+      }
     },
 
     // 上传成功
@@ -92,27 +101,31 @@ export default {
       Object.assign(this.$data, this.$options.data())
     },
     handleSubmit() {
-      //   this.add()
+      this.saveImg()
     },
     // 新增
-    // async add() {
-    //   this.loading = true
-    //   const params = {
-    //     projectId: this.projectId,
-    //     remark: this.ruleForm.remark,
-    //   }
-    //   try {
-    //     const { code } = await add(params)
-    //     if (code === 200) {
-    //       this.$message.success('公告新增成功！')
-    //       this.$emit('handleSuccess')
-    //       this.onClose()
-    //     }
-    //     this.loading = false
-    //   } catch (error) {
-    //     this.loading = false
-    //   }
-    // },
+    async saveImg() {
+      this.loading = true
+      try {
+        const { code } = await saveImg(this.form)
+        if (code === 200) {
+          this.$message.success('图片新增成功！')
+          this.$emit('handleSuccess')
+          this.onClose()
+        }
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+      }
+    },
+    // 详情
+    async getImgDetail() {
+      const { code, rs } = await getImgDetail({ id: this.form.id })
+      if (code === 200) {
+        const { id, title, fileList, content } = rs
+        Object.assign(this.form, { id, title, fileList, content })
+      }
+    },
   },
 }
 </script>

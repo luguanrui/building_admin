@@ -87,6 +87,10 @@ export function removeNotice(params) {
 export function getNoticeDetail(params) {
   return axios.get(`${baseApi}notice/get`, { params })
 }
+// 发布公告
+export function publishNotice(params) {
+  return axios.post(`${baseApi}notice/publish`, params)
+}
 /***************************** 图片 *************************** */
 // 保存公告
 export function saveImg(params) {
@@ -98,11 +102,15 @@ export function getImgList(params) {
 }
 // 删除公告
 export function removeImg(params) {
-  return axios.post(`${baseApi}notimgice/del`, params)
+  return axios.post(`${baseApi}img/del`, params)
 }
 // 查询单个公告信息
 export function getImgDetail(params) {
   return axios.get(`${baseApi}img/get`, { params })
+}
+// 发布图片
+export function publishImg(params) {
+  return axios.post(`${baseApi}img/publish`, params)
 }
 /***************************** 通用 *************************** */
 // 上传

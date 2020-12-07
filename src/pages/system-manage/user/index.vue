@@ -3,29 +3,21 @@
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
         <a-form-model-item label="用户名">
-          <a-input v-model="form.userName" placeholder="请输入" allowClear style="width: 120px"/>
+          <a-input v-model="form.userName" placeholder="请输入" allowClear style="width: 120px" />
         </a-form-model-item>
         <a-form-model-item label="所属机构">
           <a-select v-model="form.deptId" placeholder="请选择" style="min-width: 120px" allowClear>
-            <a-select-option
-              v-for="item in allOriginList"
-              :key="item.key"
-              :value="item.key"
-            >
+            <a-select-option v-for="item in allOriginList" :key="item.key" :value="item.key">
               {{ item.value }}
             </a-select-option>
           </a-select>
         </a-form-model-item>
         <a-form-model-item label="姓名">
-          <a-input v-model="form.realName" placeholder="请输入" allowClear style="width: 120px"/>
+          <a-input v-model="form.realName" placeholder="请输入" allowClear style="width: 120px" />
         </a-form-model-item>
         <a-form-model-item>
-          <a-button type="primary" @click="onSubmit" icon="search"
-            >查询</a-button
-          >
-          <a-button style="margin-left: 10px;" @click="handleReset"
-            >重置</a-button
-          >
+          <a-button type="primary" @click="onSubmit" icon="search">查询</a-button>
+          <a-button style="margin-left: 10px;" @click="handleReset">重置</a-button>
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -33,35 +25,11 @@
       <a-button type="primary" @click="handleAdd">新增</a-button>
     </div>
     <div class="table-wrapper">
-      <a-table
-        :columns="columns"
-        :data-source="data"
-        :rowKey="(record, index) => index"
-        :pagination="false"
-        :loading="loading"
-      >
-        <template
-          slot="operation"
-          slot-scope="record, text"
-          @click="handleRecord(text)"
-        >
-          <a-button
-            type="primary"
-            size="small"
-            style="margin-right: 10px"
-            @click="handleUpdate(record)"
-            >修改</a-button
-          >
-          <a-button
-            type="danger"
-            size="small"
-            style="margin-right: 10px"
-            @click="handleDel(record)"
-            >删除</a-button
-          >
-          <a-button size="small" @click="handleResetPwd(record)"
-            >重置密码</a-button
-          >
+      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="false" :loading="loading">
+        <template slot="operation" slot-scope="record, text" @click="handleRecord(text)">
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
+          <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)">删除</a-button>
+          <a-button size="small" @click="handleResetPwd(record)">重置密码</a-button>
         </template>
       </a-table>
     </div>
@@ -70,9 +38,9 @@
 </template>
 
 <script>
-import AddUser from "./add-user.vue";
-import { getUserList, delUser, resetPwd } from "@/api/index";
-import { mapActions, mapState } from "vuex";
+import AddUser from './add-user.vue'
+import { getUserList, delUser, resetPwd } from '@/api/index'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: { AddUser },
@@ -81,115 +49,119 @@ export default {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
       form: {
-        userName: "",
+        userName: '',
         deptId: undefined,
-        realName: "",
+        realName: '',
       },
       loading: false,
       data: [],
       columns: [
         {
-          title: "用户名",
-          dataIndex: "userName",
-          key: "userName",
+          title: '用户名',
+          dataIndex: 'userName',
+          key: 'userName',
           ellipsis: true,
         },
         {
-          title: "姓名",
-          dataIndex: "realName",
-          key: "realName",
+          title: '姓名',
+          dataIndex: 'realName',
+          key: 'realName',
           ellipsis: true,
         },
         {
-          title: "所属角色",
-          dataIndex: "orgName",
-          key: "orgName",
+          title: '所属角色',
+          dataIndex: 'orgName',
+          key: 'orgName',
           ellipsis: true,
         },
         {
-          title: "联系方式",
-          dataIndex: "phone",
-          key: "phone",
+          title: '联系方式',
+          dataIndex: 'phone',
+          key: 'phone',
           ellipsis: true,
         },
         {
-          title: "操作",
+          title: '操作',
           width: 250,
-          scopedSlots: { customRender: "operation" },
+          scopedSlots: { customRender: 'operation' },
         },
       ],
       addVisible: false,
-    };
+    }
   },
   computed: {
-    ...mapState("common", ["allOriginList"]),
+    ...mapState('common', ['allOriginList']),
+  },
+  activated() {
+    this.getUserList()
+    this.getAllOrgList()
   },
   mounted() {
-    this.getUserList();
-    this.getAllOrgList();
+    this.getUserList()
+    this.getAllOrgList()
   },
   methods: {
-    ...mapActions("common", ["getAllOrgList"]),
+    ...mapActions('common', ['getAllOrgList']),
     onSubmit() {
-      this.getUserList();
+      this.getUserList()
     },
     handleReset() {
-      Object.assign(this.$data, this.$options.data());
-      this.getUserList();
+      Object.assign(this.$data, this.$options.data())
+      this.getUserList()
     },
     // 新增
     handleAdd() {
-      this.addVisible = true;
-      this.$refs.addUser.handleVisible();
+      this.addVisible = true
+      this.$refs.addUser.handleVisible()
     },
     // 修改
     handleUpdate(record) {
-      this.$refs.addUser.handleVisible(record, "edit");
+      this.$refs.addUser.handleVisible(record, 'edit')
     },
 
     // 删除
     handleDel(record) {
-      this.delUser(record.userId);
-      this.getUserList();
+      this.delUser(record.userId)
+      this.getUserList()
     },
 
     // 重置密码
     handleResetPwd(record) {
-      this.resetPwd(record.userId);
+      this.resetPwd(record.userId)
     },
     // 添加成功之后
     addSuccess() {
-      this.getUserList();
+      this.getUserList()
     },
     // 列表
     async getUserList() {
-      this.loading = true;
+      this.loading = true
       try {
-        const { code, rs } = await getUserList(this.form);
+        const { code, rs } = await getUserList(this.form)
         if (code === 200) {
-          this.data = rs;
+          this.data = rs
         }
-        this.loading = false;
+        this.loading = false
       } catch (error) {
-        this.loading = false;
+        this.loading = false
       }
     },
     // 删除
     async delUser(userId) {
-      const { code } = await delUser({ userId });
+      const { code } = await delUser({ userId })
       if (code === 200) {
-        this.$message.success("删除成功");
+        this.$message.success('删除成功')
       }
     },
     // 重置密码
     async resetPwd(userId) {
-      const { code } = await resetPwd({ userId });
+      const { code } = await resetPwd({ userId })
       if (code === 200) {
-        this.$message.success("重置密码成功");
+        this.$message.success('重置密码成功')
       }
     },
   },
-};
+}
 </script>
 
 <style lang="less" scoped>

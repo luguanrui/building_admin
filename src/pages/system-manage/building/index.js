@@ -117,6 +117,8 @@ export default {
         const { code, rs } = await getBuildList(this.form)
         if (code === 200) {
           this.data = rs.data
+          const { current, pageSize, total } = rs
+          this.pagination = Object.assign(this.pagination, { current, pageSize, total })
         }
         this.loading = false
       } catch (error) {

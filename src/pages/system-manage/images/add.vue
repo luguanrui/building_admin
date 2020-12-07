@@ -6,7 +6,7 @@
           <a-input v-model="form.title" placeholder="请输入" allowClear :maxLength="200" />
         </a-form-model-item>
         <a-form-model-item label="上传" prop="fileList">
-          <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" :disabled="disabled" />
+          <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" />
         </a-form-model-item>
         <a-form-model-item label="正文" prop="content">
           <a-input v-model="form.content" placeholder="请输入" type="textarea" :rows="6" style="width: 100%" :maxLength="2000" allowClear />
@@ -53,6 +53,7 @@ export default {
       form: {
         id: '',
         title: '',
+        noticeType: 3,
         fileList: '',
         content: '',
       },
@@ -93,8 +94,7 @@ export default {
 
     // 上传成功
     uploadSuccess(list) {
-      console.log(list)
-      //   this.form.recAppendList = JSON.stringify(list)
+      this.form.fileList = JSON.stringify(list)
     },
     // 关闭弹窗
     onClose() {
@@ -122,8 +122,8 @@ export default {
     async getImgDetail() {
       const { code, rs } = await getImgDetail({ id: this.form.id })
       if (code === 200) {
-        const { id, title, fileList, content } = rs
-        Object.assign(this.form, { id, title, fileList, content })
+        const { id, title, fileList, noticeType, content } = rs
+        Object.assign(this.form, { id, title, noticeType, fileList, content })
       }
     },
   },

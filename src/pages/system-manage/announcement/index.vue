@@ -25,14 +25,15 @@
       <a-button type="primary" @click="handleAdd">新增</a-button>
     </div>
     <div class="table-wrapper">
-      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="pagination" :loading="loading">
+      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="pagination" @change="handleChange" :loading="loading">
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
+        <span slot="noticeType" slot-scope="text, record">{{ noticeTypeText(record) }}</span>
         <template slot="operation" slot-scope="record">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="record.isPublish === 1">修改</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px">删除</a-button>
           </a-popconfirm>
-          <a-button size="small" @click="handlePublish(record)">发布</a-button>
+          <a-button size="small" @click="handlePublish(record)" :disabled="record.isPublish === 1">发布</a-button>
         </template>
       </a-table>
     </div>
@@ -46,7 +47,7 @@ import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddAnnouncement from './add.vue'
 import { mapState } from 'vuex'
-import { getNoticeList, removeNotice } from '@/api/index'
+import { getNoticeList, removeNotice, publishNotice } from '@/api/index'
 
 export default {
   components: { AddAnnouncement },
@@ -79,7 +80,7 @@ export default {
           title: '类型',
           dataIndex: 'noticeType',
           ellipsis: true,
-          customRender: (text, record) => this.noticeTypeListText(record.noticeType),
+          scopedSlots: { customRender: 'noticeType' },
         },
         {
           title: '发布人',
@@ -90,7 +91,7 @@ export default {
           title: '发布时间',
           dataIndex: 'publishTime',
           ellipsis: true,
-          customRender: (text, record) => record.publishTim && dayjs(record.publishTime).format('YYYY年MM月DD日'),
+          customRender: (text, record) => record.publishTime && dayjs(record.publishTime).format('YYYY年MM月DD日'),
         },
         {
           title: '操作',
@@ -98,7 +99,6 @@ export default {
           scopedSlots: { customRender: 'operation' },
         },
       ],
-      addVisible: false,
     }
   },
   activated() {
@@ -112,16 +112,22 @@ export default {
   },
   methods: {
     dayjs,
+    noticeTypeText(record) {
+      this.noticeTypeList.find(item => item.key === record.noticeType).value
+    },
     onSubmit() {
+      this.pagination.pageSize = 10
+      this.pagination.current = 1
       this.getNoticeList()
     },
     handleReset() {
+      // console.log(this.$options.data())
       Object.assign(this.$data, this.$options.data())
       this.getNoticeList()
     },
     // 新增
     handleAdd() {
-      this.$refs.addAnnouncement.handleVisible()
+      this.$refs.addAnnouncement.handleVisible('', 'add')
     },
     // 查看
     handleDetail(record) {
@@ -135,32 +141,34 @@ export default {
     handleSuccess() {
       this.onSubmit()
     },
-    noticeTypeListText(val) {
-      switch (val) {
-        case 1:
-          return '政策'
-        case 2:
-          return '通知'
-        default:
-          return '未知类型'
-      }
-    },
     // 删除
     handleDel(record) {
       this.removeNotice(record.id)
-      this.getNoticeList()
     },
     // 发布
     handlePublish(record) {
-      console.log(record)
+      this.publishNotice(record.id)
+    },
+    // 分页
+    handleChange(pagination) {
+      Object.assign(this.pagination, pagination)
+      this.getNoticeList()
     },
     // 列表
     async getNoticeList() {
       this.loading = true
       try {
-        const { code, rs } = await getNoticeList(this.form)
+        const { pageSize, current: pageNum } = this.pagination
+        let params = {
+          pageSize,
+          pageNum,
+          ...this.form,
+        }
+        const { code, rs } = await getNoticeList(params)
         if (code === 200) {
           this.data = rs.data
+          const { current, pageSize, total } = rs
+          this.pagination = Object.assign(this.pagination, { current, pageSize, total })
         }
         this.loading = false
       } catch (error) {
@@ -172,6 +180,15 @@ export default {
       const { code } = await removeNotice({ id })
       if (code === 200) {
         this.$message.success('删除成功')
+        this.getNoticeList()
+      }
+    },
+    // 发布
+    async publishNotice(id) {
+      const { code } = await publishNotice({ id })
+      if (code === 200) {
+        this.$message.success('发布成功')
+        this.getNoticeList()
       }
     },
   },

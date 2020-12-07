@@ -18,14 +18,14 @@
       <a-button type="primary" @click="handleAdd">新增</a-button>
     </div>
     <div class="table-wrapper">
-      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="pagination" :loading="loading">
+      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="pagination" @change="handleChange" :loading="loading">
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="record.isPublish === 1">修改</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px">删除</a-button>
           </a-popconfirm>
-          <a-button size="small" @click="handlePublish(record)">发布</a-button>
+          <a-button size="small" @click="handlePublish(record)" :disabled="record.isPublish === 1">发布</a-button>
         </template>
       </a-table>
     </div>
@@ -38,7 +38,7 @@
 import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddAnnouncement from './add.vue'
-import { getImgList, removeImg } from '@/api/index'
+import { getImgList, removeImg, publishImg } from '@/api/index'
 
 export default {
   components: { AddAnnouncement },
@@ -95,6 +95,8 @@ export default {
   methods: {
     dayjs,
     onSubmit() {
+      this.pagination.pageSize = 10
+      this.pagination.current = 1
       this.getImgList()
     },
     handleReset() {
@@ -103,7 +105,7 @@ export default {
     },
     // 新增
     handleAdd() {
-      this.$refs.addAnnouncement.handleVisible()
+      this.$refs.addAnnouncement.handleVisible('', 'add')
     },
     // 查看
     handleDetail(record) {
@@ -119,26 +121,32 @@ export default {
     },
     // 删除
     handleDel(record) {
-      console.log(record)
-      this.removeImg(record.userId)
-      this.getImgList()
+      this.removeImg(record.id)
     },
     // 发布
     handlePublish(record) {
-      console.log(record)
+      this.publishImg(record.id)
     },
-
-    // 添加成功之后
-    addSuccess() {
+    // 分页
+    handleChange(pagination) {
+      Object.assign(this.pagination, pagination)
       this.getImgList()
     },
     // 列表
     async getImgList() {
       this.loading = true
       try {
-        const { code, rs } = await getImgList(this.form)
+        const { pageSize, current: pageNum } = this.pagination
+        let params = {
+          pageSize,
+          pageNum,
+          ...this.form,
+        }
+        const { code, rs } = await getImgList(params)
         if (code === 200) {
           this.data = rs.data
+          const { current, pageSize, total } = rs
+          this.pagination = Object.assign(this.pagination, { current, pageSize, total })
         }
         this.loading = false
       } catch (error) {
@@ -146,10 +154,19 @@ export default {
       }
     },
     // 删除
-    async removeImg(userId) {
-      const { code } = await removeImg({ userId })
+    async removeImg(id) {
+      const { code } = await removeImg({ id })
       if (code === 200) {
         this.$message.success('删除成功')
+        this.getImgList()
+      }
+    },
+    // 发布
+    async publishImg(id) {
+      const { code } = await publishImg({ id })
+      if (code === 200) {
+        this.$message.success('发布成功')
+        this.getImgList()
       }
     },
   },

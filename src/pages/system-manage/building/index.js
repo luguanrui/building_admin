@@ -110,6 +110,11 @@ export default {
     addSuccess() {
       this.getBuildList()
     },
+    // 分页
+    handleChange(pagination) {
+      Object.assign(this.pagination, pagination)
+      this.getBuildList()
+    },
     // 列表
     async getBuildList() {
       this.loading = true

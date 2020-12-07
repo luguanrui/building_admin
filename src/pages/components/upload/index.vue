@@ -3,14 +3,14 @@
     <a-upload
       ref="upload"
       list-type="picture-card"
-      :accept="acceptStr"
+      :accept="acceptStrs"
       :file-list="fileList"
       @preview="handlePreview"
       @change="handleChange"
       :before-upload="beforeUpload"
       :remove="handleRemove"
       :customRequest="customRequest"
-      :multiple="true"
+      :multiple="multiple"
       :disabled="disabled"
     >
       <div v-if="isCanAdd">
@@ -46,6 +46,18 @@ export default {
   props: {
     fileObjList: String,
     disabled: [Boolean],
+    fileListLength: {
+      type: Number,
+      default: 9,
+    },
+    multiple: {
+      type: Boolean,
+      default: true,
+    },
+    acceptStr: {
+      type: String,
+      default: '',
+    },
   },
   watch: {
     fileObjList: {
@@ -64,21 +76,10 @@ export default {
   },
   data() {
     return {
-      fileListLength: 9,
       previewVisible: false,
       previewImage: '',
       fileList: [],
       newFileList: [],
-      acceptStr:
-        'image/png,image/jpg,image/jpeg,\n' +
-        '              application/vnd.openxmlformats-officedocument.presentationml.presentation,\n' +
-        '              application/vnd.ms-powerpoint,\n' +
-        '              application/vnd.ms-excel,\n' +
-        '              application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,\n' +
-        '              application/msword,\n' +
-        '              application/vnd.openxmlformats-officedocument.wordprocessingml.document,\n' +
-        '              application/pdf,\n' +
-        '              text/plain',
     }
   },
   computed: {
@@ -89,6 +90,23 @@ export default {
         return false
       } else {
         return true
+      }
+    },
+    acceptStrs() {
+      if (this.acceptStr === 'img') {
+        return 'image/png,image/jpg,image/jpeg'
+      } else {
+        return (
+          'image/png,image/jpg,image/jpeg,\n' +
+          '              application/vnd.openxmlformats-officedocument.presentationml.presentation,\n' +
+          '              application/vnd.ms-powerpoint,\n' +
+          '              application/vnd.ms-excel,\n' +
+          '              application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,\n' +
+          '              application/msword,\n' +
+          '              application/vnd.openxmlformats-officedocument.wordprocessingml.document,\n' +
+          '              application/pdf,\n' +
+          '              text/plain'
+        )
       }
     },
   },

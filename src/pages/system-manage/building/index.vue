@@ -20,7 +20,7 @@
       <!-- <a-button type="primary">自定义查询</a-button> -->
     </div>
     <div class="table-wrapper">
-      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="pagination" :loading="loading">
+      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="pagination" @change="handleChange" :loading="loading">
         <a slot="name" slot-scope="text" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>

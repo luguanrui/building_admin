@@ -6,7 +6,7 @@
           <a-input v-model="form.title" placeholder="请输入" allowClear :maxLength="200" />
         </a-form-model-item>
         <a-form-model-item label="上传" prop="fileList">
-          <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" />
+          <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" :fileListLength="1" :multiple="false" :acceptStr="'img'"/>
         </a-form-model-item>
         <a-form-model-item label="正文" prop="content">
           <a-input v-model="form.content" placeholder="请输入" type="textarea" :rows="6" style="width: 100%" :maxLength="2000" allowClear />

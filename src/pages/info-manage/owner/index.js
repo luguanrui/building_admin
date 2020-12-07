@@ -1,7 +1,8 @@
-// import dayjs from "dayjs";
+import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
 import { downFile } from '@/utils/utils'
+import { getOwnerList } from '@/api/index'
 
 export default {
   mixins: [pagination],
@@ -9,8 +10,8 @@ export default {
   data() {
     return {
       form: {
-        aa: '',
-        bb: '',
+        buildName: '',
+        cardNum: '',
       },
       loading: false,
       // columnsVisible: false, // 自定义列
@@ -39,25 +40,29 @@ export default {
         },
         {
           title: '楼宇名称',
-          dataIndex: 'a',
+          dataIndex: 'buildName',
           ellipsis: true,
         },
         {
           title: '楼宇地址',
-          dataIndex: 'b',
+          dataIndex: 'ownerAddress',
           ellipsis: true,
         },
         {
           title: '房产联系人',
-          dataIndex: 'c',
+          dataIndex: 'ownerName',
+          ellipsis: true,
+        },
+        {
+          title: '人数',
+          dataIndex: 'roomNum',
           ellipsis: true,
         },
         {
           title: '创建时间',
-          dataIndex: 'd',
+          dataIndex: 'createAt',
           ellipsis: true,
-          //   customRender: (text, record) =>
-          //     dayjs(record.createAt).format("YYYY-MM-DD"),
+          customRender: (text, record) => record.createAt && dayjs(record.createAt).format('YYYY年MM月DD日'),
         },
         {
           title: '操作',
@@ -67,19 +72,29 @@ export default {
       ],
     }
   },
+  activated() {
+    this.getOwnerList()
+  },
+  mounted() {
+    this.getOwnerList()
+  },
   methods: {
+    dayjs,
     // 查询
     handleSearch() {
-      //   this.form = data;
+      this.pagination.pageSize = 10
+      this.pagination.current = 1
+      this.getOwnerList()
     },
     // 重置
     handleReset() {
       Object.assign(this.$data, this.$options.data())
+      this.getOwnerList()
     },
     // 分页
     handleChange(pagination) {
       Object.assign(this.pagination, pagination)
-      // 获取列表
+      this.getOwnerList()
     },
     // 修改
     handleUpdate(record) {
@@ -106,26 +121,25 @@ export default {
     //   this.columnsVisible = false
     // },
     // 列表
-    // async getCaseList() {
-    //   this.data = []
-    //   this.loading = true
-    //   try {
-    //     const { pageSize, current } = this.pagination
-    //     const params = { ...this.form, pageSize, pageNum: current }
-    //     const { code, rs } = await getCaseList(params)
-    //     if (code === 200) {
-    //       this.data = rs.data
-    //       this.loading = false
-    //       const { pageSize, current, total } = rs
-    //       if (total > pageSize) {
-    //         const pageObject = { pageSize, current, total }
-    //         this.pagination = _.cloneDeep(pageObject)
-    //       }
-    //     }
-    //   } catch (error) {
-    //     this.loading = false
-    //     console.log(error)
-    //   }
-    // },
+    async getOwnerList() {
+      this.loading = true
+      try {
+        const { pageSize, current: pageNum } = this.pagination
+        let params = {
+          pageSize,
+          pageNum,
+          ...this.form,
+        }
+        const { code, rs } = await getOwnerList(params)
+        if (code === 200) {
+          this.data = rs.data
+          const { current, pageSize, total } = rs
+          this.pagination = Object.assign(this.pagination, { current, pageSize, total })
+        }
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+      }
+    },
   },
 }

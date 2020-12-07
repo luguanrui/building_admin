@@ -25,6 +25,19 @@ export function resetPwd(params) {
   return axios.post(`${baseApi}user/resetPwd`, params)
 }
 
+/***************************** 业主 *************************** */
+// 查询业主列表
+export function getOwnerList(params) {
+  return axios.get(`${baseApi}owner/list`, { params })
+}
+// 保存业主信息
+export function saveOwner(params) {
+  return axios.post(`${baseApi}owner/save`, params)
+}
+// 查询单个企业信息
+export function getOwner(params) {
+  return axios.get(`${baseApi}owner/get`, { params })
+}
 /***************************** 信息管理 *************************** */
 // 查询企业列表
 export function getCompanyList(params) {

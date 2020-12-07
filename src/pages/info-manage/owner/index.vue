@@ -3,10 +3,10 @@
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
         <a-form-model-item label="楼宇名称" prop="">
-          <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 180px" />
+          <a-input v-model="form.buildName" placeholder="请输入" allowClear style="width: 180px" />
         </a-form-model-item>
         <a-form-model-item label="证件号码" prop="">
-          <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 180px" />
+          <a-input v-model="form.cardNum" placeholder="请输入" allowClear style="width: 180px" />
           <!-- <a-select
             v-model="form.bb"
             placeholder="请选择"

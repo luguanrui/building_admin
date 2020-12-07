@@ -2,7 +2,6 @@ import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
 import { getCompanyList, removeCompany } from '@/api/index'
-import _ from 'lodash'
 
 export default {
   mixins: [pagination],
@@ -10,8 +9,8 @@ export default {
   data() {
     return {
       form: {
-        aa: '',
-        bb: undefined,
+        companyName: '',
+        bb: '',
       },
       loading: false,
       data: [],
@@ -102,18 +101,15 @@ export default {
       this.data = []
       this.loading = true
       try {
-        const { pageSize, current } = this.pagination
-        const params = { ...this.form, pageSize, pageNum: current }
+        const { pageSize, current: pageNum } = this.pagination
+        const params = { ...this.form, pageSize, pageNum }
         const { code, rs } = await getCompanyList(params)
         if (code === 200) {
           this.data = rs.data
-          this.loading = false
-          const { pageSize, current, total } = rs
-          if (total > pageSize) {
-            const pageObject = { pageSize, current, total }
-            this.pagination = _.cloneDeep(pageObject)
-          }
+          const { current, pageSize, total } = rs
+          this.pagination = Object.assign(this.pagination, { current, pageSize, total })
         }
+        this.loading = false
       } catch (error) {
         this.loading = false
         console.log(error)

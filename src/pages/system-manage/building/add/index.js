@@ -1,4 +1,4 @@
-import { saveBuild, getBuildHome } from '@/api/index'
+import { saveBuild, getBuildDetail } from '@/api/index'
 import Upload from '@/pages/components/upload'
 
 export default {
@@ -84,7 +84,7 @@ export default {
 
       // 详情/编辑
       if (this.form.id) {
-        this.getBuildHome()
+        this.getBuildDetail()
       }
     },
     // 关闭弹窗
@@ -143,8 +143,8 @@ export default {
       }
     },
     // 详情
-    async getBuildHome() {
-      const { code, rs } = await getBuildHome({ buildId: this.form.id })
+    async getBuildDetail() {
+      const { code, rs } = await getBuildDetail({ id: this.form.id })
       if (code === 200) {
         rs.employeeList = rs.employeeList || []
         this.form = Object.assign(this.form, rs)

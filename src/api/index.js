@@ -53,7 +53,7 @@ export function getCompanyOtherList(params) {
 
 /***************************** 数据分析 *************************** */
 
-/***************************** 系统管理 *************************** */
+/***************************** 楼宇管理 *************************** */
 // 保存楼宇信息
 export function saveBuild(params) {
   return axios.post(`${baseApi}build/save`, params)
@@ -69,6 +69,10 @@ export function removeBuild(params) {
 // 楼宇主页
 export function getBuildHome(params) {
   return axios.get(`${baseApi}build/home`, { params })
+}
+// 查询单个公告信息
+export function getBuildDetail(params) {
+  return axios.get(`${baseApi}build/get`, { params })
 }
 /***************************** 公告管理 *************************** */
 // 保存公告

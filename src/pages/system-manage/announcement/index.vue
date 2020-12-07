@@ -29,7 +29,7 @@
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <span slot="noticeType" slot-scope="text, record">{{ noticeTypeText(record) }}</span>
         <template slot="operation" slot-scope="record">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="record.isPublish === 1">修改</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px">删除</a-button>
           </a-popconfirm>

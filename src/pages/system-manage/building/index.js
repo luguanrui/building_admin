@@ -73,6 +73,8 @@ export default {
   methods: {
     dayjs,
     onSubmit() {
+      this.pagination.pageSize = 10
+      this.pagination.current = 1
       this.getBuildList()
     },
     handleReset() {
@@ -97,18 +99,7 @@ export default {
     },
     // 删除
     handleDel(record) {
-      console.log(record)
       this.removeBuild(record.id)
-      this.getBuildList()
-    },
-    // 发布
-    handlePublish(record) {
-      console.log(record)
-    },
-
-    // 添加成功之后
-    addSuccess() {
-      this.getBuildList()
     },
     // 分页
     handleChange(pagination) {
@@ -119,7 +110,13 @@ export default {
     async getBuildList() {
       this.loading = true
       try {
-        const { code, rs } = await getBuildList(this.form)
+        const { pageSize, current: pageNum } = this.pagination
+        let params = {
+          pageSize,
+          pageNum,
+          ...this.form,
+        }
+        const { code, rs } = await getBuildList(params)
         if (code === 200) {
           this.data = rs.data
           const { current, pageSize, total } = rs
@@ -135,6 +132,7 @@ export default {
       const { code } = await removeBuild({ id })
       if (code === 200) {
         this.$message.success('删除成功')
+        this.getBuildList()
       }
     },
   },

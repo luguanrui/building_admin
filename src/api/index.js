@@ -195,3 +195,13 @@ export function getCountryList() {
 export function getBuildAllList() {
   return axios.get(`${baseApi}build/all`)
 }
+
+// 查询楼层
+export function getBuildFloorList(params) {
+  return axios.get(`${baseApi}build/floor/list`, { params })
+}
+
+// 查询房间号
+export function getBuildRoomList(params) {
+  return axios.get(`${baseApi}build/room/list`, { params })
+}

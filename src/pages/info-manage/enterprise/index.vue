@@ -2,25 +2,28 @@
   <a-card>
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
-        <a-form-model-item label="企业名称" prop="">
-          <a-input v-model="form.companyName" placeholder="请输入" allowClear style="width: 120px" />
+        <a-form-model-item label="企业名称">
+          <a-input v-model="form.companyName" placeholder="请输入" allowClear style="width: 130px" />
         </a-form-model-item>
-        <a-form-model-item label="房产地址" prop="">
-          <a-input v-model="form.bb" placeholder="请输入" allowClear style="width: 120px" />
-          <!-- <a-select
-            v-model="form.bb"
-            placeholder="请选择"
-            style="min-width: 120px"
-            allowClear
-          >
-            <a-select-option
-              v-for="item in allOriginList"
-              :key="item.key"
-              :value="item.key"
-            >
+        <a-form-model-item label="办公地址">
+          <a-select v-model="form.buildId" placeholder="请选择" style="width: 120px" allowClear @change="handleChangeBuild">
+            <a-select-option v-for="item in buildingAllList" :key="item.id" :value="item.id">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+          <a-select v-model="form.buildType" placeholder="请选择" allowClear style="width: 90px" @change="handleChangeMain">
+            <a-select-option v-for="item in buildTypeList" :value="item.key" :key="item.key">
               {{ item.value }}
             </a-select-option>
-          </a-select> -->
+          </a-select>
+          <a-select v-model="form.floor" placeholder="楼层" allowClear style="width: 90px" @change="handleChangeFloor">
+            <a-select-option v-for="item in buildingFloorList" :value="item" :key="item"> 第{{ item }}层 </a-select-option>
+          </a-select>
+          <a-select v-model="form.roomNum" placeholder="房号" allowClear style="width: 90px">
+            <a-select-option v-for="item in buildingRoomList" :value="item" :key="item">
+              {{ item }}
+            </a-select-option>
+          </a-select>
         </a-form-model-item>
         <a-form-model-item>
           <a-button type="primary" @click="handleSearch" icon="search">查询</a-button>

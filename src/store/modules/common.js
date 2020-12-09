@@ -14,6 +14,8 @@ import {
   getNationList,
   getCountryList,
   getBuildAllList,
+  getBuildFloorList,
+  getBuildRoomList,
 } from '@/api/index'
 export default {
   namespaced: true,
@@ -64,6 +66,8 @@ export default {
     nationList: [], // 民族列表枚举
     countryList: [], // 国籍
     buildingAllList: [], // 楼宇列表（不分页）
+    buildingFloorList: [], // 楼层
+    buildingRoomList: [], // 房间号
   },
   getters: {
     // 年度
@@ -128,6 +132,12 @@ export default {
     SET_BUILDING_ALL_LIST(state, val) {
       state.buildingAllList = val
     },
+    SET_BUILDING_FLOOR_LIST(state, val) {
+      state.buildingFloorList = val
+    },
+    SET_BUILDING_ROOM_LIST(state, val) {
+      state.buildingRoomList = val
+    }
   },
   actions: {
     // 获取省市区数据
@@ -233,6 +243,20 @@ export default {
       const { code, rs } = await getBuildAllList()
       if (code === 200) {
         commit('SET_BUILDING_ALL_LIST', rs)
+      }
+    },
+    //  查询楼层
+    async getBuildFloorList({ commit }, params) {
+      const { code, rs } = await getBuildFloorList(params)
+      if (code === 200) {
+        commit('SET_BUILDING_FLOOR_LIST', rs || [])
+      }
+    },
+    //  查询房间号
+    async getBuildRoomList({ commit }, params) {
+      const { code, rs } = await getBuildRoomList(params)
+      if (code === 200) {
+        commit('SET_BUILDING_ROOM_LIST', rs || [])
       }
     },
   },

@@ -20,8 +20,8 @@ export default {
         name: '', // 企业名称
         buildId: undefined, // 楼宇ID
         buildType: undefined, // 主楼副楼
-        floor: '', // 楼层
-        roomNum: '', // 房号
+        floor: undefined, // 楼层
+        roomNum: undefined, // 房号
         companyType: undefined, // 企业性质
         belongType: undefined, // 属地性质
         creditCode: '', // 统一信用代码
@@ -97,7 +97,7 @@ export default {
   },
 
   computed: {
-    ...mapState('common', ['buildTypeList', 'buildingAllList', 'companyTypeList', 'belongList', 'industryList', 'workRoomTypeList']),
+    ...mapState('common', ['buildTypeList', 'buildingAllList', 'companyTypeList', 'belongList', 'industryList', 'workRoomTypeList', 'buildingFloorList', 'buildingRoomList']),
     title() {
       switch (this.dialogStatus) {
         case 'add':
@@ -124,7 +124,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('common', ['getBuildAllList', 'getCompanyTypeList', 'getBelongList', 'getIndustryList']),
+    ...mapActions('common', ['getBuildAllList', 'getCompanyTypeList', 'getBelongList', 'getIndustryList', 'getBuildFloorList', 'getBuildRoomList']),
     /**
      *
      * @param {*} id 项目id
@@ -154,7 +154,48 @@ export default {
     onClose() {
       Object.assign(this.$data, this.$options.data())
     },
-
+    // 选择地址
+    handleChangeBuild() {
+      this.form.buildType = undefined
+      this.form.floor = undefined
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+        }
+        this.getBuildFloorList(params)
+      }
+    },
+    // 选择主楼副楼
+    handleChangeMain() {
+      this.form.floor = undefined
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+        }
+        this.getBuildFloorList(params)
+      }
+    },
+    // 选择楼层
+    handleChangeFloor() {
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType && this.form.floor) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+          floor: this.form.floor,
+        }
+        this.getBuildRoomList(params)
+      }
+    },
     // 提交信息
     handleSubmit() {
       this.$refs.form.validate(valid => {

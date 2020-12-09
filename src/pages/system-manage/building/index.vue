@@ -3,10 +3,10 @@
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
         <a-form-model-item label="楼宇名称">
-          <a-input v-model="form.buildName" placeholder="请输入" allowClear style="width: 120px" />
+          <a-input v-model="form.buildName" placeholder="请输入" allowClear style="width: 150px" />
         </a-form-model-item>
         <a-form-model-item label="物业公司">
-          <a-input v-model="form.propertyCompany" placeholder="请输入" allowClear style="width: 120px" />
+          <a-input v-model="form.propertyCompany" placeholder="请输入" allowClear style="width: 150px" />
         </a-form-model-item>
         <a-form-model-item>
           <a-button type="primary" @click="onSubmit" icon="search">查询</a-button>

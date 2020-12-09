@@ -1,5 +1,6 @@
 import { saveBuild, getBuildDetail } from '@/api/index'
 import Upload from '@/pages/components/upload'
+import { mapState } from 'vuex'
 
 export default {
   components: { Upload },
@@ -33,7 +34,14 @@ export default {
         viceArea: '', // 副楼面积
         viceAreaLeft: '', // 副楼空置
         buildingPic: '', // 楼宇照片
-        roomList: [], // 楼宇的房间列表
+        roomList: [
+          {
+            buildType: undefined,
+            floor: undefined,
+            roomNum: undefined,
+            area: undefined,
+          },
+        ], // 楼宇的房间列表
       },
 
       rules: {
@@ -53,6 +61,7 @@ export default {
   },
 
   computed: {
+    ...mapState('common', ['buildTypeList']),
     title() {
       switch (this.dialogStatus) {
         case 'add':
@@ -85,6 +94,10 @@ export default {
       // 详情/编辑
       if (this.form.id) {
         this.getBuildDetail()
+      }
+
+      if (dialogStatus === 'detail') {
+        this.rules = {}
       }
     },
     // 关闭弹窗

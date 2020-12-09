@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     ...mapActions('common', ['getCardTypeList', 'getCountryList', 'getRegionList', 'getNationList', 'getPoliticalList', 'getEducationList', 'getAbilityList']),
+    // 打开
     handleVisible(enterpriseId, employeeObj, dialogStatus) {
       Object.assign(this.$data, this.$options.data())
       this.enterpriseId = enterpriseId || ''
@@ -103,6 +104,17 @@ export default {
     },
     // 提交
     handleSubmit() {
+      // 籍贯处理
+      const employeeFrom = this.form.employeeFromCopy.length ? this.form.employeeFromCopy.join() : ''
+      this.form.employeeFrom = employeeFrom
+
+      // 有效期限处理
+      this.form.outLimitDateStart = this.form.outLimitDate[0]
+      this.form.outLimitDateEnd = this.form.outLimitDate[1]
+
+      delete this.form.employeeFromCopy
+      delete this.form.outLimitDate
+
       this.$refs.form.validate(valid => {
         if (valid) {
           // 新增
@@ -110,8 +122,6 @@ export default {
           //     // this.saveCompany()
 
           //   }
-          //   const employeeFrom = this.form.employeeFromCopy.length ? this.form.employeeFromCopy.join() : ''
-          //   this.form.employeeFrom = employeeFrom
           this.$emit('handleSuccess', this.dialogStatus, this.form)
           this.handleClose()
         } else {

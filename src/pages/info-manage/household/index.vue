@@ -7,20 +7,6 @@
         </a-form-model-item>
         <a-form-model-item label="证件号码" prop="">
           <a-input v-model="form.aa" placeholder="请输入" allowClear style="width: 180px" />
-          <!-- <a-select
-            v-model="form.bb"
-            placeholder="请选择"
-            style="min-width: 120px"
-            allowClear
-          >
-            <a-select-option
-              v-for="item in allOriginList"
-              :key="item.key"
-              :value="item.key"
-            >
-              {{ item.value }}
-            </a-select-option>
-          </a-select> -->
         </a-form-model-item>
         <a-form-model-item>
           <a-button type="primary" @click="handleSearch" icon="search">查询</a-button>

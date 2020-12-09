@@ -42,6 +42,7 @@ export default {
           title: '楼宇名称',
           dataIndex: 'buildName',
           ellipsis: true,
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: '楼宇地址',
@@ -96,6 +97,9 @@ export default {
       Object.assign(this.pagination, pagination)
       this.getOwnerList()
     },
+    handleDetail(record) {
+      this.$refs.addUpdate.handleVisible(record.id, 'detail')
+    },
     // 修改
     handleUpdate(record) {
       this.$refs.addUpdate.handleVisible(record.id, 'edit')
@@ -108,18 +112,13 @@ export default {
     handleAdd() {
       this.$refs.addUpdate.handleVisible('', 'add')
     },
+    handleSuccess() {
+      this.handleSearch()
+    },
     // 导出
     handleExport() {
       downFile()
     },
-    // // 取消查询列
-    // hideColumns() {
-    //   this.columnsVisible = false
-    // },
-    // // 查询列
-    // handleAutoSearch() {
-    //   this.columnsVisible = false
-    // },
     // 列表
     async getOwnerList() {
       this.loading = true

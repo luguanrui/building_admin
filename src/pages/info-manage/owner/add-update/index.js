@@ -14,10 +14,10 @@ export default {
 
       form: {
         id: '',
-        buildName: '', // 楼宇名称
-        buildType: undefined, // 	0-无；1-主楼；2-副楼
-        floor: '', // 楼层
-        roomNum: '', // 房号
+        buildId: undefined, // 楼宇名称
+        buildType: 1, // 	0-无；1-主楼；2-副楼
+        floor: undefined, // 楼层
+        roomNum: undefined, // 房号
         totalArea: '', // 面积
         ownerName: '', // 产权所有人
         cardType: undefined, // 证件类型
@@ -43,7 +43,7 @@ export default {
   },
 
   computed: {
-    ...mapState('common', ['buildTypeList','countryList','carTypeList']),
+    ...mapState('common', ['buildingAllList', 'buildingFloorList', 'buildingRoomList', 'buildTypeList', 'countryList', 'carTypeList']),
     title() {
       switch (this.dialogStatus) {
         case 'add':
@@ -64,7 +64,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('common', ['getCountryList','getCardTypeList']),
+    ...mapActions('common', ['getBuildAllList', 'getBuildFloorList', 'getBuildRoomList', 'getCountryList', 'getCardTypeList']),
     /**
      *
      * @param {*} id 项目id
@@ -76,17 +76,63 @@ export default {
       this.visible = true
       this.dialogStatus = dialogStatus
 
+      this.getBuildAllList()
       this.getCountryList()
       this.getCardTypeList()
       if (id) {
         this.getOwner()
+      }
+      if (dialogStatus === 'detail') {
+        this.rules = {}
       }
     },
     // 关闭弹窗
     onClose() {
       Object.assign(this.$data, this.$options.data())
     },
-
+    // 选择地址
+    handleChangeBuild() {
+      console.log(1)
+      this.form.buildType = undefined
+      this.form.floor = undefined
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+        }
+        this.getBuildFloorList(params)
+      }
+    },
+    // 选择主楼副楼
+    handleChangeMain() {
+      this.form.floor = undefined
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+        }
+        this.getBuildFloorList(params)
+      }
+    },
+    // 选择楼层
+    handleChangeFloor() {
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType && this.form.floor) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+          floor: this.form.floor,
+        }
+        this.getBuildRoomList(params)
+      }
+    },
     // 提交信息
     handleSubmit() {
       // 新增
@@ -103,6 +149,15 @@ export default {
       let result = arr.find(item => item.key === key)
       if (result) {
         return result.value
+      } else {
+        return '未知类型'
+      }
+    },
+    // 房地产
+    findBuildingValue(arr, key) {
+      let result = arr.find(item => item.id === key)
+      if (result) {
+        return result.name
       } else {
         return '未知类型'
       }
@@ -126,8 +181,8 @@ export default {
     async getOwner() {
       const { code, rs } = await getOwner({ id: this.form.id })
       if (code === 200) {
-        const { id, title, noticeType, fileList, content } = rs
-        Object.assign(this.form, { id, title, noticeType, fileList, content })
+        const { id, buildId, buildType, floor, roomNum, totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum } = rs
+        Object.assign(this.form, { id, buildId, buildType, floor, roomNum, totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum })
       }
     },
   },

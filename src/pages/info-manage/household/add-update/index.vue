@@ -7,149 +7,188 @@
             <h3 class="title">房产地址</h3>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="楼宇名称" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200">
-                <a-select slot="addonAfter" v-model="form.aa" style="width: 70px">
-                  <a-select-option v-for="item in buildingList" :value="item.key" :key="item.key">
+            <a-form-model-item label="房产地址" prop="buildId">
+              <span v-if="disabled">{{ findBuildingValue(buildingAllList, form.buildId) }}({{ findValue(buildTypeList, form.buildType) }})</span>
+              <a-input-group compact v-else>
+                <a-select v-model="form.buildId" placeholder="请选择" allowClear style="width: 153px" @change="handleChangeBuild">
+                  <a-select-option v-for="item in buildingAllList" :value="item.id" :key="item.id">
+                    {{ item.name }}
+                  </a-select-option>
+                </a-select>
+                <a-select v-model="form.buildType" placeholder="请选择" allowClear style="width: 90px" @change="handleChangeMain">
+                  <a-select-option v-for="item in buildTypeList" :value="item.key" :key="item.key">
                     {{ item.value }}
                   </a-select-option>
                 </a-select>
-              </a-input>
+              </a-input-group>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="楼层" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" addon-after="层" />
+            <a-form-model-item label="楼层" prop="floor">
+              <span v-if="disabled">{{ form.floor }} &nbsp;&nbsp;层</span>
+              <a-select
+                v-else
+                v-model="form.floor"
+                placeholder="请选择"
+                allowClear
+                :getPopupContainer="trigger => trigger.parentNode"
+                :dropdownMatchSelectWidth="false"
+                @change="handleChangeFloor"
+              >
+                <a-select-option v-for="item in buildingFloorList" :value="item" :key="item">
+                  {{ item }}
+                </a-select-option>
+              </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="房号" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" />
+            <a-form-model-item label="房号" prop="roomNum">
+              <span v-if="disabled">{{ form.roomNum }} &nbsp;&nbsp;号</span>
+              <a-select v-else v-model="form.roomNum" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+                <a-select-option v-for="item in buildingRoomList" :value="item" :key="item">
+                  {{ item }}
+                </a-select-option>
+              </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="面积" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
+            <a-form-model-item label="面积" prop="totalArea">
+              <span v-if="disabled">{{ form.totalArea }} &nbsp;&nbsp;平方米</span>
+              <a-input v-else v-model="form.totalArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
             </a-form-model-item>
           </a-col>
-
-          <a-col :span="24"><h3 class="title">住户</h3></a-col>
+        </a-row>
+        <a-col :span="24"><h3 class="title">住户</h3></a-col>
+        <a-row v-for="(user, index) in form.userList" :key="index">
+          <a-col :span="24">
+            <h6 style="padding-left: 10px;margin: 20px 0;">住户{{ index + 1 }}</h6>
+          </a-col>
           <a-col :span="span">
-            <a-form-model-item label="房屋性质" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <!-- <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
+            <a-form-model-item label="房屋性质" prop="user">
+              <span v-if="disabled">{{ user.houseRoomType }}</span>
+              <a-select v-else v-model="user.houseRoomType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+                <a-select-option v-for="item in houseNatureList" :value="item.key" :key="item.item">
                   {{ item.value }}
-                </a-select-option> -->
+                </a-select-option>
               </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="居主人姓名" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <span v-if="disabled">{{ user.houseName }}</span>
+              <a-input v-else v-model="user.houseName" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="证件类型" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <!-- <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
+              <span v-if="disabled">{{ user.cardType }}</span>
+              <a-select v-else v-model="user.cardType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+                <a-select-option v-for="item in carTypeList" :value="item.key" :key="item.item">
                   {{ item.value }}
-                </a-select-option> -->
+                </a-select-option>
               </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="国籍" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <!-- <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
+              <span v-if="disabled">{{ user.country }}</span>
+              <a-select v-else v-model="user.country" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+                <a-select-option v-for="item in countryList" :value="item.key" :key="item.item">
                   {{ item.value }}
-                </a-select-option> -->
+                </a-select-option>
               </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="证件号" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <span v-if="disabled">{{ user.cardNum }}</span>
+              <a-input v-else v-model="user.cardNum" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="暂住证号" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <span v-if="disabled">{{ user.tempCardNum }}</span>
+              <a-input v-else v-model="user.tempCardNum" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="性别" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <span v-if="disabled">{{ user.sex }}</span>
+              <a-select v-else v-model="user.sex" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+                <a-select-option v-for="item in genderList" :value="item.key" :key="item.item">
+                  {{ item.value }}
+                </a-select-option>
+              </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="年龄" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <span v-if="disabled">{{ user.age }}</span>
+              <a-input v-else v-model="user.age" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="车牌号码" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" style="width: 218px;margin-right: 10px" />
+              <span v-if="disabled">{{ user.carNum }}</span>
+              <a-input v-else v-model="user.carNum" placeholder="请输入" allowClear :maxLength="200" style="width: 218px;margin-right: 10px" />
               <a><a-icon type="plus-circle"/></a>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="籍贯" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <!-- <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
-                  {{ item.value }}
-                </a-select-option> -->
-              </a-select>
+              <span v-if="disabled">{{ user.userFrom }}</span>
+              <a-cascader
+                v-else
+                placeholder="请选择"
+                allowClear
+                v-model="form.userFromCopy"
+                :options="regionList"
+                :field-names="{ label: 'name', value: 'id', children: 'childList' }"
+              />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="民族" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <!-- <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
+              <span v-if="disabled">{{ user.nation }}</span>
+              <a-select v-else v-model="user.nation" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+                <a-select-option v-for="item in nationList" :value="item.key" :key="item.item">
                   {{ item.value }}
-                </a-select-option> -->
+                </a-select-option>
               </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="政治面貌" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-select v-else v-model="form.aa" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <!-- <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
+              <span v-if="disabled">{{ user.politicalType }}</span>
+              <a-select v-else v-model="user.politicalType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+                <a-select-option v-for="item in politicalList" :value="item.key" :key="item.item">
                   {{ item.value }}
-                </a-select-option> -->
+                </a-select-option>
               </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="户籍地址" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <span v-if="disabled">{{ user.address }}</span>
+              <a-cascader
+                v-else
+                placeholder="请选择"
+                allowClear
+                v-model="form.addressCopy"
+                :options="regionList"
+                :field-names="{ label: 'name', value: 'id', children: 'childList' }"
+              />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="联系电话" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
-              <a-input v-else v-model="form.aa" placeholder="请输入" allowClear :maxLength="200" />
+              <span v-if="disabled">{{ user.phone }}</span>
+              <a-input v-else v-model="user.phone" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="入住时间" prop="aa">
-              <span v-if="disabled">{{ form.aa }}</span>
+              <span v-if="disabled">{{ user.liveInTime }}</span>
               <a-date-picker
                 v-model="form.aa"
                 format="YYYY/MM/DD"

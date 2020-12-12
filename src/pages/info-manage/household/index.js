@@ -1,6 +1,7 @@
-// import dayjs from "dayjs";
+import dayjs from "dayjs";
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
+import { getHouseList } from '@/api/index'
 
 export default {
   mixins: [pagination],
@@ -12,15 +13,6 @@ export default {
         bb: '',
       },
       loading: false,
-      // columnsVisible: false, // 自定义列
-      // checkedColumn: [],
-      // columnList: [
-      //   { key: '楼宇名称', value: 'aa' },
-      //   { key: '建设单位', value: 'bb' },
-      //   { key: '楼宇地址', value: 'ccc' },
-      //   { key: '物业该公司', value: 'dd' },
-      //   { key: '建筑面积范围', value: 'ee' },
-      // ],
       data: [
         {
           a: 1,
@@ -39,30 +31,34 @@ export default {
         },
         {
           title: '楼宇名称',
-          dataIndex: 'a',
+          dataIndex: 'buildName',
           ellipsis: true,
         },
         {
-          title: '楼宇地址',
-          dataIndex: 'b',
+          title: '房产地址',
+          dataIndex: 'buildAddress',
           ellipsis: true,
         },
         {
           title: '住户联系人',
-          dataIndex: 'c',
+          dataIndex: 'contactName',
+          ellipsis: true,
+        },
+        {
+          title: '人数',
+          dataIndex: 'userCount',
           ellipsis: true,
         },
         {
           title: '房屋性质',
-          dataIndex: 'd',
+          dataIndex: 'houseTypeName',
           ellipsis: true,
         },
         {
           title: '入住时间',
-          dataIndex: 'e',
+          dataIndex: 'liveInTime',
           ellipsis: true,
-          //   customRender: (text, record) =>
-          //     dayjs(record.createAt).format("YYYY-MM-DD"),
+          customRender: (text, record) => record.liveInTime && dayjs(record.liveInTime).format('YYYY年MM月DD日'),
         },
         {
           title: '操作',
@@ -72,18 +68,29 @@ export default {
       ],
     }
   },
+  activated() {
+    this.getHouseList()
+  },
+  mounted() {
+    this.getHouseList()
+  },
   methods: {
+    dayjs,
     // 查询
     handleSearch() {
-      //   this.form = data;
+      this.pagination.pageSize = 10
+      this.pagination.current = 1
+      this.getHouseList()
     },
     // 重置
     handleReset() {
       Object.assign(this.$data, this.$options.data())
+      this.getHouseList()
     },
     // 分页
     handleChange(pagination) {
       Object.assign(this.pagination, pagination)
+      this.getHouseList()
       // 获取列表
     },
     // 修改
@@ -98,37 +105,31 @@ export default {
     handleAdd() {
       this.$refs.addUpdate.handleVisible('', 'add')
     },
+    handleSuccess() {
+      this.handleSearch()
+    },
     // 导出
     handleExport() {},
-    // // 取消查询列
-    // hideColumns() {
-    //   this.columnsVisible = false
-    // },
-    // // 查询列
-    // handleAutoSearch() {
-    //   this.columnsVisible = false
-    // },
     // 列表
-    // async getCaseList() {
-    //   this.data = []
-    //   this.loading = true
-    //   try {
-    //     const { pageSize, current } = this.pagination
-    //     const params = { ...this.form, pageSize, pageNum: current }
-    //     const { code, rs } = await getCaseList(params)
-    //     if (code === 200) {
-    //       this.data = rs.data
-    //       this.loading = false
-    //       const { pageSize, current, total } = rs
-    //       if (total > pageSize) {
-    //         const pageObject = { pageSize, current, total }
-    //         this.pagination = _.cloneDeep(pageObject)
-    //       }
-    //     }
-    //   } catch (error) {
-    //     this.loading = false
-    //     console.log(error)
-    //   }
-    // },
+    async getHouseList() {
+      this.loading = true
+      try {
+        const { pageSize, current: pageNum } = this.pagination
+        let params = {
+          pageSize,
+          pageNum,
+          ...this.form,
+        }
+        const { code, rs } = await getHouseList(params)
+        if (code === 200) {
+          this.data = rs.data
+          const { current, pageSize, total } = rs
+          this.pagination = Object.assign(this.pagination, { current, pageSize, total })
+        }
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+      }
+    },
   },
 }

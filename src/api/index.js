@@ -38,6 +38,19 @@ export function saveOwner(params) {
 export function getOwner(params) {
   return axios.get(`${baseApi}owner/get`, { params })
 }
+/***************************** 住户信息 *************************** */
+// 查询业主列表
+export function getHouseList(params) {
+  return axios.get(`${baseApi}house/list`, { params })
+}
+// 保存业主信息
+export function saveHouse(params) {
+  return axios.post(`${baseApi}house/save`, params)
+}
+// 查询单个企业信息
+export function getHouse(params) {
+  return axios.get(`${baseApi}house/get`, { params })
+}
 /***************************** 信息管理 *************************** */
 // 查询企业列表
 export function getCompanyList(params) {

@@ -92,7 +92,6 @@ export default {
     },
     // 选择地址
     handleChangeBuild() {
-      console.log(1)
       this.form.buildType = undefined
       this.form.floor = undefined
       this.form.roomNum = undefined
@@ -135,10 +134,14 @@ export default {
     },
     // 提交信息
     handleSubmit() {
-      // 新增
-      if (this.dialogStatus === 'add' || this.dialogStatus === 'edit') {
-        this.saveOwner()
-      }
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.saveOwner()
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     // textarea详情处理
     textarea(str) {

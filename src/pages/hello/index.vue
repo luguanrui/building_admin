@@ -12,7 +12,7 @@
           <div class="carousel-item" @mouseenter="handleEnter(index)" @mouseleave="handleLeave(index)">
             <img :src="item.imgSrc" alt="" />
             <div class="hover-content" v-if="showInfo === index">
-              {{ item.text }}
+              <pre>{{ item.text }}</pre>
             </div>
           </div>
         </div>
@@ -40,12 +40,12 @@
             <tbody>
               <tr v-for="(item, index) in announcementList" :key="index">
                 <td class="content">{{ item.content }}</td>
-                <td class="type">{{ item.type }}</td>
-                <td class="time">{{ item.time }}</td>
+                <td class="type">{{ noticeTypeListText(item.noticeType) }}</td>
+                <td class="time">{{ item.publishTime && dayjs(item.publishTime).format('YYYY年MM月DD日') }}</td>
               </tr>
             </tbody>
           </table>
-          <div style="text-align: right;padding-right: 10px;">
+          <div style="text-align: right;padding-right: 10px;" v-if="announcementList.length > 10">
             <a-button type="link">更多</a-button>
           </div>
         </div>

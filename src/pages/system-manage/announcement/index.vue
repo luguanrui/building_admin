@@ -27,7 +27,7 @@
     <div class="table-wrapper">
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="pagination" @change="handleChange" :loading="loading">
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
-        <span slot="noticeType" slot-scope="text, record">{{ noticeTypeText(record) }}</span>
+        <span slot="noticeType" slot-scope="text, record">{{ noticeTypeText(record.noticeType) }}</span>
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
@@ -84,7 +84,7 @@ export default {
         },
         {
           title: '发布人',
-          dataIndex: 'updateUserName',
+          dataIndex: 'publishUserName',
           ellipsis: true,
         },
         {
@@ -112,8 +112,12 @@ export default {
   },
   methods: {
     dayjs,
-    noticeTypeText(record) {
-      this.noticeTypeList.find(item => item.key === record.noticeType).value
+    noticeTypeText(type) {
+      let typeObj = this.noticeTypeList.find(item => item.key === type)
+      if (typeObj) {
+        return typeObj.value
+      }
+      return ''
     },
     onSubmit() {
       this.pagination.pageSize = 10

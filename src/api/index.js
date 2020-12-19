@@ -24,7 +24,15 @@ export function delUser(params) {
 export function resetPwd(params) {
   return axios.post(`${baseApi}user/resetPwd`, params)
 }
-
+/***************************** 欢迎页 *************************** */
+// 图片列表
+export function getImgWelcomeList(params) {
+  return axios.get(`${baseApi}img/welcome/list`, { params })
+}
+// 公告
+export function getNoticeWelcomeList(params) {
+  return axios.get(`${baseApi}notice/welcome/list`, { params })
+}
 /***************************** 业主 *************************** */
 // 查询业主列表
 export function getOwnerList(params) {

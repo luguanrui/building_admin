@@ -68,7 +68,7 @@ export default {
         },
         {
           title: '发布人',
-          dataIndex: 'updateUserName',
+          dataIndex: 'publishUserName',
           ellipsis: true,
         },
         {

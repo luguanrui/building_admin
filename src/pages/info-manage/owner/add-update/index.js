@@ -58,8 +58,6 @@ export default {
     },
     // 显示详情
     disabled() {
-      // const arr = ['detail', 'talking-about', 'contracted', 'landing', 'start', 'invest']
-      // return arr.includes(this.dialogStatus)
       return this.dialogStatus === 'detail' ? true : false
     },
   },

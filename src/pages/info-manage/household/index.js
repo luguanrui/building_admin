@@ -1,7 +1,8 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
 import { getHouseList } from '@/api/index'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   mixins: [pagination],
@@ -9,8 +10,11 @@ export default {
   data() {
     return {
       form: {
-        aa: '',
-        bb: '',
+        contactName: '', // 房屋联系人
+        buildId: undefined, // 楼宇名称
+        buildType: undefined, // 主楼副楼
+        floor: undefined, // 楼层
+        roomNum: undefined, // 房号
       },
       loading: false,
       data: [
@@ -62,20 +66,68 @@ export default {
         },
         {
           title: '操作',
-          width: 180,
+          width: 100,
           scopedSlots: { customRender: 'operation' },
         },
       ],
     }
   },
+  computed: {
+    ...mapState('common', ['buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
+  },
   activated() {
+    this.getBuildAllList()
     this.getHouseList()
   },
   mounted() {
+    this.getBuildAllList()
     this.getHouseList()
   },
   methods: {
     dayjs,
+    ...mapActions('common', ['getBuildAllList', 'getBuildFloorList', 'getBuildRoomList']),
+    // 选择地址
+    handleChangeBuild() {
+      this.form.buildType = undefined
+      this.form.floor = undefined
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+        }
+        this.getBuildFloorList(params)
+      }
+    },
+    // 选择主楼副楼
+    handleChangeMain() {
+      this.form.floor = undefined
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+        }
+        this.getBuildFloorList(params)
+      }
+    },
+    // 选择楼层
+    handleChangeFloor() {
+      this.form.roomNum = undefined
+      this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
+      if (this.form.buildId && this.form.buildType && this.form.floor) {
+        const params = {
+          buildId: this.form.buildId,
+          buildType: this.form.buildType,
+          floor: this.form.floor,
+        }
+        this.getBuildRoomList(params)
+      }
+    },
     // 查询
     handleSearch() {
       this.pagination.pageSize = 10

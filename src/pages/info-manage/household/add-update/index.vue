@@ -65,7 +65,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="房屋性质" prop="user">
-              <span v-if="disabled">{{ user.houseRoomType }}</span>
+              <span v-if="disabled">{{ findValue(houseNatureList,user.houseRoomType) }}</span>
               <a-select v-else v-model="user.houseRoomType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in houseNatureList" :value="item.key" :key="item.item">
                   {{ item.value }}
@@ -81,7 +81,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="证件类型" prop="aa">
-              <span v-if="disabled">{{ user.cardType }}</span>
+              <span v-if="disabled">{{ findValue(carTypeList,user.cardType) }}</span>
               <a-select v-else v-model="user.cardType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in carTypeList" :value="item.key" :key="item.item">
                   {{ item.value }}
@@ -91,7 +91,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="国籍" prop="aa">
-              <span v-if="disabled">{{ user.country }}</span>
+              <span v-if="disabled">{{ findValue(countryList,user.country) }}</span>
               <a-select v-else v-model="user.country" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in countryList" :value="item.key" :key="item.item">
                   {{ item.value }}
@@ -113,7 +113,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="性别" prop="aa">
-              <span v-if="disabled">{{ user.sex }}</span>
+              <span v-if="disabled">{{ findValue(genderList,user.sex) }}</span>
               <a-select v-else v-model="user.sex" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in genderList" :value="item.key" :key="item.item">
                   {{ item.value }}
@@ -136,12 +136,12 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="籍贯" prop="aa">
-              <span v-if="disabled">{{ user.userFrom }}</span>
+              <span v-if="disabled">{{ user.userFromName }}</span>
               <a-cascader
                 v-else
                 placeholder="请选择"
                 allowClear
-                v-model="form.userFromCopy"
+                v-model="user.userFromCopy"
                 :options="regionList"
                 :field-names="{ label: 'name', value: 'id', children: 'childList' }"
               />
@@ -149,7 +149,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="民族" prop="aa">
-              <span v-if="disabled">{{ user.nation }}</span>
+              <span v-if="disabled">{{ findValue(nationList,user.nation) }}</span>
               <a-select v-else v-model="user.nation" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in nationList" :value="item.key" :key="item.item">
                   {{ item.value }}
@@ -159,7 +159,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="政治面貌" prop="aa">
-              <span v-if="disabled">{{ user.politicalType }}</span>
+              <span v-if="disabled">{{ findValue(politicalList,user.politicalType) }}</span>
               <a-select v-else v-model="user.politicalType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in politicalList" :value="item.key" :key="item.item">
                   {{ item.value }}
@@ -170,14 +170,15 @@
           <a-col :span="span">
             <a-form-model-item label="户籍地址" prop="aa">
               <span v-if="disabled">{{ user.address }}</span>
-              <a-cascader
+              <a-input v-else v-model="user.address" placeholder="请输入" allowClear :maxLength="200" />
+              <!-- <a-cascader
                 v-else
                 placeholder="请选择"
                 allowClear
-                v-model="form.addressCopy"
+                v-model="user.addressCopy"
                 :options="regionList"
                 :field-names="{ label: 'name', value: 'id', children: 'childList' }"
-              />
+              /> -->
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -190,7 +191,8 @@
             <a-form-model-item label="入住时间" prop="aa">
               <span v-if="disabled">{{ user.liveInTime }}</span>
               <a-date-picker
-                v-model="form.aa"
+                v-else
+                v-model="user.liveInTime"
                 format="YYYY/MM/DD"
                 valueFormat="YYYY-MM-DD"
                 :allowClear="true"
@@ -200,7 +202,7 @@
             </a-form-model-item>
           </a-col>
         </a-row>
-        <a-row>
+        <a-row v-if="!disabled">
           <div style="margin: 20px 20px">
             <a-button type="primary" block @click="handleAddHousehold">新增住户</a-button>
           </div>

@@ -85,6 +85,7 @@
             <a-form-model-item label="注册时间" prop="regDate">
               <span v-if="disabled">{{ form.regDate }}</span>
               <a-date-picker
+                v-else
                 v-model="form.regDate"
                 format="YYYY/MM/DD"
                 valueFormat="YYYY-MM-DD"

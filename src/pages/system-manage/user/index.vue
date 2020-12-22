@@ -5,13 +5,13 @@
         <a-form-model-item label="用户名">
           <a-input v-model="form.userName" placeholder="请输入" allowClear style="width: 120px" />
         </a-form-model-item>
-        <a-form-model-item label="所属机构">
+        <!-- <a-form-model-item label="所属机构">
           <a-select v-model="form.deptId" placeholder="请选择" style="min-width: 120px" allowClear>
             <a-select-option v-for="item in allOriginList" :key="item.key" :value="item.key">
               {{ item.value }}
             </a-select-option>
           </a-select>
-        </a-form-model-item>
+        </a-form-model-item> -->
         <a-form-model-item label="姓名">
           <a-input v-model="form.realName" placeholder="请输入" allowClear style="width: 120px" />
         </a-form-model-item>
@@ -40,7 +40,6 @@
 <script>
 import AddUser from './add-user.vue'
 import { getUserList, delUser, resetPwd } from '@/api/index'
-import { mapActions, mapState } from 'vuex'
 
 export default {
   components: { AddUser },
@@ -89,19 +88,13 @@ export default {
       addVisible: false,
     }
   },
-  computed: {
-    ...mapState('common', ['allOriginList']),
-  },
   activated() {
     this.getUserList()
-    this.getAllOrgList()
   },
   mounted() {
     this.getUserList()
-    this.getAllOrgList()
   },
   methods: {
-    ...mapActions('common', ['getAllOrgList']),
     onSubmit() {
       this.getUserList()
     },

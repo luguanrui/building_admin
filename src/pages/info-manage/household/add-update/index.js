@@ -174,8 +174,6 @@ export default {
       this.form.userList.map(item => {
         item.userFrom = item.userFromCopy.length ? item.userFromCopy.join() : ''
         item.address = item.addressCopy.length ? item.addressCopy.join() : ''
-        delete item.userFromCopy
-        delete item.addressCopy
         return item
       })
       this.$refs.form.validate(valid => {
@@ -229,6 +227,11 @@ export default {
       const { code, rs } = await getHouse({ id: this.form.id })
       if (code === 200) {
         const { id, buildId, buildType, floor, roomNum, totalArea, userList } = rs
+        userList.map(item => {
+          item.userFromCopy = item.userFrom ? item.userFrom.split(',') : []
+          item.addressCopy = item.address ? item.address.split(',') : []
+          return item
+        })
         Object.assign(this.form, { id, buildId, buildType, floor, roomNum, totalArea, userList })
       }
     },

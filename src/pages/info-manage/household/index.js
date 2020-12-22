@@ -42,6 +42,7 @@ export default {
           title: '房产地址',
           dataIndex: 'buildAddress',
           ellipsis: true,
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: '住户联系人',
@@ -144,6 +145,9 @@ export default {
       Object.assign(this.pagination, pagination)
       this.getHouseList()
       // 获取列表
+    },
+    handleDetail(record) {
+      this.$refs.addUpdate.handleVisible(record.id, 'detail')
     },
     // 修改
     handleUpdate(record) {

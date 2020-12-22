@@ -32,6 +32,7 @@ export default {
         {
           title: '楼宇名称',
           dataIndex: 'buildName',
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: '办公地址',
@@ -124,6 +125,9 @@ export default {
     handleChange(pagination) {
       Object.assign(this.pagination, pagination)
       this.getCompanyList()
+    },
+    handleDetail(record) {
+      this.$refs.addUpdate.handleVisible(record.id, 'detail')
     },
     // 修改
     handleUpdate(record) {

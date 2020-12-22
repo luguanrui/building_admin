@@ -7,7 +7,7 @@
         </a-form-model-item>
         <!-- <a-form-model-item label="所属机构">
           <a-select v-model="form.deptId" placeholder="请选择" style="min-width: 120px" allowClear>
-            <a-select-option v-for="item in allOriginList" :key="item.key" :value="item.key">
+            <a-select-option v-for="item in allOrgList" :key="item.key" :value="item.key">
               {{ item.value }}
             </a-select-option>
           </a-select>

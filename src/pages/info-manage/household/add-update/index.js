@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { mapState, mapActions } from 'vuex'
 import { saveHouse, getHouse } from '@/api/index'
 
@@ -34,7 +35,6 @@ export default {
             userFrom: '', // 籍贯
             nation: undefined, // 民族
             politicalType: undefined, // 政治面貌；0-无；1-团员；2-党员
-            addressCopy: [],
             address: '', // 户籍地址
             phone: '', // 联系电话
             liveInTime: undefined, // 入住时间
@@ -84,6 +84,7 @@ export default {
     },
   },
   methods: {
+    dayjs,
     ...mapActions('common', [
       'getBuildAllList',
       'getBuildFloorList',
@@ -173,7 +174,6 @@ export default {
     handleSubmit() {
       this.form.userList.map(item => {
         item.userFrom = item.userFromCopy.length ? item.userFromCopy.join() : ''
-        item.address = item.addressCopy.length ? item.addressCopy.join() : ''
         return item
       })
       this.$refs.form.validate(valid => {
@@ -227,12 +227,28 @@ export default {
       const { code, rs } = await getHouse({ id: this.form.id })
       if (code === 200) {
         const { id, buildId, buildType, floor, roomNum, totalArea, userList } = rs
-        userList.map(item => {
-          item.userFromCopy = item.userFrom ? item.userFrom.split(',') : []
-          item.addressCopy = item.address ? item.address.split(',') : []
-          return item
+        let userListCopy = []
+        userList.forEach(user => {
+          userListCopy.push({
+            houseRoomType: user.houseRoomType, // 房屋性质：所属权；1-自住；2-租赁
+            houseName: user.houseName, // 居住人姓名
+            cardType: user.cardType, // 证件类型
+            country: user.country, // 国籍
+            cardNum: user.cardNum, // 证件号码
+            tempCardNum: user.tempCardNum, // 暂住证号码
+            sex: user.sex, // 性别；1-男；2-女；
+            age: user.age, // 年龄
+            carNum: user.carNum, // 车牌号码
+            userFromCopy: [user.province,user.city,user.zone],
+            userFrom: user.userFrom, // 籍贯
+            nation: user.nation, // 民族
+            politicalType: user.politicalType, // 政治面貌；0-无；1-团员；2-党员
+            address: user.address, // 户籍地址
+            phone: user.phone, // 联系电话
+            liveInTime: user.liveInTime, // 入住时间
+          })
         })
-        Object.assign(this.form, { id, buildId, buildType, floor, roomNum, totalArea, userList })
+        Object.assign(this.form, { id, buildId, buildType, floor, roomNum, totalArea, userList:userListCopy })
       }
     },
   },

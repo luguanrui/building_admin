@@ -7,7 +7,7 @@
             <h3 class="title">房产地址</h3>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="房产地址" prop="buildName">
+            <a-form-model-item label="房产地址" prop="buildId">
               <span v-if="disabled">{{ findBuildingValue(buildingAllList, form.buildId) }}({{ findValue(buildTypeList, form.buildType) }})</span>
               <a-input-group compact v-else>
                 <a-select v-model="form.buildId" placeholder="请选择" allowClear style="width: 153px" @change="handleChangeBuild">
@@ -77,7 +77,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="国籍" prop="country">
-              <span v-if="disabled">{{ findValue(carTypeList, form.country) }}</span>
+              <span v-if="disabled">{{ findValue(countryList, form.country) }}</span>
               <a-select v-else v-model="form.country" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in countryList" :value="item.key" :key="item.item">
                   {{ item.value }}
@@ -107,7 +107,7 @@
             <a-form-model-item label="车牌号码" prop="carNum">
               <span v-if="disabled">{{ form.carNum }}</span>
               <a-input v-else v-model="form.carNum" placeholder="请输入" allowClear :maxLength="20" style="width: 218px;margin-right: 10px" />
-              <a><a-icon type="plus-circle"/></a>
+              <a v-if="!disabled"><a-icon type="plus-circle"/></a>
             </a-form-model-item>
           </a-col>
         </a-row>

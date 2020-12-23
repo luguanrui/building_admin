@@ -15,17 +15,10 @@ export default {
         buildType: undefined, // 主楼副楼
         floor: undefined, // 楼层
         roomNum: undefined, // 房号
-        cardNum: '',
+        ownerName: '', // 联系人
       },
       loading: false,
-      data: [
-        {
-          a: 1,
-          b: '11',
-          c: '11',
-          d: '11',
-        },
-      ],
+      data: [],
       columns: [
         {
           title: '序号',

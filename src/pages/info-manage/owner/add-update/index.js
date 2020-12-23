@@ -29,7 +29,7 @@ export default {
       },
 
       rules: {
-        buildName: [{ required: true, message: '必填', trigger: 'blur' }],
+        buildId: [{ required: true, message: '必填', trigger: 'blur' }],
         floor: [{ required: true, message: '必填', trigger: 'blur' }],
         roomNum: [{ required: true, message: '必填', trigger: 'blur' }],
         totalArea: [{ required: true, message: '必填', trigger: 'blur' }],

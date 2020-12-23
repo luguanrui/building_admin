@@ -17,15 +17,7 @@ export default {
         roomNum: undefined, // 房号
       },
       loading: false,
-      data: [
-        {
-          a: 1,
-          b: '11',
-          c: '11',
-          d: '11',
-          e: '11',
-        },
-      ],
+      data: [],
       columns: [
         {
           title: '序号',

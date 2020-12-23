@@ -136,7 +136,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="籍贯" prop="aa">
-              <span v-if="disabled">{{ user.userFromName }}</span>
+              <span v-if="disabled">{{ user.userFrom }}</span>
               <a-cascader
                 v-else
                 placeholder="请选择"
@@ -189,7 +189,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="入住时间" prop="aa">
-              <span v-if="disabled">{{ user.liveInTime }}</span>
+              <span v-if="disabled">{{ dayjs(user.liveInTime).format('YYYY年MM月DD日') }}</span>
               <a-date-picker
                 v-else
                 v-model="user.liveInTime"

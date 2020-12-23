@@ -22,8 +22,8 @@
             </a-select-option>
           </a-select>
         </a-form-model-item>
-        <a-form-model-item label="联系人" prop="">
-          <a-input v-model="form.cardNum" placeholder="请输入" allowClear style="width: 180px" />
+        <a-form-model-item label="联系人">
+          <a-input v-model="form.ownerName" placeholder="请输入" allowClear style="width: 180px" />
         </a-form-model-item>
         <a-form-model-item>
           <a-button type="primary" @click="handleSearch" icon="search">查询</a-button>

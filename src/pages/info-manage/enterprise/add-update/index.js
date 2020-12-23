@@ -15,6 +15,7 @@ export default {
       loading: false,
       dialogStatus: '', // add ,edit,detail
 
+      totalCount: 0,
       form: {
         id: '',
         name: '', // 企业名称
@@ -29,6 +30,7 @@ export default {
         regDate: '', // 注册时间
         industryType: undefined, // 行业类别
         iegalPerson: '', // 法人
+        taxId: '', // 纳税人识别号
         businessScope: '', // 经营范围
 
         // 联系方式
@@ -57,6 +59,7 @@ export default {
         regAddress: [{ required: true, message: '必填', trigger: 'blur' }],
         regDate: [{ required: true, message: '必填', trigger: 'blur' }],
         iegalPerson: [{ required: true, message: '必填', trigger: 'blur' }],
+        taxId: [{ required: true, message: '必填', trigger: 'blur' }],
         businessScope: [{ required: true, message: '必填', trigger: 'blur' }],
 
         contactJob: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -110,20 +113,13 @@ export default {
           return '未知状态'
       }
     },
-    // 员工情况,总人数
-    totalCount() {
-      let total = 0
-      this.form.educationCountList.forEach(item => {
-        total += item.count
-      })
-      return total
-    },
     // 显示详情
     disabled() {
       return this.dialogStatus === 'detail' ? true : false
     },
   },
   methods: {
+    dayjs,
     ...mapActions('common', ['getBuildAllList', 'getCompanyTypeList', 'getBelongList', 'getIndustryList', 'getBuildFloorList', 'getBuildRoomList']),
     /**
      *
@@ -210,15 +206,19 @@ export default {
         }
       })
     },
-    // textarea详情处理
-    textarea(str) {
-      return str && str.replace(/\n|\r\n/g, '<br>')
-    },
-
     findValue(arr, key) {
       let result = arr.find(item => item.key === key)
       if (result) {
         return result.value
+      } else {
+        return '未知类型'
+      }
+    },
+    // 房地产
+    findBuildingValue(arr, key) {
+      let result = arr.find(item => item.id === key)
+      if (result) {
+        return result.name
       } else {
         return '未知类型'
       }
@@ -252,6 +252,11 @@ export default {
       if (code === 200) {
         rs.employeeList = rs.employeeList || []
         this.form = Object.assign(this.form, rs)
+        // 员工情况,总人数
+        this.totalCount = 0
+        this.form.educationCountList.forEach(item => {
+          this.totalCount += item.count
+        })
       }
     },
     // 新增
@@ -260,7 +265,6 @@ export default {
         this.loading = true
         // 参数
         const params = { ...this.form }
-        console.log(params, 'params')
         if (params) {
           const { code } = await saveCompany(params)
           if (code === 200) {

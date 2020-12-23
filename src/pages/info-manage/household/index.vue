@@ -2,12 +2,9 @@
   <a-card>
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
-        <a-form-model-item label="楼宇名称" prop="">
+        <!-- <a-form-model-item label="楼宇名称" prop="">
           <a-input v-model="form.contactName" placeholder="请输入" allowClear style="width: 180px" />
-        </a-form-model-item>
-        <a-form-model-item label="联系人" prop="">
-          <a-input v-model="form.contactName" placeholder="请输入" allowClear style="width: 180px" />
-        </a-form-model-item>
+        </a-form-model-item> -->
         <a-form-model-item label="办公地址">
           <a-select v-model="form.buildId" placeholder="请选择" style="width: 120px" allowClear @change="handleChangeBuild">
             <a-select-option v-for="item in buildingAllList" :key="item.id" :value="item.id">
@@ -27,6 +24,9 @@
               {{ item }}
             </a-select-option>
           </a-select>
+        </a-form-model-item>
+        <a-form-model-item label="联系人">
+          <a-input v-model="form.contactName" placeholder="请输入" allowClear style="width: 180px" />
         </a-form-model-item>
         <a-form-model-item>
           <a-button type="primary" @click="handleSearch" icon="search">查询</a-button>

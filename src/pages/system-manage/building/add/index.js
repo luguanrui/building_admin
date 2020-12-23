@@ -1,4 +1,4 @@
-import { saveBuild, getBuildDetail } from '@/api/index'
+import { saveBuild, getBuildDetail,getUserList } from '@/api/index'
 import Upload from '@/pages/components/upload'
 import { mapState } from 'vuex'
 
@@ -19,6 +19,7 @@ export default {
         { key: 2, value: '副楼' },
         { key: 3, value: '单身公寓' },
       ],
+      userList: [],
 
       form: {
         id: '',
@@ -26,7 +27,7 @@ export default {
         constructCompany: '', // 建设单位
         address: '', // 建设单位地址
         propertyCompany: '', // 物业公司
-        contactName: '', // 负责人
+        contactUserId: undefined, // 负责人
         contactPhone: '', // 联系电话
         mainArea: '', // 主楼面积
         singleApartmentArea: '', // 单身公寓面积
@@ -49,7 +50,7 @@ export default {
         constructCompany: [{ required: true, message: '必填', trigger: 'blur' }],
         address: [{ required: true, message: '必填', trigger: 'blur' }],
         propertyCompany: [{ required: true, message: '必填', trigger: 'blur' }],
-        contactName: [{ required: true, message: '必填', trigger: 'blur' }],
+        contactUserId: [{ required: true, message: '必填', trigger: 'change' }],
         contactPhone: [{ required: true, message: '必填', trigger: 'blur' }],
         mainArea: [{ required: true, message: '必填', trigger: 'blur' }],
         singleApartmentArea: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -91,6 +92,8 @@ export default {
       this.visible = true
       this.dialogStatus = dialogStatus
 
+      // 用户列表
+      this.getUserList()
       // 详情/编辑
       if (this.form.id) {
         this.getBuildDetail()
@@ -153,6 +156,13 @@ export default {
         })
       } else if (dialogStatus === 'edit') {
         // 编辑
+      }
+    },
+    // 用户列表
+    async getUserList() {
+      const {code, rs} = await getUserList()
+      if (code === 200) {
+        this.userList = rs || []
       }
     },
     // 详情

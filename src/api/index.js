@@ -7,7 +7,7 @@ export function login(params) {
 
 // 用户列表
 export function getUserList(params) {
-  return axios.post(`${baseApi}user/list`, params)
+  return axios.get(`${baseApi}user/list`, params)
 }
 
 // 添加用户
@@ -32,6 +32,10 @@ export function getImgWelcomeList(params) {
 // 公告
 export function getNoticeWelcomeList(params) {
   return axios.get(`${baseApi}notice/welcome/list`, { params })
+}
+// 消息中心
+export function getMsgList(params) {
+  return axios.get(`${baseApi}msg/list`, { params })
 }
 /***************************** 业主 *************************** */
 // 查询业主列表

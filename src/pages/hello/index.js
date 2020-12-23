@@ -1,4 +1,4 @@
-import { getImgWelcomeList, getNoticeWelcomeList } from '@/api/index'
+import { getImgWelcomeList, getNoticeWelcomeList, getMsgList } from '@/api/index'
 import dayjs from 'dayjs'
 import { mapState } from 'vuex'
 
@@ -28,10 +28,12 @@ export default {
   activated() {
     this.getImgWelcomeList()
     this.getNoticeWelcomeList()
+    this.getMsgList()
   },
   mounted() {
     this.getImgWelcomeList()
     this.getNoticeWelcomeList()
+    this.getMsgList()
   },
   computed: {
     ...mapState('common', ['noticeTypeList']),
@@ -55,6 +57,14 @@ export default {
     getMessageList() {},
     // 通知公告
     getAnnouncementList() {},
+    // 消息
+    async getMsgList() {
+      const { code, rs } = await getMsgList()
+      if (code === 200) {
+        console.log(rs)
+        this.msgList = rs.data
+      }
+    },
     // 图片
     async getImgWelcomeList() {
       const { code, rs } = await getImgWelcomeList()

@@ -24,9 +24,9 @@
             <tbody>
               <tr v-for="(item, index) in msgList" :key="index">
                 <td class="number">{{ index + 1 }}</td>
-                <td class="content">{{ item.content }}</td>
-                <td class="name">{{ item.name }}</td>
-                <td class="time">{{ item.time }}</td>
+                <td class="content">{{ item.title }}</td>
+                <td class="name">{{ item.createUserName }}</td>
+                <td class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日')}}</td>
               </tr>
             </tbody>
           </table>

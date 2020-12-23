@@ -31,9 +31,13 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="负责人" prop="contactName">
+            <a-form-model-item label="负责人" prop="contactUserId">
               <span v-if="disabled">{{ form.contactName }}</span>
-              <a-input v-else v-model="form.contactName" placeholder="请输入" allowClear :maxLength="200" />
+              <a-select v-else v-model="form.contactUserId" placeholder="请选择" allowClear style="width: 100%">
+                  <a-select-option v-for="item in userList" :value="item.userId" :key="item.userId">
+                    {{ item.realName }}
+                  </a-select-option>
+                </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">

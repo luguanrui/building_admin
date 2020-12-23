@@ -90,6 +90,9 @@ export function getCompanyOtherList(params) {
 }
 
 /***************************** 数据分析 *************************** */
+export function getDataByIndustry(params) {
+  return axios.get(`${baseApi}data/byIndustry`, params)
+}
 
 /***************************** 楼宇管理 *************************** */
 // 保存楼宇信息

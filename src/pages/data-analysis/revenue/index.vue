@@ -3,22 +3,22 @@
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
         <a-form-model-item label="年度">
-          <a-select v-model="form.a" placeholder="请选择" style="min-width: 120px" allowClear>
-            <a-select-option v-for="item in list" :key="item.key" :value="item.key">
-              {{ item.value }}
-            </a-select-option>
-          </a-select>
-        </a-form-model-item>
-        <a-form-model-item label="行业">
-          <a-select v-model="form.b" placeholder="请选择" style="min-width: 120px" allowClear>
-            <a-select-option v-for="item in list" :key="item.key" :value="item.key">
+          <a-select v-model="form.year" placeholder="请选择" style="min-width: 120px" allowClear>
+            <a-select-option v-for="item in yearList" :key="item.key" :value="item.key">
               {{ item.value }}
             </a-select-option>
           </a-select>
         </a-form-model-item>
         <a-form-model-item label="楼宇">
-          <a-select v-model="form.c" placeholder="请选择" style="min-width: 120px" allowClear>
-            <a-select-option v-for="item in list" :key="item.key" :value="item.key">
+          <a-select v-model="form.buildIdList" placeholder="请选择" mode="multiple" allowClear style="width: 175px">
+            <a-select-option v-for="item in buildingAllList" :value="item.id" :key="item.id">
+              {{ item.name }}
+            </a-select-option>
+          </a-select>
+        </a-form-model-item>
+        <a-form-model-item label="行业">
+          <a-select v-model="form.industryIdList" placeholder="请选择" allowClear mode="multiple" style="width: 175px">
+            <a-select-option v-for="item in industryList" :value="item.key" :key="item.key">
               {{ item.value }}
             </a-select-option>
           </a-select>

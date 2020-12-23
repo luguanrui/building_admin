@@ -1,26 +1,26 @@
 import BarItem from '../components/barItem.vue'
 import AreaLine from '../components/area-line.vue'
+import { mapState, mapActions } from 'vuex'
+import { getDataByIndustry } from '@/api/index'
+
 export default {
-  components: { AreaLine,BarItem },
+  components: { AreaLine, BarItem },
   data() {
     return {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
-      form: {
-        a: undefined,
-        b: undefined,
-        c: undefined,
-      },
-      list: [
-        {
-          key: 1,
-          value: '政策',
-        },
-        {
-          key: 2,
-          value: '通知',
-        },
+      yearList: [
+        { key: '2020', value: 2020 },
+        { key: '2019', value: 2019 },
+        { key: '2018', value: 2018 },
+        { key: '2017', value: 2017 },
+        { key: '2016', value: 2016 },
       ],
+      form: {
+        year: undefined, // 年度
+        buildIdList: undefined, // 楼宇
+        industryIdList: undefined, // 行业列表
+      },
       data: [
         {
           a: 100,
@@ -204,24 +204,33 @@ export default {
         { type: '服务业（生命健康）10', value: 2 },
         { type: '服务业（生命健康）11', value: 2 },
         { type: '服务业（生命健康）12', value: 2 },
-      ]
+      ],
     }
   },
-  mounted() {},
+  activated() {
+    this.getBuildAllList()
+    this.getIndustryList()
+  },
+  mounted() {
+    this.getBuildAllList()
+    this.getIndustryList()
+  },
   computed: {
+    ...mapState('common', ['buildingAllList', 'industryList']),
     columnsTest() {
       return this.columnarData.map(item => {
         return {
           title: item.type,
           dataIndex: 'value',
-          ellipsis: true
+          ellipsis: true,
         }
       })
-    }
+    },
   },
   methods: {
+    ...mapActions('common', ['getBuildAllList', 'getIndustryList']),
     onSubmit() {
-      // this.getUserList();
+      this.getDataByIndustry()
     },
     handleReset() {
       Object.assign(this.$data, this.$options.data())
@@ -257,6 +266,16 @@ export default {
     // 添加成功之后
     addSuccess() {
       // this.getUserList();
+    },
+    async getDataByIndustry() {
+      try {
+        const { code, rs } = await getDataByIndustry(this.form)
+        if (code === 200) {
+          console.log(rs, 'rs')
+        }
+      } catch (error) {
+        console.log(error)
+      }
     },
     // 列表
     // async getUserList() {

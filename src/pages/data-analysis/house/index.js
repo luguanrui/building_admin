@@ -1,10 +1,11 @@
 import BarItem from '../components/barItem.vue'
 import AreaLine from '../components/area-line.vue'
+import BarChart from '../components/bar-chart.vue'
 import { mapState, mapActions } from 'vuex'
 import { getDataHouseIndustry, getDataHousePercent, getDataHouseUseful } from '@/api/index'
 
 export default {
-  components: { AreaLine, BarItem },
+  components: { AreaLine, BarItem,BarChart },
   data() {
     return {
       labelCol: { span: 6 },
@@ -70,6 +71,7 @@ export default {
             this.columns.push({ title: col.label, dataIndex: col.prop })
           })
           this.data = rs.table.tableData
+          this.columnarData = rs.image
         }
       } catch (error) {
         console.log(error)
@@ -89,6 +91,7 @@ export default {
             this.columns2.push({ title: col.label, dataIndex: col.prop })
           })
           this.data2 = rs.table.tableData
+          this.columnarData2 = rs.image
         }
       } catch (error) {
         console.log(error)
@@ -108,6 +111,7 @@ export default {
             this.columns3.push({ title: col.label, dataIndex: col.prop })
           })
           this.data3 = rs.table.tableData
+          this.columnarData3 = rs.image
         }
       } catch (error) {
         console.log(error)

@@ -41,54 +41,56 @@ export default {
         container: this.$refs.rank,
         autoFit: true,
         height: 300,
-        padding: [50, 20, 50, 50],
-      })
-      this.chart.axis(this.typeName, {
-        tickLine: null,
-        label: {
-          formatter: val => {
-            if (val.length > 3) {
-              return val.substring(0, 3) + '...'
-            } else {
-              return val
-            }
-          },
-        },
+        padding: [50, 20, 50, 100],
       })
 
       this.chart.data(data)
 
-      this.chart.scale('value', {
-        alias: '数量',
-        nice: true,
+      this.chart.coordinate('theta', {
+        radius: 0.85,
       })
 
-      this.chart.axis(this.typeName, {
-        tickLine: {
-          alignTick: false,
+      this.chart.scale('value', {
+        formatter: val => {
+          val = val * 100 + '%'
+          return val
         },
       })
-      this.chart.axis('value', false)
-
       this.chart.tooltip({
-        shared: true,
+        showTitle: false,
         showMarkers: false,
       })
-      this.chart.interval().position(`${this.typeName}*value`)
-      this.chart.interaction('active-region')
-
-      // 添加文本标注
-      data.forEach(item => {
-        this.chart.annotation().text({
-          position: [item[this.typeName], item.value],
-          content: item.value + '个',
+      this.chart.axis(false) // 关闭坐标轴
+      const interval = this.chart
+        .interval()
+        .adjust('stack')
+        .position('value')
+        .color('item')
+        .label('value', {
+          offset: -40,
           style: {
             textAlign: 'center',
+            shadowBlur: 2,
+            shadowColor: 'rgba(0, 0, 0, .45)',
+            fill: '#fff',
           },
-          offsetY: -10,
         })
-      })
+        .tooltip('item*value', (item, value) => {
+          value = value * 100 + '%'
+          return {
+            name: item,
+            value: value,
+          }
+        })
+        .style({
+          lineWidth: 1,
+          stroke: '#fff',
+        })
+      this.chart.interaction('element-single-selected')
       this.chart.render()
+
+      // 默认选择
+      interval.elements[0].setState('selected', true)
     },
   },
 }

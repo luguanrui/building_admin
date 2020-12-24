@@ -30,6 +30,10 @@
       <div class="table-and-chart">
         <div class="table-content">
           <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="false"> </a-table>
+          <div class="chart-content"></div>
+        </div>
+        <div class="chart-content">
+          <BarItem :data="columnarData" />
         </div>
       </div>
 
@@ -40,17 +44,20 @@
       <div class="table-and-chart">
         <div class="table-content">
           <a-table :columns="columns2" :data-source="data2" :rowKey="(record, index) => index" :pagination="false"> </a-table>
-          <BarItem :data="columnarData2" typeName="month"/>
+        </div>
+        <div class="chart-content">
+          <BarChart :data="columnarData2" typeName="month" />
         </div>
       </div>
 
-          <div class="title-content">
+      <div class="title-content">
         <span class="title">按照楼宇行业情况分析</span>
         <a-button type="primary" :loading="downLoading3">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
           <a-table :columns="columns3" :data-source="data3" :rowKey="(record, index) => index" :pagination="false"> </a-table>
+          <BarItem :data="columnarData3" typeName="categoryName" />
         </div>
       </div>
     </div>

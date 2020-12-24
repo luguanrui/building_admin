@@ -5,7 +5,7 @@ import { mapState, mapActions } from 'vuex'
 import { getDataHouseIndustry, getDataHousePercent, getDataHouseUseful } from '@/api/index'
 
 export default {
-  components: { AreaLine, BarItem,BarChart },
+  components: { AreaLine, BarItem, BarChart },
   data() {
     return {
       labelCol: { span: 6 },
@@ -91,7 +91,11 @@ export default {
             this.columns2.push({ title: col.label, dataIndex: col.prop })
           })
           this.data2 = rs.table.tableData
-          this.columnarData2 = rs.image
+          this.columnarData2 = rs.image.map(item => {
+            item.value = item.value / 100
+            return item
+          })
+          console.log(this.columnarData2, 'columnarData2')
         }
       } catch (error) {
         console.log(error)

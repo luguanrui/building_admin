@@ -23,7 +23,7 @@
             </a-select-option>
           </a-select>
         </a-form-model-item>
-        <a-form-model-item label="学历">
+        <!-- <a-form-model-item label="学历">
           <a-select v-model="form.educationIdList" placeholder="请选择" allowClear mode="multiple" :maxTagCount="1" style="width: 175px">
             <a-select-option v-for="item in educationList" :value="item.key" :key="item.key">
               {{ item.value }}
@@ -36,7 +36,7 @@
               {{ item.value }}
             </a-select-option>
           </a-select>
-        </a-form-model-item>
+        </a-form-model-item> -->
         <a-form-model-item>
           <a-button type="primary" @click="onSubmit" icon="search">查询</a-button>
           <a-button style="margin-left: 10px;" @click="handleReset">重置</a-button>

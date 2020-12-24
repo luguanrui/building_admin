@@ -18,10 +18,10 @@ export default {
       ],
       form: {
         year: undefined, // 年度
-        buildIdList: [34], // 楼宇
+        buildIdList: [], // 楼宇
         industryIdList: [], // 行业列表
-        educationIdList: [],
-        abilityIdList: [],
+        // educationIdList: [],
+        // abilityIdList: [],
         dataAnalyseType: 1,
       },
       downLoading: false,
@@ -46,12 +46,16 @@ export default {
     this.getIndustryList()
     this.getEducationList()
     this.getAbilityList()
+
+    this.onSubmit()
   },
   mounted() {
     this.getBuildAllList()
     this.getIndustryList()
     this.getEducationList()
     this.getAbilityList()
+
+    this.onSubmit()
   },
   computed: {
     ...mapState('common', ['buildingAllList', 'industryList', 'educationList', 'abilityList']),
@@ -75,8 +79,8 @@ export default {
         year: this.form.year, // 年度
         buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
         industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
-        educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
-        abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
+        // educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
+        // abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
         dataAnalyseType: this.form.dataAnalyseType,
       }
       try {
@@ -84,7 +88,7 @@ export default {
         if (code === 200) {
           this.columns = []
           rs.cols.forEach(col => {
-            this.columns.push({ title: col.label, dataIndex: col.prop, ellipsis: true })
+            this.columns.push({ title: col.label, dataIndex: col.prop })
           })
           this.data = rs.tableData
         }
@@ -98,8 +102,8 @@ export default {
         year: this.form.year, // 年度
         buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
         industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
-        educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
-        abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
+        // educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
+        // abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
         dataAnalyseType: this.form.dataAnalyseType,
       }
       try {
@@ -107,7 +111,7 @@ export default {
         if (code === 200) {
           this.columns2 = []
           rs.table.cols.forEach(col => {
-            this.columns2.push({ title: col.label, dataIndex: col.prop, ellipsis: true })
+            this.columns2.push({ title: col.label, dataIndex: col.prop})
           })
           this.data2 = rs.table.tableData
           this.columnarData2 = rs.image
@@ -122,8 +126,8 @@ export default {
         year: this.form.year, // 年度
         buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
         industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
-        educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
-        abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
+        // educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
+        // abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
         dataAnalyseType: this.form.dataAnalyseType,
       }
       try {
@@ -131,7 +135,7 @@ export default {
         if (code === 200) {
           this.columns3 = []
           rs.table.cols.forEach(col => {
-            this.columns3.push({ title: col.label, dataIndex: col.prop, ellipsis: true })
+            this.columns3.push({ title: col.label, dataIndex: col.prop })
           })
           this.data3 = rs.table.tableData
           this.columnarData3 = rs.image

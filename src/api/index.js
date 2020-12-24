@@ -103,6 +103,19 @@ export function getDataByMonth(params) {
 export function getDataByYear(params) {
   return axios.get(`${baseApi}data/byYear`, { params })
 }
+
+// 按照楼宇行业情况分析
+export function getDataHouseIndustry(params) {
+  return axios.get(`${baseApi}data/house/industry`, { params })
+}
+// 按照楼宇情况分析
+export function getDataHousePercent(params) {
+  return axios.get(`${baseApi}data/house/percent`, { params })
+}
+// 按照楼宇用途情况分析
+export function getDataHouseUseful(params) {
+  return axios.get(`${baseApi}data/house/useful`, { params })
+}
 /***************************** 楼宇管理 *************************** */
 // 保存楼宇信息
 export function saveBuild(params) {

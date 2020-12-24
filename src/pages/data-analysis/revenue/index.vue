@@ -10,15 +10,29 @@
           </a-select>
         </a-form-model-item>
         <a-form-model-item label="楼宇">
-          <a-select v-model="form.buildIdList" placeholder="请选择" mode="multiple" allowClear style="width: 175px">
+          <a-select v-model="form.buildIdList" placeholder="请选择" mode="multiple" :maxTagCount="1" allowClear style="width: 175px">
             <a-select-option v-for="item in buildingAllList" :value="item.id" :key="item.id">
               {{ item.name }}
             </a-select-option>
           </a-select>
         </a-form-model-item>
         <a-form-model-item label="行业">
-          <a-select v-model="form.industryIdList" placeholder="请选择" allowClear mode="multiple" style="width: 175px">
+          <a-select v-model="form.industryIdList" placeholder="请选择" allowClear mode="multiple" :maxTagCount="1" style="width: 175px">
             <a-select-option v-for="item in industryList" :value="item.key" :key="item.key">
+              {{ item.value }}
+            </a-select-option>
+          </a-select>
+        </a-form-model-item>
+        <a-form-model-item label="学历">
+          <a-select v-model="form.educationIdList" placeholder="请选择" allowClear mode="multiple" :maxTagCount="1" style="width: 175px">
+            <a-select-option v-for="item in educationList" :value="item.key" :key="item.key">
+              {{ item.value }}
+            </a-select-option>
+          </a-select>
+        </a-form-model-item>
+        <a-form-model-item label="人才类别">
+          <a-select v-model="form.abilityIdList" placeholder="请选择" allowClear mode="multiple" :maxTagCount="1" style="width: 175px">
+            <a-select-option v-for="item in abilityList" :value="item.key" :key="item.key">
               {{ item.value }}
             </a-select-option>
           </a-select>
@@ -32,41 +46,43 @@
     <div class="table-wrapper">
       <div class="title-content">
         <span class="title">2017年度以来整体营收情况分析</span>
-        <a-button type="primary" :loading="loading">导出</a-button>
+        <a-button type="primary" :loading="downLoading">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
-          <a-table :columns="columnsTest" :data-source="data" :rowKey="(record, index) => index" :pagination="false"> </a-table>
+          <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="false"> </a-table>
         </div>
-        <div class="chart-content">
+        <!-- <div class="chart-content">
           <AreaLine :data="columnarData" />
-        </div>
+        </div> -->
       </div>
 
       <div class="title-content">
         <span class="title">按照年度营收情况分析</span>
-        <a-button type="primary" :loading="loading">导出</a-button>
+        <a-button type="primary" :loading="downLoading2">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
-          <a-table :columns="columns2" :data-source="data" :rowKey="(record, index) => index" :pagination="false"> </a-table>
+          <a-table :columns="columns2" :data-source="data2" :rowKey="(record, index) => index" :pagination="false"> </a-table>
+          <BarItem :data="columnarData2" typeName="month"/>
         </div>
-        <div class="chart-content">
-          <BarItem :data="columnarData2" />
-        </div>
+        <!-- <div class="chart-content">
+          <BarItem :data="columnarData2" typeName="month"/>
+        </div> -->
       </div>
 
       <div class="title-content">
         <span class="title">按照行业营收情况分析</span>
-        <a-button type="primary" :loading="loading">导出</a-button>
+        <a-button type="primary" :loading="downLoading3">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
-          <a-table :columns="columns3" :data-source="data" :rowKey="(record, index) => index" :pagination="false"> </a-table>
+          <a-table :columns="columns3" :data-source="data3" :rowKey="(record, index) => index" :pagination="false"> </a-table>
+          <BarItem :data="columnarData3" typeName="categoryName"/>
         </div>
-        <div class="chart-content">
-          <BarItem :data="columnarData3" />
-        </div>
+        <!-- <div class="chart-content">
+          <BarItem :data="columnarData3" typeName="categoryName"/>
+        </div> -->
       </div>
     </div>
   </a-card>

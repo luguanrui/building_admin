@@ -1,7 +1,7 @@
 import BarItem from '../components/barItem.vue'
 import AreaLine from '../components/area-line.vue'
 import { mapState, mapActions } from 'vuex'
-import { getDataByIndustry } from '@/api/index'
+import { getDataByIndustry, getDataByMonth, getDataByYear } from '@/api/index'
 
 export default {
   components: { AreaLine, BarItem },
@@ -18,284 +18,127 @@ export default {
       ],
       form: {
         year: undefined, // 年度
-        buildIdList: undefined, // 楼宇
-        industryIdList: undefined, // 行业列表
+        buildIdList: [34], // 楼宇
+        industryIdList: [], // 行业列表
+        educationIdList: [],
+        abilityIdList: [],
+        dataAnalyseType: 1,
       },
-      data: [
-        {
-          a: 100,
-          b: 100,
-          c: 100,
-          d: 100,
-        },
-      ],
-      loading: false,
-      columns: [
-        {
-          title: '2017年',
-          dataIndex: 'a',
-          ellipsis: true,
-        },
-        {
-          title: '2018年',
-          dataIndex: 'b',
-          ellipsis: true,
-        },
-        {
-          title: '2018年',
-          dataIndex: 'c',
-          ellipsis: true,
-        },
-        {
-          title: '2020年',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-      ],
-      columns2: [
-        {
-          title: '1月',
-          dataIndex: 'a',
-          ellipsis: true,
-        },
-        {
-          title: '2月',
-          dataIndex: 'b',
-          ellipsis: true,
-        },
-        {
-          title: '3月',
-          dataIndex: 'c',
-          ellipsis: true,
-        },
-        {
-          title: '4月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '5月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '6月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '7月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '8月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '9月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '10月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '11月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '12月',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-      ],
-      columns3: [
-        {
-          title: '服务业（生命健康）',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）2',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）3',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）4',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）5',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）6',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）7',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）8',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-        {
-          title: '服务业（生命健康）',
-          dataIndex: 'd',
-          ellipsis: true,
-        },
-      ],
-      columnarData: [
-        { type: '2017年', value: 2 },
-        { type: '2018年', value: 2 },
-        { type: '2019年', value: 3 },
-        { type: '2020年', value: 2 },
-      ],
-      columnarData2: [
-        { type: '1月', value: 2 },
-        { type: '2月', value: 2 },
-        { type: '3月', value: 3 },
-        { type: '4月', value: 2 },
-        { type: '5月', value: 2 },
-        { type: '6月', value: 3 },
-        { type: '7月', value: 2 },
-        { type: '8月', value: 2 },
-        { type: '9月', value: 3 },
-        { type: '10月', value: 2 },
-        { type: '11月', value: 2 },
-        { type: '12月', value: 3 },
-      ],
-      columnarData3: [
-        { type: '服务业（生命健康）', value: 2 },
-        { type: '服务业（生命健康）2', value: 2 },
-        { type: '服务业（生命健康）3', value: 2 },
-        { type: '服务业（生命健康）4', value: 2 },
-        { type: '服务业（生命健康）5', value: 2 },
-        { type: '服务业（生命健康）6', value: 2 },
-        { type: '服务业（生命健康）7', value: 2 },
-        { type: '服务业（生命健康）8', value: 2 },
-        { type: '服务业（生命健康）9', value: 2 },
-        { type: '服务业（生命健康）10', value: 2 },
-        { type: '服务业（生命健康）11', value: 2 },
-        { type: '服务业（生命健康）12', value: 2 },
-      ],
+      downLoading: false,
+      data: [],
+      columns: [],
+
+      downLoading2: false,
+      data2: [],
+      columns2: [],
+
+      downLoading3: false,
+      data3: [],
+      columns3: [],
+
+      columnarData: [],
+      columnarData2: [],
+      columnarData3: [],
     }
   },
   activated() {
     this.getBuildAllList()
     this.getIndustryList()
+    this.getEducationList()
+    this.getAbilityList()
   },
   mounted() {
     this.getBuildAllList()
     this.getIndustryList()
+    this.getEducationList()
+    this.getAbilityList()
   },
   computed: {
-    ...mapState('common', ['buildingAllList', 'industryList']),
-    columnsTest() {
-      return this.columnarData.map(item => {
-        return {
-          title: item.type,
-          dataIndex: 'value',
-          ellipsis: true,
-        }
-      })
-    },
+    ...mapState('common', ['buildingAllList', 'industryList', 'educationList', 'abilityList']),
   },
   methods: {
-    ...mapActions('common', ['getBuildAllList', 'getIndustryList']),
+    ...mapActions('common', ['getBuildAllList', 'getIndustryList', 'getEducationList', 'getAbilityList']),
     onSubmit() {
       this.getDataByIndustry()
+      this.getDataByMonth()
+      this.getDataByYear()
     },
     handleReset() {
       Object.assign(this.$data, this.$options.data())
-      // this.getUserList();
+      this.getDataByIndustry()
+      this.getDataByMonth()
+      this.getDataByYear()
     },
-    // 新增
-    handleAdd() {
-      this.$refs.addAnnouncement.handleVisible()
-    },
-    // 查看
-    handleDetail(record) {
-      this.$refs.addAnnouncement.handleVisible('detail', record)
-    },
-    // 修改
-    handleUpdate(record) {
-      this.$refs.addAnnouncement.handleVisible('update', record)
-    },
-    // 新增修改成功
-    handleSuccess() {
-      this.onSubmit()
-    },
-    // 删除
-    handleDel(record) {
-      console.log(record)
-      // this.delUser(record.userId);
-      // this.getUserList();
-    },
-    // 发布
-    handlePublish(record) {
-      console.log(record)
-    },
-
-    // 添加成功之后
-    addSuccess() {
-      // this.getUserList();
-    },
-    async getDataByIndustry() {
+    // 按年度，从2017年至今xx分析
+    async getDataByYear() {
+      const params = {
+        year: this.form.year, // 年度
+        buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
+        industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
+        educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
+        abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
+        dataAnalyseType: this.form.dataAnalyseType,
+      }
       try {
-        const { code, rs } = await getDataByIndustry(this.form)
+        const { code, rs } = await getDataByYear(params)
         if (code === 200) {
-          console.log(rs, 'rs')
+          this.columns = []
+          rs.cols.forEach(col => {
+            this.columns.push({ title: col.label, dataIndex: col.prop, ellipsis: true })
+          })
+          this.data = rs.tableData
         }
       } catch (error) {
         console.log(error)
       }
     },
-    // 列表
-    // async getUserList() {
-    //   this.loading = true;
-    //   try {
-    //     const { code, rs } = await getUserList(this.form);
-    //     if (code === 200) {
-    //       this.data = rs;
-    //     }
-    //     this.loading = false;
-    //   } catch (error) {
-    //     this.loading = false;
-    //   }
-    // },
-    // // 删除
-    // async delUser(userId) {
-    //   const { code } = await delUser({ userId });
-    //   if (code === 200) {
-    //     this.$message.success("删除成功");
-    //   }
-    // },
+    // 年度xx分析
+    async getDataByMonth() {
+      const params = {
+        year: this.form.year, // 年度
+        buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
+        industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
+        educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
+        abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
+        dataAnalyseType: this.form.dataAnalyseType,
+      }
+      try {
+        const { code, rs } = await getDataByMonth(params)
+        if (code === 200) {
+          this.columns2 = []
+          rs.table.cols.forEach(col => {
+            this.columns2.push({ title: col.label, dataIndex: col.prop, ellipsis: true })
+          })
+          this.data2 = rs.table.tableData
+          this.columnarData2 = rs.image
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    // 年度行业xx情况分析
+    async getDataByIndustry() {
+      const params = {
+        year: this.form.year, // 年度
+        buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
+        industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
+        educationIdList: this.form.educationIdList ? this.form.educationIdList.join(',') : '',
+        abilityIdList: this.form.abilityIdList ? this.form.abilityIdList.join(',') : '',
+        dataAnalyseType: this.form.dataAnalyseType,
+      }
+      try {
+        const { code, rs } = await getDataByIndustry(params)
+        if (code === 200) {
+          this.columns3 = []
+          rs.table.cols.forEach(col => {
+            this.columns3.push({ title: col.label, dataIndex: col.prop, ellipsis: true })
+          })
+          this.data3 = rs.table.tableData
+          this.columnarData3 = rs.image
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
   },
 }

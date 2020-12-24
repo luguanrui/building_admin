@@ -90,10 +90,19 @@ export function getCompanyOtherList(params) {
 }
 
 /***************************** 数据分析 *************************** */
+// 年度行业xx情况分析
 export function getDataByIndustry(params) {
-  return axios.get(`${baseApi}data/byIndustry`, params)
+  return axios.get(`${baseApi}data/byIndustry`, { params })
+}
+// 年度xx分析
+export function getDataByMonth(params) {
+  return axios.get(`${baseApi}data/byMonth`, { params })
 }
 
+// 按年度，从2017年至今xx分析
+export function getDataByYear(params) {
+  return axios.get(`${baseApi}data/byYear`, { params })
+}
 /***************************** 楼宇管理 *************************** */
 // 保存楼宇信息
 export function saveBuild(params) {

@@ -255,3 +255,8 @@ export function getBuildFloorList(params) {
 export function getBuildRoomList(params) {
   return axios.get(`${baseApi}build/room/list`, { params })
 }
+
+// 年份类别
+export function getYearList() {
+  return axios.get(`${baseApi}year/list`)
+}

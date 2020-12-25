@@ -16,6 +16,7 @@ import {
   getBuildAllList,
   getBuildFloorList,
   getBuildRoomList,
+  getYearList
 } from '@/api/index'
 export default {
   namespaced: true,
@@ -68,6 +69,7 @@ export default {
     buildingAllList: [], // 楼宇列表（不分页）
     buildingFloorList: [], // 楼层
     buildingRoomList: [], // 房间号
+    yearList: []
   },
   getters: {
     // 年度
@@ -137,6 +139,9 @@ export default {
     },
     SET_BUILDING_ROOM_LIST(state, val) {
       state.buildingRoomList = val
+    },
+    SET_YEAR_LIST(state, val) {
+      state.yearList = val
     }
   },
   actions: {
@@ -259,5 +264,12 @@ export default {
         commit('SET_BUILDING_ROOM_LIST', rs || [])
       }
     },
+    // 年份
+    async getYearList({ commit }) {
+      const { code, rs } = await getYearList()
+      if (code === 200) {
+        commit('SET_YEAR_LIST', rs || [])
+      }
+    }
   },
 }

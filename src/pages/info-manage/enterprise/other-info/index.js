@@ -30,13 +30,6 @@ export default {
         taxId: '', // 纳税人识别号
         businessScope: '', // 经营范围
       },
-      yearList: [
-        { key: '2020', value: 2020 },
-        { key: '2019', value: 2019 },
-        { key: '2018', value: 2018 },
-        { key: '2017', value: 2017 },
-        { key: '2016', value: 2016 },
-      ],
       otherList: [
         {
           year: undefined, // 年度
@@ -72,7 +65,18 @@ export default {
   },
 
   computed: {
-    ...mapState('common', ['buildTypeList', 'buildingAllList', 'companyTypeList', 'belongList', 'industryList', 'workRoomTypeList', 'buildingFloorList', 'buildingRoomList', 'whetherList']),
+    ...mapState('common', [
+      'buildTypeList',
+      'buildingAllList',
+      'companyTypeList',
+      'belongList',
+      'industryList',
+      'workRoomTypeList',
+      'buildingFloorList',
+      'buildingRoomList',
+      'whetherList',
+      'yearList',
+    ]),
     title() {
       switch (this.dialogStatus) {
         case 'add':
@@ -96,7 +100,7 @@ export default {
   },
   methods: {
     dayjs,
-    ...mapActions('common', ['getBuildAllList', 'getCompanyTypeList', 'getBelongList', 'getIndustryList', 'getBuildFloorList', 'getBuildRoomList']),
+    ...mapActions('common', ['getBuildAllList', 'getCompanyTypeList', 'getBelongList', 'getIndustryList', 'getBuildFloorList', 'getBuildRoomList', 'getYearList']),
     /**
      *
      * @param {*} id 项目id
@@ -116,6 +120,7 @@ export default {
       this.getBelongList()
       // 行业类别列表
       this.getIndustryList()
+      this.getYearList()
 
       this.getCompany()
     },

@@ -9,13 +9,6 @@ export default {
     return {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
-      yearList: [
-        { key: '2020', value: 2020 },
-        { key: '2019', value: 2019 },
-        { key: '2018', value: 2018 },
-        { key: '2017', value: 2017 },
-        { key: '2016', value: 2016 },
-      ],
       form: {
         year: undefined, // 年度
         buildIdList: [], // 楼宇
@@ -46,6 +39,7 @@ export default {
     this.getIndustryList()
     this.getEducationList()
     this.getAbilityList()
+    this.getYearList()
 
     this.onSubmit()
   },
@@ -54,14 +48,15 @@ export default {
     this.getIndustryList()
     this.getEducationList()
     this.getAbilityList()
+    this.getYearList()
 
     this.onSubmit()
   },
   computed: {
-    ...mapState('common', ['buildingAllList', 'industryList', 'educationList', 'abilityList']),
+    ...mapState('common', ['buildingAllList', 'industryList', 'educationList', 'abilityList','yearList']),
   },
   methods: {
-    ...mapActions('common', ['getBuildAllList', 'getIndustryList', 'getEducationList', 'getAbilityList']),
+    ...mapActions('common', ['getBuildAllList', 'getIndustryList', 'getEducationList', 'getAbilityList','getYearList']),
     onSubmit() {
       this.getDataByIndustry()
       this.getDataByMonth()

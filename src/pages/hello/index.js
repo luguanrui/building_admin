@@ -7,22 +7,8 @@ export default {
     return {
       carouselList: [],
       showInfo: undefined,
-      msgList: [
-        { content: 'XXX楼宇入住浙江华为有限公司', name: '张三', time: '2020年8月20日' },
-        { content: 'XXX楼宇申通快递公司优惠政策即将到期', name: '张三', time: '2020年8月20日' },
-        { content: 'XXX楼宇申通快递公司优惠政策即将到期', name: '张三', time: '2020年8月20日' },
-        { content: 'XXX楼宇申通快递公司优惠政策即将到期', name: '张三', time: '2020年8月20日' },
-        { content: 'XXX楼宇申通快递公司优惠政策即将到期', name: '张三', time: '2020年8月20日' },
-        { content: 'XXX楼宇申通快递公司优惠政策即将到期', name: '张三', time: '2020年8月20日' },
-      ],
-      announcementList: [
-        { content: 'XXX楼宇入住浙江华为有限公司', type: '通知', time: '2020年8月20日' },
-        { content: '关于贷款利率调整的公告', type: '公告', time: '2020年8月20日' },
-        { content: 'XXX楼宇入住浙江华为有限公司', type: '通知', time: '2020年8月20日' },
-        { content: '关于贷款利率调整的公告', type: '公告', time: '2020年8月20日' },
-        { content: 'XXX楼宇入住浙江华为有限公司', type: '通知', time: '2020年8月20日' },
-        { content: '关于贷款利率调整的公告', type: '公告', time: '2020年8月20日' },
-      ],
+      msgList: [],
+      announcementList: [],
     }
   },
   activated() {
@@ -53,10 +39,10 @@ export default {
       }
       return ''
     },
-    // 消息中心
-    getMessageList() {},
     // 通知公告
-    getAnnouncementList() {},
+    handleToAnnouncement() {
+      // this.$router.push({ path: '' })
+    },
     // 消息
     async getMsgList() {
       const { code, rs } = await getMsgList()

@@ -127,6 +127,11 @@ const options = {
               component: () => import("@/pages/system-manage/announcement/index.vue"),
             },
             {
+              path: "announcement/add",
+              name: "新增公告",
+              component: () => import("@/pages/system-manage/announcement/update.vue"),
+            },
+            {
               path: "images",
               name: "图片管理",
               component: () => import("@/pages/system-manage/images/index.vue"),

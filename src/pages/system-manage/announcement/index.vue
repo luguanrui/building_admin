@@ -131,7 +131,8 @@ export default {
     },
     // 新增
     handleAdd() {
-      this.$refs.addAnnouncement.handleVisible('', 'add')
+      this.$router.push({path: 'announcement/add'})
+      // this.$refs.addAnnouncement.handleVisible('', 'add')
     },
     // 查看
     handleDetail(record) {

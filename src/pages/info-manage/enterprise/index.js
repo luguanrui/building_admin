@@ -1,12 +1,13 @@
 import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
+import OtherInfo from './other-info/index.vue'
 import { getCompanyList, removeCompany } from '@/api/index'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   mixins: [pagination],
-  components: { AddUpdate },
+  components: { AddUpdate, OtherInfo },
   data() {
     return {
       form: {
@@ -17,6 +18,7 @@ export default {
         roomNum: undefined, // 房号
       },
       loading: false,
+      selectedRowKeys: [],
       data: [],
       columns: [
         {
@@ -145,6 +147,17 @@ export default {
     // 新增
     handleAdd() {
       this.$refs.addUpdate.handleVisible('', 'add')
+    },
+    onSelectChange(selectedRowKeys) {
+      this.selectedRowKeys = selectedRowKeys;
+    },
+    // 其他信息
+    handleAddOther() {
+      if (!this.selectedRowKeys.length) {
+        this.$message.error('请先选择企业')
+        return
+      }
+      this.$refs.otherInfo.handleVisible(this.selectedRowKeys[0], 'add')
     },
     // 新增成功
     handleSuccess() {

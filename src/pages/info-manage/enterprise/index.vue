@@ -34,13 +34,21 @@
     <div class="opreation-wrapper">
       <div>
         <a-button type="primary" @click="handleAdd">新增企业基础信息</a-button>
-        <a-button type="primary" @click="handleAdd">新增企业其他信息</a-button>
+        <a-button type="primary" @click="handleAddOther">新增企业其他信息</a-button>
         <a-button type="primary" @click="handleExport">导出</a-button>
       </div>
     </div>
     <div class="table-wrapper">
-      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="pagination" :loading="loading">
-        <a slot="name" slot-scope="text,record" @click="handleDetail(record)">{{ text }}</a>
+      <a-table
+        :columns="columns"
+        :data-source="data"
+        :rowKey="(record, index) => record.id"
+        @change="handleChange"
+        :pagination="pagination"
+        :loading="loading"
+        :row-selection="{ selectedRowKeys: selectedRowKeys,type: 'radio', onChange: onSelectChange }"
+      >
+        <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
@@ -51,6 +59,8 @@
     </div>
     <!-- 新增，编辑，查看 -->
     <AddUpdate ref="addUpdate" @handleSuccess="handleSuccess" />
+    <!-- 其他信息 -->
+    <OtherInfo ref="otherInfo" @handleSuccess="handleSuccess" />
   </a-card>
 </template>
 

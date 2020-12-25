@@ -25,6 +25,7 @@
           <a-input v-model="form.content" placeholder="请输入" type="textarea" :rows="8" style="width: 100%" :maxLength="2000" allowClear />
         </a-form-model-item> -->
         <a-form-model-item label="正文" prop="content">
+          <span ref="editor"></span>
         </a-form-model-item>
       </a-form-model>
     </div>
@@ -32,6 +33,7 @@
 </template>
 <script>
 import Upload from '@/pages/components/upload'
+import E from 'wangeditor'
 import { mapState } from 'vuex'
 import { saveNotice, getNoticeDetail } from '@/api/index'
 
@@ -60,9 +62,9 @@ export default {
       },
       disabled: false,
       options: {
-          placeholder: '请输入',
-          theme: 'snow'
-      }
+        placeholder: '请输入',
+        theme: 'snow',
+      },
     }
   },
   computed: {
@@ -80,11 +82,13 @@ export default {
       }
     },
   },
-  activated() {
-    Object.assign(this.$data, this.$options.data())
-  },
+//   activated() {
+//     Object.assign(this.$data, this.$options.data())
+//     this.initEditor()
+//   },
   mounted() {
     Object.assign(this.$data, this.$options.data())
+    this.initEditor()
   },
   methods: {
     handleVisible(id, dialogStatus) {
@@ -98,7 +102,14 @@ export default {
         this.getNoticeDetail()
       }
     },
-
+    initEditor() {
+      const editor = new E(this.$refs.editor)
+      editor.config.height = 400
+      editor.config.onchange = function(newHtml) {
+        this.form.content = newHtml
+      }
+      editor.create()
+    },
     // 上传成功
     uploadSuccess(list) {
       this.form.fileList = JSON.stringify(list)

@@ -37,20 +37,16 @@
         </template>
       </a-table>
     </div>
-    <!-- 新增修改公告 -->
-    <AddAnnouncement ref="addAnnouncement" @handleSuccess="handleSuccess" />
   </a-card>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
-import AddAnnouncement from './add.vue'
 import { mapState } from 'vuex'
 import { getNoticeList, removeNotice, publishNotice } from '@/api/index'
 
 export default {
-  components: { AddAnnouncement },
   mixins: [pagination],
   data() {
     return {
@@ -131,16 +127,21 @@ export default {
     },
     // 新增
     handleAdd() {
-      this.$router.push({path: 'announcement/add'})
-      // this.$refs.addAnnouncement.handleVisible('', 'add')
+      this.$router.push({ path: 'announcement/add' })
     },
     // 查看
     handleDetail(record) {
-      this.$refs.addAnnouncement.handleVisible(record.id, 'detail')
+      this.$router.push({
+        path: 'announcement/detail',
+        query: { id: record.id },
+      })
     },
     // 修改
     handleUpdate(record) {
-      this.$refs.addAnnouncement.handleVisible(record.id, 'update')
+      this.$router.push({
+        path: 'announcement/update',
+        query: { id: record.id },
+      })
     },
     // 新增修改成功
     handleSuccess() {

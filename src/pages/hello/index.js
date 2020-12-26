@@ -40,8 +40,11 @@ export default {
       return ''
     },
     // 通知公告
-    handleToAnnouncement() {
-      // this.$router.push({ path: '' })
+    handleToAnnouncement(item) {
+      this.$router.push({
+        path: 'system-manage/announcement/detail',
+        query: { id: item.id },
+      })
     },
     // 消息
     async getMsgList() {

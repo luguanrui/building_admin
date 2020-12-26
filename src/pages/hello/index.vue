@@ -39,7 +39,7 @@
           <table style="width: 100%">
             <tbody>
               <tr v-for="(item, index) in announcementList" :key="index">
-                <td class="content" @click="handleToAnnouncement">{{ item.content }}</td>
+                <td class="content" @click="handleToAnnouncement(item)">{{ item.content }}</td>
                 <td class="type">{{ noticeTypeListText(item.noticeType) }}</td>
                 <td class="time">{{ item.publishTime && dayjs(item.publishTime).format('YYYY年MM月DD日') }}</td>
               </tr>

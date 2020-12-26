@@ -16,7 +16,7 @@
     </div>
     <div class="opreation-wrapper">
       <a-button type="primary" @click="handleAdd">新增</a-button>
-      <a-button type="primary">导出</a-button>
+      <a-button type="primary" :loading="downLoading" @click="handleExport">导出</a-button>
       <!-- <a-button type="primary">自定义查询</a-button> -->
     </div>
     <div class="table-wrapper">

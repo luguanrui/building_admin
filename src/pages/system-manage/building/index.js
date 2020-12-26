@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
-import { getBuildList, removeBuild } from '@/api/index'
+import { getBuildList, removeBuild, exportBuildList } from '@/api/index'
 import BuildingAdd from './add/index.vue'
 
 export default {
@@ -24,6 +24,7 @@ export default {
           value: '通知',
         },
       ],
+      downLoading: false,
       loading: false,
       data: [],
       columns: [
@@ -106,6 +107,9 @@ export default {
       Object.assign(this.pagination, pagination)
       this.getBuildList()
     },
+    handleExport() {
+      this.exportBuildList()
+    },
     // 列表
     async getBuildList() {
       this.loading = true
@@ -133,6 +137,43 @@ export default {
       if (code === 200) {
         this.$message.success('删除成功')
         this.getBuildList()
+      }
+    },
+    // 导出
+    async exportBuildList() {
+      try {
+        this.downLoading = true
+        const { pageSize, current: pageNum } = this.pagination
+        let params = {
+          pageSize,
+          pageNum,
+          ...this.form,
+        }
+        let result = await exportBuildList(params)
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `楼宇管理.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },

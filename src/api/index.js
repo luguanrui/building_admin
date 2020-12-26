@@ -42,6 +42,10 @@ export function getMsgList(params) {
 export function getOwnerList(params) {
   return axios.get(`${baseApi}owner/list`, { params })
 }
+// 导出
+export function exportOwnerList(params) {
+  return axios.get(`${baseApi}owner/list/export`, { params })
+}
 // 保存业主信息
 export function saveOwner(params) {
   return axios.post(`${baseApi}owner/save`, params)
@@ -55,6 +59,10 @@ export function getOwner(params) {
 export function getHouseList(params) {
   return axios.get(`${baseApi}house/list`, { params })
 }
+// 导出
+export function exportHouseList(params) {
+  return axios.get(`${baseApi}house/list/export`, { params })
+}
 // 保存业主信息
 export function saveHouse(params) {
   return axios.post(`${baseApi}house/save`, params)
@@ -67,6 +75,10 @@ export function getHouse(params) {
 // 查询企业列表
 export function getCompanyList(params) {
   return axios.get(`${baseApi}company/list`, { params })
+}
+// 企业列表导出
+export function exportCompanyList(params) {
+  return axios.get(`${baseApi}company/list/export`, { params })
 }
 // 查询单个企业信息
 export function getCompany(params) {
@@ -124,6 +136,10 @@ export function saveBuild(params) {
 // 楼宇列表
 export function getBuildList(params) {
   return axios.get(`${baseApi}build/list`, { params })
+}
+// 导出
+export function exportBuildList(params) {
+  return axios.get(`${baseApi}build/list/export`, { params })
 }
 // 删除楼宇
 export function removeBuild(params) {

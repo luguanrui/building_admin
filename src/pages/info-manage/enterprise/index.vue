@@ -35,7 +35,7 @@
       <div>
         <a-button type="primary" @click="handleAdd">新增企业基础信息</a-button>
         <a-button type="primary" @click="handleAddOther">新增企业其他信息</a-button>
-        <a-button type="primary" @click="handleExport">导出</a-button>
+        <a-button type="primary" @click="handleExport" :loading="downLoading">导出</a-button>
       </div>
     </div>
     <div class="table-wrapper">

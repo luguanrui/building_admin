@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
 import OtherInfo from './other-info/index.vue'
-import { getCompanyList, removeCompany } from '@/api/index'
+import { getCompanyList, removeCompany, exportCompanyList } from '@/api/index'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -17,6 +17,7 @@ export default {
         floor: undefined, // 楼层
         roomNum: undefined, // 房号
       },
+      downLoading: false,
       loading: false,
       selectedRowKeys: [],
       data: [],
@@ -149,7 +150,7 @@ export default {
       this.$refs.addUpdate.handleVisible('', 'add')
     },
     onSelectChange(selectedRowKeys) {
-      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRowKeys = selectedRowKeys
     },
     // 其他信息
     handleAddOther() {
@@ -164,7 +165,9 @@ export default {
       this.handleSearch()
     },
     // 导出
-    handleExport() {},
+    handleExport() {
+      this.exportCompanyList()
+    },
     // 列表
     async getCompanyList() {
       this.data = []
@@ -182,6 +185,39 @@ export default {
       } catch (error) {
         this.loading = false
         console.log(error)
+      }
+    },
+    // 导出
+    async exportCompanyList() {
+      try {
+        this.downLoading = true
+        const { pageSize, current: pageNum } = this.pagination
+        const params = { ...this.form, pageSize, pageNum }
+        let result = await exportCompanyList(params)
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `企业信息.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },

@@ -90,6 +90,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  margin-bottom: 30px;
   .table-content,
   .chart-content {
     padding: 0 20px;

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
-import { getHouseList } from '@/api/index'
+import { getHouseList, exportHouseList } from '@/api/index'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -16,6 +16,7 @@ export default {
         floor: undefined, // 楼层
         roomNum: undefined, // 房号
       },
+      downLoading: false,
       loading: false,
       data: [],
       columns: [
@@ -157,7 +158,9 @@ export default {
       this.handleSearch()
     },
     // 导出
-    handleExport() {},
+    handleExport() {
+      this.exportHouseList()
+    },
     // 列表
     async getHouseList() {
       this.loading = true
@@ -177,6 +180,43 @@ export default {
         this.loading = false
       } catch (error) {
         this.loading = false
+      }
+    },
+    // 导出
+    async exportHouseList() {
+      try {
+        this.downLoading = true
+        const { pageSize, current: pageNum } = this.pagination
+        let params = {
+          pageSize,
+          pageNum,
+          ...this.form,
+        }
+        let result = await exportHouseList(params)
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `住户信息.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },

@@ -2,8 +2,7 @@ import dayjs from 'dayjs'
 import { mapState, mapActions } from 'vuex'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
-import { downFile } from '@/utils/utils'
-import { getOwnerList } from '@/api/index'
+import { getOwnerList, exportOwnerList } from '@/api/index'
 
 export default {
   mixins: [pagination],
@@ -18,6 +17,7 @@ export default {
         ownerName: '', // 联系人
       },
       loading: false,
+      downLoading: false,
       data: [],
       columns: [
         {
@@ -153,7 +153,7 @@ export default {
     },
     // 导出
     handleExport() {
-      downFile()
+      this.exportOwnerList()
     },
     // 列表
     async getOwnerList() {
@@ -174,6 +174,43 @@ export default {
         this.loading = false
       } catch (error) {
         this.loading = false
+      }
+    },
+    // 导出
+    async exportOwnerList() {
+      try {
+        this.downLoading = true
+        const { pageSize, current: pageNum } = this.pagination
+        let params = {
+          pageSize,
+          pageNum,
+          ...this.form,
+        }
+        let result = await exportOwnerList(params)
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `业主信息.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },

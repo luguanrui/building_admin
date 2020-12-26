@@ -106,14 +106,25 @@ export function getCompanyOtherList(params) {
 export function getDataByIndustry(params) {
   return axios.get(`${baseApi}data/byIndustry`, { params })
 }
+// 导出
+export function exportDataByIndustry(params) {
+  return axios.get(`${baseApi}data/byIndustry/export`, { params })
+}
 // 年度xx分析
 export function getDataByMonth(params) {
   return axios.get(`${baseApi}data/byMonth`, { params })
 }
-
+// 导出
+export function exportDataByMonth(params) {
+  return axios.get(`${baseApi}data/byMonth/export`, { params })
+}
 // 按年度，从2017年至今xx分析
 export function getDataByYear(params) {
   return axios.get(`${baseApi}data/byYear`, { params })
+}
+// 导出
+export function exportDataByYear(params) {
+  return axios.get(`${baseApi}data/byYear/export`, { params })
 }
 
 // 按照楼宇行业情况分析

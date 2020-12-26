@@ -1,7 +1,7 @@
 import BarItem from '../components/barItem.vue'
 import AreaLine from '../components/area-line.vue'
 import { mapState, mapActions } from 'vuex'
-import { getDataByIndustry, getDataByMonth, getDataByYear } from '@/api/index'
+import { getDataByIndustry, getDataByMonth, getDataByYear, exportDataByIndustry, exportDataByMonth, exportDataByYear } from '@/api/index'
 
 export default {
   components: { AreaLine, BarItem },
@@ -53,10 +53,10 @@ export default {
     this.onSubmit()
   },
   computed: {
-    ...mapState('common', ['buildingAllList', 'industryList', 'educationList', 'abilityList','yearList']),
+    ...mapState('common', ['buildingAllList', 'industryList', 'educationList', 'abilityList', 'yearList']),
   },
   methods: {
-    ...mapActions('common', ['getBuildAllList', 'getIndustryList', 'getEducationList', 'getAbilityList','getYearList']),
+    ...mapActions('common', ['getBuildAllList', 'getIndustryList', 'getEducationList', 'getAbilityList', 'getYearList']),
     onSubmit() {
       this.getDataByIndustry()
       this.getDataByMonth()
@@ -67,6 +67,15 @@ export default {
       this.getDataByIndustry()
       this.getDataByMonth()
       this.getDataByYear()
+    },
+    handleExport() {
+      this.exportDataByYear()
+    },
+    handleExport2() {
+      this.exportDataByMonth()
+    },
+    handleExport3() {
+      this.exportDataByIndustry()
     },
     // 按年度，从2017年至今xx分析
     async getDataByYear() {
@@ -137,6 +146,93 @@ export default {
         }
       } catch (error) {
         console.log(error)
+      }
+    },
+    // 导出
+    async exportDataByIndustry() {
+      try {
+        this.downLoading3 = true
+        const params = {
+          year: this.form.year, // 年度
+          buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
+          industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
+          dataAnalyseType: this.form.dataAnalyseType,
+        }
+        let result = await exportDataByIndustry(params)
+        if (result) {
+          this.downLoading3 = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `行业人才情况分析.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading3 = false
+      }
+    },
+    //
+    async exportDataByMonth() {
+      try {
+        this.downLoading2 = true
+        const params = {
+          year: this.form.year, // 年度
+          buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
+          industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
+          dataAnalyseType: this.form.dataAnalyseType,
+        }
+        let result = await exportDataByMonth(params)
+        if (result) {
+          this.downLoading2 = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `${this.form.year}年度人才情况分析.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading2 = false
+      }
+    },
+    //
+    async exportDataByYear() {
+      try {
+        this.downLoading = true
+        const params = {
+          year: this.form.year, // 年度
+          buildIdList: this.form.buildIdList ? this.form.buildIdList.join(',') : '', // 楼宇
+          industryIdList: this.form.industryIdList ? this.form.industryIdList.join(',') : '', // 行业列表
+          dataAnalyseType: this.form.dataAnalyseType,
+        }
+        let result = await exportDataByYear(params)
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `${this.form.year}年度以来整体人才情况分析.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },

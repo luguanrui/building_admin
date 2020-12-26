@@ -23,20 +23,6 @@
             </a-select-option>
           </a-select>
         </a-form-model-item>
-        <!-- <a-form-model-item label="学历">
-          <a-select v-model="form.educationIdList" placeholder="请选择" allowClear mode="multiple" :maxTagCount="1" style="width: 175px">
-            <a-select-option v-for="item in educationList" :value="item.key" :key="item.key">
-              {{ item.value }}
-            </a-select-option>
-          </a-select>
-        </a-form-model-item>
-        <a-form-model-item label="人才类别">
-          <a-select v-model="form.abilityIdList" placeholder="请选择" allowClear mode="multiple" :maxTagCount="1" style="width: 175px">
-            <a-select-option v-for="item in abilityList" :value="item.key" :key="item.key">
-              {{ item.value }}
-            </a-select-option>
-          </a-select>
-        </a-form-model-item> -->
         <a-form-model-item>
           <a-button type="primary" @click="onSubmit" icon="search">查询</a-button>
           <a-button style="margin-left: 10px;" @click="handleReset">重置</a-button>
@@ -46,7 +32,7 @@
     <div class="table-wrapper">
       <div class="title-content">
         <span class="title">2017年度以来整体营收情况分析</span>
-        <a-button type="primary" :loading="downLoading">导出</a-button>
+        <a-button type="primary" :loading="downLoading" @click="handleExport">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
@@ -59,7 +45,7 @@
 
       <div class="title-content">
         <span class="title">按照年度营收情况分析</span>
-        <a-button type="primary" :loading="downLoading2">导出</a-button>
+        <a-button type="primary" :loading="downLoading2" @click="handleExport2">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
@@ -73,7 +59,7 @@
 
       <div class="title-content">
         <span class="title">按照行业营收情况分析</span>
-        <a-button type="primary" :loading="downLoading3">导出</a-button>
+        <a-button type="primary" :loading="downLoading3" @click="handleExport3">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">

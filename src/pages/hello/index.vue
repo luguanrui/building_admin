@@ -20,31 +20,23 @@
       <div class="msg-wrapper">
         <div class="msg-content">
           <h3 class="title">消息中心</h3>
-          <table style="width: 100%">
-            <tbody>
-              <tr v-for="(item, index) in msgList" :key="index">
-                <td class="number">{{ index + 1 }}</td>
-                <td class="content">{{ item.title }}</td>
-                <td class="name">{{ item.createUserName }}</td>
-                <td class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日')}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div style="text-align: right;padding-right: 15px;">
+          <li v-for="(item, index) in msgList" :key="index" class="msg-content-item">
+            <div class="number">{{ index + 1 }}</div>
+            <div class="content">{{ item.title }}</div>
+            <div class="name">{{ item.createUserName }}</div>
+            <div class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日') }}</div>
+          </li>
+          <div style="text-align: right;padding-right: 35px;">
             <a-button type="link">更多</a-button>
           </div>
         </div>
         <div class="announcement-content">
           <h3 class="title">通知公告</h3>
-          <table style="width: 100%">
-            <tbody>
-              <tr v-for="(item, index) in announcementList" :key="index">
-                <td class="content" @click="handleToAnnouncement(item)">{{ item.content }}</td>
-                <td class="type">{{ noticeTypeListText(item.noticeType) }}</td>
-                <td class="time">{{ item.publishTime && dayjs(item.publishTime).format('YYYY年MM月DD日') }}</td>
-              </tr>
-            </tbody>
-          </table>
+          <li v-for="(item, index) in announcementList" :key="index" class="announcement-content-item">
+            <div class="content" @click="handleToAnnouncement(item)">{{ item.title }}</div>
+            <div class="type">{{ noticeTypeListText(item.noticeType) }}</div>
+            <div class="time">{{ item.publishTime && dayjs(item.publishTime).format('YYYY年MM月DD日') }}</div>
+          </li>
           <div style="text-align: right;padding-right: 10px;" v-if="announcementList.length > 10">
             <a-button type="link">更多</a-button>
           </div>
@@ -65,18 +57,25 @@
     .title {
       padding: 8px 16px;
     }
-    td {
-      padding: 6px 16px;
+    .msg-content-item {
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      padding: 0 16px;
     }
     .number {
       width: 30px;
     }
     .content {
       cursor: pointer;
-      //   width: 50px;
+      width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .name {
       width: 80px;
+      padding-left: 20px;
     }
     .time {
       width: 150px;
@@ -87,14 +86,21 @@
     .title {
       padding: 8px 16px;
     }
-    td {
-      padding: 6px 16px;
+    .announcement-content-item {
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      padding: 0 16px;
     }
     .content {
       cursor: pointer;
-      //   width: 30px;
+      width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .type {
+      padding-left: 20px;
       width: 80px;
     }
     .time {

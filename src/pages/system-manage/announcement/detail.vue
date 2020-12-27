@@ -1,7 +1,7 @@
 <template>
   <a-card>
     <div v-html="form.content"></div>
-    <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" :fileListLength="1" :multiple="false" :acceptStr="'img'" />
+    <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" :fileListLength="1" :multiple="false" :acceptStr="'img'" :disabled="true"/>
   </a-card>
 </template>
 <script>

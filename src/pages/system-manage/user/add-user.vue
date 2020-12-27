@@ -24,17 +24,6 @@
         <a-form-model-item label="手机号码" prop="phone">
           <a-input v-model="form.phone" placeholder="请输入" allowClear :maxLength="11"/>
         </a-form-model-item>
-        <a-form-model-item label="所属机构" prop="deptId">
-          <a-select v-model="form.deptId" placeholder="请选择" allowClear>
-            <a-select-option
-              v-for="item in allOrgList"
-              :key="item.key"
-              :value="item.key"
-            >
-              {{ item.value }}
-            </a-select-option>
-          </a-select>
-        </a-form-model-item>
         <a-form-model-item label="所属角色" prop="role">
           <a-select v-model="form.role" placeholder="请选择" allowClear>
             <a-select-option
@@ -106,12 +95,11 @@ export default {
     };
   },
   computed: {
-    ...mapState("common", ["allOrgList", "roleList"]),
+    ...mapState("common", ["roleList"]),
   },
   methods: {
-    ...mapActions("common", ["getAllOrgList", "getRoleList"]),
+    ...mapActions("common", ["getRoleList"]),
     handleVisible(user, type) {
-      this.getAllOrgList();
       this.getRoleList();
       if (user) {
         const { userName, realName, phone, deptId, role, userId } = user;

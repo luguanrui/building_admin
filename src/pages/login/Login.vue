@@ -95,7 +95,7 @@ export default {
       if (code === 200) {
         localStorage.setItem('sessionId', rs.sessionId)
         this.setUser(rs)
-        this.$router.push("/info-manage/building");
+        this.$router.push("/index");
       }
     },
     onSubmit() {

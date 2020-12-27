@@ -136,12 +136,12 @@
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="营收" prop="" :label-col="{ span: 5 }">
-              <a-input v-model="other.income" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-model="other.income" placeholder="请输入" allowClear :maxLength="200" addon-after="万元"/>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="税收" prop="" :label-col="{ span: 5 }">
-              <a-input v-model="other.tax" placeholder="请输入" allowClear :maxLength="200" />
+              <a-input v-model="other.tax" placeholder="请输入" allowClear :maxLength="200" addon-after="万元"/>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">

@@ -61,7 +61,7 @@
       display: flex;
       align-content: center;
       justify-content: center;
-      padding: 0 16px;
+      padding: 4px 16px;
     }
     .number {
       width: 30px;
@@ -90,7 +90,7 @@
       display: flex;
       align-content: center;
       justify-content: center;
-      padding: 0 16px;
+      padding: 4px 16px;
     }
     .content {
       cursor: pointer;

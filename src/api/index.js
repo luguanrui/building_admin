@@ -44,7 +44,7 @@ export function getOwnerList(params) {
 }
 // 导出
 export function exportOwnerList(params) {
-  return axios.get(`${baseApi}owner/list/export`, { params })
+  return axios.get(`${baseApi}owner/list/export`, { params, responseType: 'blob' })
 }
 // 保存业主信息
 export function saveOwner(params) {
@@ -61,7 +61,7 @@ export function getHouseList(params) {
 }
 // 导出
 export function exportHouseList(params) {
-  return axios.get(`${baseApi}house/list/export`, { params })
+  return axios.get(`${baseApi}house/list/export`, { params, responseType: 'blob' })
 }
 // 保存业主信息
 export function saveHouse(params) {
@@ -78,7 +78,7 @@ export function getCompanyList(params) {
 }
 // 企业列表导出
 export function exportCompanyList(params) {
-  return axios.get(`${baseApi}company/list/export`, { params })
+  return axios.get(`${baseApi}company/list/export`, { params, responseType: 'blob' })
 }
 // 查询单个企业信息
 export function getCompany(params) {
@@ -108,7 +108,7 @@ export function getDataByIndustry(params) {
 }
 // 导出
 export function exportDataByIndustry(params) {
-  return axios.get(`${baseApi}data/byIndustry/export`, { params })
+  return axios.get(`${baseApi}data/byIndustry/export`, { params, responseType: 'blob' })
 }
 // 年度xx分析
 export function getDataByMonth(params) {
@@ -116,7 +116,7 @@ export function getDataByMonth(params) {
 }
 // 导出
 export function exportDataByMonth(params) {
-  return axios.get(`${baseApi}data/byMonth/export`, { params })
+  return axios.get(`${baseApi}data/byMonth/export`, { params, responseType: 'blob' })
 }
 // 按年度，从2017年至今xx分析
 export function getDataByYear(params) {
@@ -124,7 +124,7 @@ export function getDataByYear(params) {
 }
 // 导出
 export function exportDataByYear(params) {
-  return axios.get(`${baseApi}data/byYear/export`, { params })
+  return axios.get(`${baseApi}data/byYear/export`, { params, responseType: 'blob' })
 }
 
 // 按照楼宇行业情况分析
@@ -150,7 +150,7 @@ export function getBuildList(params) {
 }
 // 导出
 export function exportBuildList(params) {
-  return axios.get(`${baseApi}build/list/export`, { params })
+  return axios.get(`${baseApi}build/list/export`, { params, responseType: 'blob' })
 }
 // 删除楼宇
 export function removeBuild(params) {

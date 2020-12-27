@@ -59,8 +59,8 @@ module.exports = {
       }
     }
   },
-  publicPath: process.env.NODE_ENV === 'production' ? '/vue-antd-admin/' : '/',
-  outputDir: 'dist',
+  publicPath: process.env.NODE_ENV === 'production' ? '/building_admin/' : '/',
+  outputDir: 'building_admin',
   assetsDir: 'static',
   productionSourceMap: false
 }

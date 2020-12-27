@@ -35,16 +35,16 @@ export default {
       },
       rules: {
         name: [{ required: true, message: '必填', trigger: 'blur' }],
-        cardType: [{ required: true, message: '必填', trigger: 'blur' }],
-        country: [{ required: true, message: '必填', trigger: 'blur' }],
+        cardType: [{ required: true, message: '必填', trigger: 'change' }],
+        country: [{ required: true, message: '必填', trigger: 'change' }],
         cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
         sex: [{ required: true, message: '必填', trigger: 'blur' }],
         age: [{ required: true, message: '必填', trigger: 'blur' }],
-        employeeFrom: [{ required: true, message: '必填', trigger: 'blur' }],
-        nation: [{ required: true, message: '必填', trigger: 'blur' }],
-        politicalType: [{ required: true, message: '必填', trigger: 'blur' }],
+        employeeFrom: [{ required: true, message: '必填', trigger: 'change' }],
+        nation: [{ required: true, message: '必填', trigger: 'change' }],
+        politicalType: [{ required: true, message: '必填', trigger: 'change' }],
         address: [{ required: true, message: '必填', trigger: 'blur' }],
-        education: [{ required: true, message: '必填', trigger: 'blur' }],
+        education: [{ required: true, message: '必填', trigger: 'change' }],
         outLimitDate: [{ required: true, message: '必填', trigger: 'blur' }],
         repeatCheck: [{ required: true, message: '必填', trigger: 'blur' }],
         phone: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -63,6 +63,7 @@ export default {
   methods: {
     ...mapActions('common', ['getCardTypeList', 'getCountryList', 'getRegionList', 'getNationList', 'getPoliticalList', 'getEducationList', 'getAbilityList']),
     // 打开
+    // enterpriseId, employeeObj, dialogStatus
     handleVisible(enterpriseId, employeeObj, dialogStatus) {
       Object.assign(this.$data, this.$options.data())
       this.enterpriseId = enterpriseId || ''
@@ -86,17 +87,17 @@ export default {
       // 人才列表
       this.getAbilityList()
 
-      if (this.employeeId) {
+      // if (this.employeeId) {
+       
         this.form = Object.assign(this.form, employeeObj)
+        console.log(this.form,'this.form')
         // 有效期限
-        this.form.outLimitDate = [employeeObj.outLimitDateStart, employeeObj.outLimitDateEnd]
+        if (this.form.outLimitDateStart && this.form.outLimitDateEnd) {
+          this.form.outLimitDate = [this.form.outLimitDateStart, this.form.outLimitDateEnd]
+        }
         // 籍贯
-        this.form.employeeFromCopy = []
-      }
-
-      //   if (this.form.id) {
-      //     // this.getCompany()
-      //   }
+        this.form.employeeFromCopy = this.form.employeeFrom ? this.form.employeeFrom.split(',') : []
+      // }
     },
     // 关闭
     handleClose() {
@@ -112,8 +113,8 @@ export default {
       this.form.outLimitDateStart = this.form.outLimitDate[0]
       this.form.outLimitDateEnd = this.form.outLimitDate[1]
 
-      delete this.form.employeeFromCopy
-      delete this.form.outLimitDate
+      // delete this.form.employeeFromCopy
+      // delete this.form.outLimitDate
 
       this.$refs.form.validate(valid => {
         if (valid) {

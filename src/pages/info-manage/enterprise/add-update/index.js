@@ -48,16 +48,16 @@ export default {
       },
 
       rules: {
-        name: [{ required: true, message: '必填', trigger: 'blur' }],
-        buildId: [{ required: true, message: '必填', trigger: 'blur' }],
-        buildType: [{ required: true, message: '必填', trigger: 'blur' }],
-        floor: [{ required: true, message: '必填', trigger: 'blur' }],
-        roomNum: [{ required: true, message: '必填', trigger: 'blur' }],
-        companyType: [{ required: true, message: '必填', trigger: 'blur' }],
-        belongType: [{ required: true, message: '必填', trigger: 'blur' }],
+        name: [{ required: true, message: '必填', trigger: 'change' }],
+        buildId: [{ required: true, message: '必填', trigger: 'change' }],
+        buildType: [{ required: true, message: '必填', trigger: 'change' }],
+        floor: [{ required: true, message: '必填', trigger: 'change' }],
+        roomNum: [{ required: true, message: '必填', trigger: 'change' }],
+        companyType: [{ required: true, message: '必填', trigger: 'change' }],
+        belongType: [{ required: true, message: '必填', trigger: 'change' }],
         creditCode: [{ required: true, message: '必填', trigger: 'blur' }],
         regAddress: [{ required: true, message: '必填', trigger: 'blur' }],
-        regDate: [{ required: true, message: '必填', trigger: 'blur' }],
+        regDate: [{ required: true, message: '必填', trigger: 'change' }],
         iegalPerson: [{ required: true, message: '必填', trigger: 'blur' }],
         taxId: [{ required: true, message: '必填', trigger: 'blur' }],
         businessScope: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -229,6 +229,7 @@ export default {
     },
     // 修改员工信息
     handleUpdate(record) {
+      console.log(record,'record')
       this.$refs.employeeAdd.handleVisible(this.form.id, record, 'edit')
     },
     // 删除员工

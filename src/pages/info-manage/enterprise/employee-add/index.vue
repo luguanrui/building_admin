@@ -51,7 +51,7 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="span">
-          <a-form-model-item label="籍贯" prop="employeeFrom">
+          <a-form-model-item label="籍贯" prop="employeeFromCopy">
             <span v-if="disabled">{{ form.employeeFrom }}</span>
             <a-cascader
               v-else

@@ -135,12 +135,6 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="职务" prop="contactJob">
-              <!-- <span v-if="disabled">{{ form.contactJob }}</span>
-              <a-select v-else v-model="form.contactJob" placeholder="请选择" allowClear :getPopupContainer="(trigger) => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
-                  {{ item.value }}
-                </a-select-option>
-              </a-select> -->
               <span v-if="disabled">{{ form.contactJob }}</span>
               <a-input v-else v-model="form.contactJob" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
@@ -158,7 +152,6 @@
           <a-col :span="span">
             <a-form-model-item label="所属权" prop="workRoomType">
               <span v-if="disabled">{{ findValue(workRoomTypeList,form.workRoomType) }}</span>
-              <!-- <a-input v-else v-model="form.workRoomType" placeholder="请输入" allowClear :maxLength="200" /> -->
               <a-select v-else v-model="form.workRoomType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in workRoomTypeList" :value="item.key" :key="item.key">
                   {{ item.value }}
@@ -168,12 +161,6 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="面积" prop="workRoomArea">
-              <!-- <span v-if="disabled">{{ form.workRoomArea }}</span>
-              <a-select v-else v-model="form.workRoomArea" placeholder="请选择" allowClear :getPopupContainer="(trigger) => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <a-select-option v-for="item in industryList" :value="item.key" :key="item.item">
-                  {{ item.value }}
-                </a-select-option>
-              </a-select> -->
               <span v-if="disabled">{{ form.workRoomArea }}平方米</span>
               <a-input v-else v-model="form.workRoomArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
             </a-form-model-item>
@@ -207,9 +194,9 @@
           </a-col>
           <a-col :span="24">
             <a-table :columns="columns" :data-source="form.employeeList" :rowKey="(record, index) => index" :pagination="false">
-              <template slot="operation" slot-scope="record">
-                <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
-                <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)">删除</a-button>
+              <template slot="operation" slot-scope="text, record, index">
+                <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(index,record)">修改</a-button>
+                <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(index)">删除</a-button>
               </template>
             </a-table>
           </a-col>

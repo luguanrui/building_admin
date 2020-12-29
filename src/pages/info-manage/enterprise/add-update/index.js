@@ -16,6 +16,7 @@ export default {
       dialogStatus: '', // add ,edit,detail
 
       totalCount: 0,
+      employeeListIndex: '',
       form: {
         id: '',
         name: '', // 企业名称
@@ -225,19 +226,31 @@ export default {
     },
     // 新增员工
     handleAddEmployee() {
-      this.$refs.employeeAdd.handleVisible(this.form.id, undefined, 'add')
+      const params = {
+        employeeObj: null,
+        dialogStatus: 'add',
+      }
+      this.employeeListIndex = ''
+      console.log(params, 'handleAddEmployee')
+      this.$refs.employeeAdd.handleVisible(params)
     },
     // 修改员工信息
-    handleUpdate(record) {
-      console.log(record,'record')
-      this.$refs.employeeAdd.handleVisible(this.form.id, record, 'edit')
+    handleUpdate(index, record) {
+      const params = {
+        employeeObj: record,
+        dialogStatus: 'edit',
+      }
+      this.employeeListIndex = index
+      console.log(params, 'handleUpdate')
+      this.$refs.employeeAdd.handleVisible(params)
     },
     // 删除员工
-    handleDel(record) {
-      console.log(record)
+    handleDel(index) {
+      this.form.employeeList.splice(index, 1)
     },
     // 新增员工成功
-    handleSuccess(dialogStatus, obj) {
+    handleSuccess(params) {
+      const { dialogStatus, obj } = params
       if (dialogStatus === 'add') {
         this.form.employeeList.push({
           ...obj,
@@ -245,6 +258,8 @@ export default {
         })
       } else if (dialogStatus === 'edit') {
         // 编辑
+        console.log(this.employeeListIndex, 'handleSuccess')
+        this.form.employeeList[this.employeeListIndex] = Object.assign(this.form.employeeList[this.employeeListIndex], obj)
       }
     },
     // 详情
@@ -254,7 +269,7 @@ export default {
         rs.employeeList = rs.employeeList || []
         let rsObj = {
           ...rs,
-          roomNum: rs.roomNum.split(',')
+          roomNum: rs.roomNum.split(','),
         }
         this.form = Object.assign(this.form, rsObj)
         // 员工情况,总人数
@@ -271,7 +286,7 @@ export default {
         // 参数
         const params = {
           ...this.form,
-          roomNum: this.form.roomNum.join()
+          roomNum: this.form.roomNum.join(),
         }
         if (params) {
           const { code } = await saveCompany(params)

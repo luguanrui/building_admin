@@ -8,7 +8,6 @@ export default {
       wrapperCol: { span: 24 },
       span: 12,
       dialogStatus: '',
-      enterpriseId: '', // 企业id
       employeeId: '', // 员工id
       form: {
         name: '', // 员工名称
@@ -40,7 +39,7 @@ export default {
         cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
         sex: [{ required: true, message: '必填', trigger: 'blur' }],
         age: [{ required: true, message: '必填', trigger: 'blur' }],
-        employeeFrom: [{ required: true, message: '必填', trigger: 'change' }],
+        employeeFromCopy: [{ required: true, message: '必填', trigger: 'change' }],
         nation: [{ required: true, message: '必填', trigger: 'change' }],
         politicalType: [{ required: true, message: '必填', trigger: 'change' }],
         address: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -63,10 +62,11 @@ export default {
   methods: {
     ...mapActions('common', ['getCardTypeList', 'getCountryList', 'getRegionList', 'getNationList', 'getPoliticalList', 'getEducationList', 'getAbilityList']),
     // 打开
-    // enterpriseId, employeeObj, dialogStatus
-    handleVisible(enterpriseId, employeeObj, dialogStatus) {
+    // employeeObj, dialogStatus
+    handleVisible(obj) {
+      const { employeeObj, dialogStatus } = obj
+      console.log(obj, 'handleVisible')
       Object.assign(this.$data, this.$options.data())
-      this.enterpriseId = enterpriseId || ''
       this.employeeId = employeeObj ? employeeObj.id : ''
       //   this.form.id = id || ''
       this.visible = true
@@ -87,17 +87,16 @@ export default {
       // 人才列表
       this.getAbilityList()
 
-      // if (this.employeeId) {
-       
+      if (dialogStatus === 'edit') {
         this.form = Object.assign(this.form, employeeObj)
-        console.log(this.form,'this.form')
+        console.log(this.form, 'this.form')
         // 有效期限
         if (this.form.outLimitDateStart && this.form.outLimitDateEnd) {
           this.form.outLimitDate = [this.form.outLimitDateStart, this.form.outLimitDateEnd]
         }
         // 籍贯
         this.form.employeeFromCopy = this.form.employeeFrom ? this.form.employeeFrom.split(',') : []
-      // }
+      }
     },
     // 关闭
     handleClose() {
@@ -113,17 +112,14 @@ export default {
       this.form.outLimitDateStart = this.form.outLimitDate[0]
       this.form.outLimitDateEnd = this.form.outLimitDate[1]
 
-      // delete this.form.employeeFromCopy
-      // delete this.form.outLimitDate
-
       this.$refs.form.validate(valid => {
         if (valid) {
-          // 新增
-          //   if (this.dialogStatus === 'add' || this.dialogStatus === 'edit') {
-          //     // this.saveCompany()
-
-          //   }
-          this.$emit('handleSuccess', this.dialogStatus, this.form)
+          const params = {
+            dialogStatus: this.dialogStatus,
+            obj: this.form,
+          }
+          console.log(params, 'handleSubmit')
+          this.$emit('handleSuccess', params)
           this.handleClose()
         } else {
           console.log('error submit!!')

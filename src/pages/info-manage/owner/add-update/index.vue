@@ -44,7 +44,7 @@
           <a-col :span="span">
             <a-form-model-item label="房号" prop="roomNum">
               <span v-if="disabled">{{ form.roomNum }} &nbsp;&nbsp;号</span>
-              <a-select v-else v-model="form.roomNum" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+              <a-select v-else v-model="form.roomNum" placeholder="请选择" mode="multiple" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false" @change="handleChangeRoomNum">
                 <a-select-option v-for="item in buildingRoomList" :value="item" :key="item">
                   {{ item }}
                 </a-select-option>
@@ -54,7 +54,7 @@
           <a-col :span="span">
             <a-form-model-item label="面积" prop="totalArea">
               <span v-if="disabled">{{ form.totalArea }} &nbsp;&nbsp;平方米</span>
-              <a-input v-else v-model="form.totalArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
+              <a-input v-else v-model="form.totalArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" :disabled="true"/>
             </a-form-model-item>
           </a-col>
 
@@ -106,8 +106,7 @@
           <a-col :span="span">
             <a-form-model-item label="车牌号码" prop="carNum">
               <span v-if="disabled">{{ form.carNum }}</span>
-              <a-input v-else v-model="form.carNum" placeholder="请输入" allowClear :maxLength="20" style="width: 218px;margin-right: 10px" />
-              <a v-if="!disabled"><a-icon type="plus-circle"/></a>
+              <a-input v-else v-model="form.carNum" placeholder="多个车牌号码请以英文逗号隔开" allowClear :maxLength="20"/>
             </a-form-model-item>
           </a-col>
         </a-row>

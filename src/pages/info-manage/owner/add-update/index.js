@@ -1,5 +1,5 @@
 import { mapState, mapActions } from 'vuex'
-import { saveOwner, getOwner } from '@/api/index'
+import { saveOwner, getOwner, getBuildRoomCalc } from '@/api/index'
 
 export default {
   data() {
@@ -161,6 +161,23 @@ export default {
         return result.name
       } else {
         return '未知类型'
+      }
+    },
+    // 选择房号
+    handleChangeRoomNum() {
+      this.getBuildRoomCalc()
+    },
+    // 根据房号计算面积
+    async getBuildRoomCalc() {
+      const params = {
+        buildId: this.form.buildId,
+        buildType: this.form.buildType,
+        floor: this.form.floor,
+        roomNums: this.form.roomNum,
+      }
+      const { code, rs } = await getBuildRoomCalc(params)
+      if (code === 200) {
+        this.form.totalArea = rs
       }
     },
     // 新增

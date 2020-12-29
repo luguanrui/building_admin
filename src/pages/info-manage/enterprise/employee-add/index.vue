@@ -125,7 +125,7 @@
         <a-col :span="span">
           <a-form-model-item label="车牌号码" prop="carNum">
             <span v-if="disabled">{{ form.carNum }}</span>
-            <a-input v-else v-model="form.carNum" placeholder="请输入" allowClear :maxLength="200" />
+            <a-input v-else v-model="form.carNum" placeholder="多个车牌号码请以英文逗号隔开" allowClear :maxLength="200" />
           </a-form-model-item>
         </a-col>
         <a-col :span="span">

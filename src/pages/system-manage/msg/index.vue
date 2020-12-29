@@ -54,11 +54,9 @@ export default {
     }
   },
   activated() {
-    this.pagination.pageSize = 20
     this.getMsgList()
   },
   mounted() {
-    this.pagination.pageSize = 20
     this.getMsgList()
   },
   methods: {

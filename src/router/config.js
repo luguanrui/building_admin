@@ -161,6 +161,9 @@ const options = {
               path: 'msg',
               name: '消息中心',
               component: () => import('@/pages/system-manage/msg/index.vue'),
+              meta: {
+                invisible: true,
+              },
             },
           ],
         },

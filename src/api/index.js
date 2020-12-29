@@ -164,6 +164,10 @@ export function getBuildHome(params) {
 export function getBuildDetail(params) {
   return axios.get(`${baseApi}build/get`, { params })
 }
+// 根据多个房号计算总面积
+export function getBuildRoomCalc(params) {
+  return axios.post(`${baseApi}build/room/calc`, params)
+}
 /***************************** 公告管理 *************************** */
 // 保存公告
 export function saveNotice(params) {

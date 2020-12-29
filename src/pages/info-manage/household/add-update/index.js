@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { mapState, mapActions } from 'vuex'
-import { saveHouse, getHouse } from '@/api/index'
+import { saveHouse, getHouse, getBuildRoomCalc } from '@/api/index'
 
 export default {
   data() {
@@ -30,7 +30,7 @@ export default {
             tempCardNum: undefined, // 暂住证号码
             sex: undefined, // 性别；1-男；2-女；
             age: undefined, // 年龄
-            carNum: undefined, // 车牌号码
+            carNum: '', // 车牌号码
             userFromCopy: [],
             userFrom: '', // 籍贯
             nation: undefined, // 民族
@@ -43,10 +43,10 @@ export default {
       },
 
       rules: {
-        buildId: [{ required: true, message: '必填', trigger: 'blur' }],
-        buildType: [{ required: true, message: '必填', trigger: 'blur' }],
-        floor: [{ required: true, message: '必填', trigger: 'blur' }],
-        roomNum: [{ required: true, message: '必填', trigger: 'blur' }],
+        buildId: [{ required: true, message: '必填', trigger: 'change' }],
+        buildType: [{ required: true, message: '必填', trigger: 'change' }],
+        floor: [{ required: true, message: '必填', trigger: 'change' }],
+        roomNum: [{ required: true, message: '必填', trigger: 'change' }],
         totalArea: [{ required: true, message: '必填', trigger: 'blur' }],
       },
     }
@@ -115,6 +115,9 @@ export default {
       if (id) {
         this.getHouse()
       }
+      if (dialogStatus === 'detail') {
+        this.rules = {}
+      }
     },
     // 关闭弹窗
     onClose() {
@@ -161,6 +164,10 @@ export default {
         }
         this.getBuildRoomList(params)
       }
+    },
+    // 选择房号
+    handleChangeRoomNum() {
+      this.getBuildRoomCalc()
     },
     // 新增用户
     handleAddHousehold() {
@@ -211,15 +218,36 @@ export default {
     async saveHouse() {
       this.loading = true
       try {
-        const { code } = await saveHouse(this.form)
+        const params = {
+          ...this.form,
+          roomNum: this.form.roomNum.join()
+        }
+        const { code } = await saveHouse(params)
         if (code === 200) {
-          this.$message.success('业主信息新增成功！')
+          if (this.dialogStatus === 'add'){
+            this.$message.success('住户信息新增成功！')
+          }else if (this.dialogStatus === 'edit') {
+            this.$message.success('住户信息编辑成功！')
+          }
           this.$emit('handleSuccess')
           this.onClose()
         }
         this.loading = false
       } catch (error) {
         this.loading = false
+      }
+    },
+    // 根据房号计算面积
+    async getBuildRoomCalc() {
+      const params = {
+        buildId: this.form.buildId,
+        buildType: this.form.buildType,
+        floor: this.form.floor,
+        roomNums: this.form.roomNum,
+      }
+      const { code, rs } = await getBuildRoomCalc(params)
+      if (code === 200) {
+        this.form.totalArea = rs
       }
     },
     // 详情
@@ -239,7 +267,7 @@ export default {
             sex: user.sex, // 性别；1-男；2-女；
             age: user.age, // 年龄
             carNum: user.carNum, // 车牌号码
-            userFromCopy: [user.province,user.city,user.zone],
+            userFromCopy: [user.province, user.city, user.zone],
             userFrom: user.userFrom, // 籍贯
             nation: user.nation, // 民族
             politicalType: user.politicalType, // 政治面貌；0-无；1-团员；2-党员
@@ -248,7 +276,7 @@ export default {
             liveInTime: user.liveInTime, // 入住时间
           })
         })
-        Object.assign(this.form, { id, buildId, buildType, floor, roomNum, totalArea, userList:userListCopy })
+        Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, userList: userListCopy })
       }
     },
   },

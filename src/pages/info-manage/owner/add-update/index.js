@@ -17,7 +17,7 @@ export default {
         buildId: undefined, // 楼宇名称
         buildType: 1, // 	0-无；1-主楼；2-副楼
         floor: undefined, // 楼层
-        roomNum: undefined, // 房号
+        roomNum: [], // 房号
         totalArea: '', // 面积
         ownerName: '', // 产权所有人
         cardType: undefined, // 证件类型
@@ -92,7 +92,7 @@ export default {
     handleChangeBuild() {
       this.form.buildType = undefined
       this.form.floor = undefined
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -106,7 +106,7 @@ export default {
     // 选择主楼副楼
     handleChangeMain() {
       this.form.floor = undefined
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -119,7 +119,7 @@ export default {
     },
     // 选择楼层
     handleChangeFloor() {
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType && this.form.floor) {
         const params = {
@@ -184,7 +184,11 @@ export default {
     async saveOwner() {
       this.loading = true
       try {
-        const { code } = await saveOwner(this.form)
+        const params = {
+          ...this.form,
+          roomNum: this.form.roomNum.join()
+        }
+        const { code } = await saveOwner(params)
         if (code === 200) {
           this.$message.success('业主信息新增成功！')
           this.$emit('handleSuccess')
@@ -200,7 +204,7 @@ export default {
       const { code, rs } = await getOwner({ id: this.form.id })
       if (code === 200) {
         const { id, buildId, buildType, floor, roomNum, totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum } = rs
-        Object.assign(this.form, { id, buildId, buildType, floor, roomNum, totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum })
+        Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum })
       }
     },
   },

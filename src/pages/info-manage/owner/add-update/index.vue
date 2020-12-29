@@ -43,7 +43,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="房号" prop="roomNum">
-              <span v-if="disabled">{{ form.roomNum }} &nbsp;&nbsp;号</span>
+              <span v-if="disabled">{{ form.roomNum && form.roomNum.join() }} &nbsp;&nbsp;号</span>
               <a-select v-else v-model="form.roomNum" placeholder="请选择" mode="multiple" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false" @change="handleChangeRoomNum">
                 <a-select-option v-for="item in buildingRoomList" :value="item" :key="item">
                   {{ item }}

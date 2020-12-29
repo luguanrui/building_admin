@@ -22,7 +22,7 @@ export default {
         buildId: undefined, // 楼宇ID
         buildType: undefined, // 主楼副楼
         floor: undefined, // 楼层
-        roomNum: undefined, // 房号
+        roomNum: [], // 房号
         companyType: undefined, // 企业性质
         belongType: undefined, // 属地性质
         creditCode: '', // 统一信用代码
@@ -154,7 +154,7 @@ export default {
     handleChangeBuild() {
       this.form.buildType = undefined
       this.form.floor = undefined
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -168,7 +168,7 @@ export default {
     // 选择主楼副楼
     handleChangeMain() {
       this.form.floor = undefined
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -181,7 +181,7 @@ export default {
     },
     // 选择楼层
     handleChangeFloor() {
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType && this.form.floor) {
         const params = {
@@ -252,7 +252,11 @@ export default {
       const { code, rs } = await getCompany({ id: this.form.id })
       if (code === 200) {
         rs.employeeList = rs.employeeList || []
-        this.form = Object.assign(this.form, rs)
+        let rsObj = {
+          ...rs,
+          roomNum: rs.roomNum.split(',')
+        }
+        this.form = Object.assign(this.form, rsObj)
         // 员工情况,总人数
         this.totalCount = 0
         this.form.educationCountList.forEach(item => {
@@ -265,7 +269,10 @@ export default {
       try {
         this.loading = true
         // 参数
-        const params = { ...this.form }
+        const params = {
+          ...this.form,
+          roomNum: this.form.roomNum.join()
+        }
         if (params) {
           const { code } = await saveCompany(params)
           if (code === 200) {

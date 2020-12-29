@@ -18,7 +18,7 @@ export default {
         buildId: undefined, // 楼宇ID
         buildType: undefined, // 1-主楼；2-副楼
         floor: undefined, // 楼层
-        roomNum: undefined, // 房号
+        roomNum: [], // 房号
         totalArea: '', // 根据房号计算的面积
         userList: [
           {
@@ -127,7 +127,7 @@ export default {
     handleChangeBuild() {
       this.form.buildType = undefined
       this.form.floor = undefined
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -141,7 +141,7 @@ export default {
     // 选择主楼副楼
     handleChangeMain() {
       this.form.floor = undefined
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -154,7 +154,7 @@ export default {
     },
     // 选择楼层
     handleChangeFloor() {
-      this.form.roomNum = undefined
+      this.form.roomNum = []
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType && this.form.floor) {
         const params = {

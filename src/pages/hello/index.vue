@@ -27,7 +27,7 @@
             <div class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日') }}</div>
           </li>
           <div style="text-align: right;padding-right: 35px;">
-            <a-button type="link">更多</a-button>
+            <a-button type="link" @click="handleToMsg">更多</a-button>
           </div>
         </div>
         <div class="announcement-content">

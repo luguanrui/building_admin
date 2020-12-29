@@ -157,6 +157,11 @@ const options = {
               name: '楼宇管理',
               component: () => import('@/pages/system-manage/building/index.vue'),
             },
+            {
+              path: 'msg',
+              name: '消息中心',
+              component: () => import('@/pages/system-manage/msg/index.vue'),
+            },
           ],
         },
       ],

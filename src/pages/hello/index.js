@@ -46,6 +46,12 @@ export default {
         query: { id: item.id },
       })
     },
+    // 更多消息
+    handleToMsg() {
+      this.$router.push({
+        path: 'system-manage/msg',
+      })
+    },
     // 消息
     async getMsgList() {
       const { code, rs } = await getMsgList()

@@ -204,6 +204,8 @@ export default {
       const { code, rs } = await getOwner({ id: this.form.id })
       if (code === 200) {
         const { id, buildId, buildType, floor, roomNum, totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum } = rs
+        // Object.keys(this.form).forEach(key => this.form[key] = rs[key])
+        // this.form.roomNum = this.form.roomNum.split(',')
         Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum })
       }
     },

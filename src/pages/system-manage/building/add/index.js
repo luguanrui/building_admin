@@ -170,7 +170,7 @@ export default {
       const { code, rs } = await getBuildDetail({ id: this.form.id })
       if (code === 200) {
         rs.employeeList = rs.employeeList || []
-        this.form = Object.assign(this.form, rs)
+        Object.keys(this.form).forEach(key => this.form[key] = rs[key])
       }
     },
     // 新增
@@ -179,7 +179,6 @@ export default {
         this.loading = true
         // 参数
         const params = { ...this.form }
-        console.log(params, 'params')
         if (params) {
           const { code } = await saveBuild(params)
           if (code === 200) {

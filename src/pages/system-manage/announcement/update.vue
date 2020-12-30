@@ -129,8 +129,7 @@ export default {
     async getNoticeDetail() {
       const { code, rs } = await getNoticeDetail({ id: this.form.id })
       if (code === 200) {
-        const { id, title, noticeType, fileList, content } = rs
-        Object.assign(this.form, { id, title, noticeType, fileList, content })
+        Object.keys(this.form).forEach(key => this.form[key] = rs[key])
         this.initEditor()
         this.editor.txt.html(this.form.content)
       }

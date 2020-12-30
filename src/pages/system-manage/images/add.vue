@@ -122,8 +122,7 @@ export default {
     async getImgDetail() {
       const { code, rs } = await getImgDetail({ id: this.form.id })
       if (code === 200) {
-        const { id, title, fileList, noticeType, content } = rs
-        Object.assign(this.form, { id, title, noticeType, fileList, content })
+        Object.keys(this.form).forEach(key => this.form[key] = rs[key])
       }
     },
   },

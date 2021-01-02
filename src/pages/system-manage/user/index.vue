@@ -22,13 +22,13 @@
       </a-form-model>
     </div>
     <div class="opreation-wrapper">
-      <a-button type="primary" @click="handleAdd">新增</a-button>
+      <a-button type="primary" @click="handleAdd" :disabled="!permissionList.includes('100063')">新增</a-button>
     </div>
     <div class="table-wrapper">
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="false" :loading="loading">
         <template slot="operation" slot-scope="record, text" @click="handleRecord(text)">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
-          <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)">删除</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100063')">修改</a-button>
+          <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)" :disabled="!permissionList.includes('100064')">删除</a-button>
           <a-button size="small" @click="handleResetPwd(record)">重置密码</a-button>
         </template>
       </a-table>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import AddUser from './add-user.vue'
 import { getUserList, delUser, resetPwd } from '@/api/index'
 
@@ -87,6 +88,9 @@ export default {
       ],
       addVisible: false,
     }
+  },
+  computed: {
+    ...mapState('common', ['permissionList']),
   },
   activated() {
     this.getUserList()

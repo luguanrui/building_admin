@@ -67,7 +67,7 @@ export default {
     this.getCompanyList()
   },
   computed: {
-    ...mapState('common', ['buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', ['permissionList','buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
   },
   methods: {
     ...mapActions('common', ['getBuildAllList', 'getBuildFloorList', 'getBuildRoomList']),

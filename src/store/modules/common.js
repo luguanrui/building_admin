@@ -16,7 +16,8 @@ import {
   getBuildAllList,
   getBuildFloorList,
   getBuildRoomList,
-  getYearList
+  getYearList,
+  getHasPermissionList,
 } from '@/api/index'
 export default {
   namespaced: true,
@@ -69,7 +70,8 @@ export default {
     buildingAllList: [], // 楼宇列表（不分页）
     buildingFloorList: [], // 楼层
     buildingRoomList: [], // 房间号
-    yearList: []
+    yearList: [],
+    permissionList: [] // 权限按钮
   },
   getters: {
     // 年度
@@ -142,6 +144,9 @@ export default {
     },
     SET_YEAR_LIST(state, val) {
       state.yearList = val
+    },
+    SET_PERMISSION_LIST(state, val) {
+      state.permissionList = val
     }
   },
   actions: {
@@ -270,6 +275,13 @@ export default {
       if (code === 200) {
         commit('SET_YEAR_LIST', rs || [])
       }
-    }
+    },
+    // 权限按钮
+    async getHasPermissionList({ commit }) {
+      const { code, rs } = await getHasPermissionList()
+      if (code === 200) {
+        commit('SET_PERMISSION_LIST', rs)
+      }
+    },
   },
 }

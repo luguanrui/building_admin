@@ -32,7 +32,7 @@
     <div class="table-wrapper">
       <div class="title-content">
         <span class="title">2017年度以来整体营收情况分析</span>
-        <a-button type="primary" :loading="downLoading" @click="handleExport">导出</a-button>
+        <a-button type="primary" :loading="downLoading" @click="handleExport" :disabled="!permissionList.includes('100055')">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
@@ -45,7 +45,7 @@
 
       <div class="title-content">
         <span class="title">按照年度营收情况分析</span>
-        <a-button type="primary" :loading="downLoading2" @click="handleExport2">导出</a-button>
+        <a-button type="primary" :loading="downLoading2" @click="handleExport2" :disabled="!permissionList.includes('100055')">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
@@ -59,7 +59,7 @@
 
       <div class="title-content">
         <span class="title">按照行业营收情况分析</span>
-        <a-button type="primary" :loading="downLoading3" @click="handleExport3">导出</a-button>
+        <a-button type="primary" :loading="downLoading3" @click="handleExport3" :disabled="!permissionList.includes('100055')">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">

@@ -33,9 +33,9 @@
     </div>
     <div class="opreation-wrapper">
       <div>
-        <a-button type="primary" @click="handleAdd">新增企业基础信息</a-button>
-        <a-button type="primary" @click="handleAddOther">新增企业其他信息</a-button>
-        <a-button type="primary" @click="handleExport" :loading="downLoading">导出</a-button>
+        <a-button type="primary" @click="handleAdd" :disabled="!permissionList.includes('100022')">新增企业基础信息</a-button>
+        <a-button type="primary" @click="handleAddOther" :disabled="!permissionList.includes('100023')">新增企业其他信息</a-button>
+        <a-button type="primary" @click="handleExport" :loading="downLoading" :disabled="!permissionList.includes('100025')">导出</a-button>
       </div>
     </div>
     <div class="table-wrapper">
@@ -50,9 +50,9 @@
       >
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100022')">修改</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
-            <a-button type="danger" size="small" style="margin-right: 10px">删除</a-button>
+            <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100024')">删除</a-button>
           </a-popconfirm>
         </template>
       </a-table>

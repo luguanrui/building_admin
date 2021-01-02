@@ -53,7 +53,7 @@ export default {
     this.onSubmit()
   },
   computed: {
-    ...mapState('common', ['buildingAllList', 'industryList', 'educationList', 'abilityList', 'yearList']),
+    ...mapState('common', ['permissionList','buildingAllList', 'industryList', 'educationList', 'abilityList', 'yearList']),
   },
   methods: {
     ...mapActions('common', ['getBuildAllList', 'getIndustryList', 'getEducationList', 'getAbilityList', 'getYearList']),

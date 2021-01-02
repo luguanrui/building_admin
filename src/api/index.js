@@ -20,6 +20,16 @@ export function delUser(params) {
   return axios.post(`${baseApi}user/del`, params)
 }
 
+// 权限按钮 
+export function getHasPermissionList() {
+  return axios.get(`${baseApi}permission/getHasPermissionList`)
+}
+
+// 菜单 
+export function getPerByUser() {
+  return axios.get(`${baseApi}permission/getPerByUser`)
+}
+
 // 重置密码
 export function resetPwd(params) {
   return axios.post(`${baseApi}user/resetPwd`, params)

@@ -46,7 +46,7 @@
     <div class="table-wrapper">
       <div class="title-content">
         <span class="title">2017年度以来整体人才情况分析</span>
-        <a-button type="primary" :loading="downLoading">导出</a-button>
+        <a-button type="primary" :loading="downLoading" :disabled="!permissionList.includes('100055')">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
@@ -59,7 +59,7 @@
 
       <div class="title-content">
         <span class="title">按照年度人才情况分析</span>
-        <a-button type="primary" :loading="downLoading2">导出</a-button>
+        <a-button type="primary" :loading="downLoading2" :disabled="!permissionList.includes('100055')">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">
@@ -73,7 +73,7 @@
 
       <div class="title-content">
         <span class="title">按照行业人才情况分析</span>
-        <a-button type="primary" :loading="downLoading3">导出</a-button>
+        <a-button type="primary" :loading="downLoading3" :disabled="!permissionList.includes('100055')">导出</a-button>
       </div>
       <div class="table-and-chart">
         <div class="table-content">

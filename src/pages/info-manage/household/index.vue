@@ -36,15 +36,15 @@
     </div>
     <div class="opreation-wrapper">
       <div>
-        <a-button type="primary" @click="handleAdd">新增</a-button>
-        <a-button type="primary" @click="handleExport" :loading="downLoading">导出</a-button>
+        <a-button type="primary" @click="handleAdd" :disabled="!permissionList.includes('100032')">新增</a-button>
+        <a-button type="primary" @click="handleExport" :loading="downLoading" :disabled="!permissionList.includes('100033')">导出</a-button>
       </div>
     </div>
     <div class="table-wrapper">
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="pagination" :loading="loading">
         <a slot="name" slot-scope="text,record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100032')">修改</a-button>
           <!-- <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)">删除</a-button> -->
         </template>
       </a-table>

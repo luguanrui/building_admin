@@ -1,23 +1,7 @@
 <template>
-  <a-drawer
-    title="设置权限"
-    :width="720"
-    :visible="visible"
-    :body-style="{ paddingBottom: '80px' }"
-    @close="onClose"
-    :maskClosable="false"
-    :loading="drawerLoading"
-  >
+  <a-drawer title="设置权限" :width="720" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false" :loading="drawerLoading">
     <div class="wrapper">
-      <a-tree
-        v-if="treeData.length"
-        :tree-data="treeData"
-        checkable
-        v-model="checkedKeys"
-        :default-expand-all="defaultExpandAll"
-        :replaceFields="replaceFields"
-      >
-      </a-tree>
+      <a-tree v-if="treeData.length" :tree-data="treeData" checkable v-model="checkedKeys" :default-expand-all="defaultExpandAll" :replaceFields="replaceFields"> </a-tree>
     </div>
     <div
       :style="{
@@ -35,78 +19,78 @@
       <a-button :style="{ marginRight: '8px' }" @click="onClose">
         取消
       </a-button>
-      <a-button type="primary" @click="handleSubmit" :loading="loading">
+      <a-button type="primary" @click="handleSubmit" :loading="loading" :disabled="!permissionList.includes('100072')">
         保存
       </a-button>
     </div>
   </a-drawer>
 </template>
 <script>
-import {
-  getPermissionList,
-  getMyPermission,
-  saveMyPermission,
-} from "@/api/user";
+import { mapState } from 'vuex'
+import { getPermissionList, getMyPermission, saveMyPermission } from '@/api/user'
 
 export default {
   data() {
     return {
       visible: false,
       drawerLoading: false,
-      roleId: "",
+      roleId: '',
       loading: false,
       defaultExpandAll: true, // 全部展开
       checkedKeys: [], // 选中
       treeData: [],
       replaceFields: {
-        key: "perCode",
-        title: "name",
-        children: "childList",
+        key: 'perCode',
+        title: 'name',
+        children: 'childList',
       },
-    };
+    }
+  },
+  computed: {
+    ...mapState('common', ['permissionList']),
   },
   methods: {
     handleVisible(roleId) {
-      this.roleId = roleId;
-      this.visible = true;
-      this.getMyPermission();
-      this.getPermissionList();
+      this.roleId = roleId
+      this.visible = true
+      this.getMyPermission()
+      this.getPermissionList()
     },
     onClose() {
-      Object.assign(this.$data, this.$options.data());
+      Object.assign(this.$data, this.$options.data())
     },
     handleSubmit() {
-      this.saveMyPermission();
+      this.saveMyPermission()
     },
     // 保存接口
     async saveMyPermission() {
-      this.loading = true;
+      this.loading = true
       const params = {
         roleId: this.roleId,
         permissionCode: this.checkedKeys,
-      };
-      const { code } = await saveMyPermission(params);
+      }
+      const { code } = await saveMyPermission(params)
       if (code === 200) {
-        this.$message.success("保存成功");
-        this.onClose();
+        this.$message.success('保存成功')
+        this.onClose()
       }
     },
     // 接口
     async getPermissionList() {
-      this.drawerLoading = true;
-      const { code, rs } = await getPermissionList();
+      this.drawerLoading = true
+      const { code, rs } = await getPermissionList()
       if (code === 200) {
-        this.treeData = rs || [];
-        this.drawerLoading = true;
+        this.treeData = rs || []
+        this.drawerLoading = true
       }
     },
     // 获取当前用户的权限
     async getMyPermission() {
-      const { code, rs } = await getMyPermission({ roleId: this.roleId });
+      const { code, rs } = await getMyPermission({ roleId: this.roleId })
       if (code === 200) {
-        this.checkedKeys = rs || [];
+        this.checkedKeys = rs || []
       }
     },
   },
-};
+}
 </script>

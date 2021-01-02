@@ -70,7 +70,7 @@ export default {
     this.getOwnerList()
   },
   computed: {
-    ...mapState('common', ['buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', ['permissionList','buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
   },
   methods: {
     dayjs,

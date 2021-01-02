@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { mapState } from 'vuex'
 import pagination from '@/mixins/pagination'
 import { getBuildList, removeBuild, exportBuildList } from '@/api/index'
 import BuildingAdd from './add/index.vue'
@@ -64,6 +65,9 @@ export default {
       ],
       addVisible: false,
     }
+  },
+  computed: {
+    ...mapState('common', ['permissionList']),
   },
   activated() {
     this.getBuildList()

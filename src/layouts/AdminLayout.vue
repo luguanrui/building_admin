@@ -32,7 +32,8 @@ import PageFooter from './footer/PageFooter'
 import Drawer from '../components/tool/Drawer'
 import SideMenu from '../components/menu/SideMenu'
 import Setting from '../components/setting/Setting'
-import {mapState, mapMutations} from 'vuex'
+import {mapState, mapMutations,mapActions} from 'vuex'
+import { getPerByUser } from '@/api/index'
 
 const minHeight = window.innerHeight - 64 - 24 - 122
 
@@ -61,6 +62,7 @@ export default {
   },
   methods: {
     ...mapMutations('setting', ['correctPageMinHeight']),
+    ...mapActions('common', ['getHasPermissionList']),
     toggleCollapse () {
       this.collapsed = !this.collapsed
     },
@@ -69,7 +71,11 @@ export default {
     },
   },
   created() {
+    getPerByUser().then(res => {
+      this.$store.commit('setting/setMenuData', res.rs)
+    })
     this.correctPageMinHeight(minHeight - 1)
+    this.getHasPermissionList()
   },
   beforeDestroy() {
     this.correctPageMinHeight(-minHeight + 1)

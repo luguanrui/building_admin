@@ -15,17 +15,17 @@
       </a-form-model>
     </div>
     <div class="opreation-wrapper">
-      <a-button type="primary" @click="handleAdd">新增</a-button>
+      <a-button type="primary" @click="handleAdd" :disabled="!permissionList.includes('100092')">新增</a-button>
     </div>
     <div class="table-wrapper">
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="pagination" @change="handleChange" :loading="loading">
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100092')">修改</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
-            <a-button type="danger" size="small" style="margin-right: 10px">删除</a-button>
+            <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100093')">删除</a-button>
           </a-popconfirm>
-          <a-button size="small" @click="handlePublish(record)" :disabled="record.isPublish === 1">发布</a-button>
+          <a-button size="small" @click="handlePublish(record)" :disabled="record.isPublish === 1 && !permissionList.includes('100092')">发布</a-button>
         </template>
       </a-table>
     </div>
@@ -36,6 +36,7 @@
 
 <script>
 import dayjs from 'dayjs'
+import { mapState } from 'vuex'
 import pagination from '@/mixins/pagination'
 import AddAnnouncement from './add.vue'
 import { getImgList, removeImg, publishImg } from '@/api/index'
@@ -85,6 +86,9 @@ export default {
       ],
       addVisible: false,
     }
+  },
+  computed: {
+    ...mapState('common', ['permissionList']),
   },
   activated() {
     this.getImgList()

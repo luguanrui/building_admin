@@ -67,7 +67,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('common', ['buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', ['permissionList','buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
   },
   activated() {
     this.getBuildAllList()

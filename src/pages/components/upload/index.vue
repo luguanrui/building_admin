@@ -95,7 +95,9 @@ export default {
     acceptStrs() {
       if (this.acceptStr === 'img') {
         return 'image/png,image/jpg,image/jpeg'
-      } else {
+      } if (this.acceptStr === 'excel') {
+        return 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      }else {
         return (
           'image/png,image/jpg,image/jpeg,\n' +
           '              application/vnd.openxmlformats-officedocument.presentationml.presentation,\n' +

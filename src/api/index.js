@@ -20,12 +20,12 @@ export function delUser(params) {
   return axios.post(`${baseApi}user/del`, params)
 }
 
-// 权限按钮 
+// 权限按钮
 export function getHasPermissionList() {
   return axios.get(`${baseApi}permission/getHasPermissionList`)
 }
 
-// 菜单 
+// 菜单
 export function getPerByUser() {
   return axios.get(`${baseApi}permission/getPerByUser`)
 }
@@ -148,6 +148,22 @@ export function getDataHousePercent(params) {
 // 按照楼宇用途情况分析
 export function getDataHouseUseful(params) {
   return axios.get(`${baseApi}data/house/useful`, { params })
+}
+
+// 导入
+export function importTax(params) {
+  let config = {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }
+  return axios.post(`${baseApi}tax/import`, params, config)
+}
+// 导入明细
+export function getTaxImportDetail(params) {
+  return axios.get(`${baseApi}tax/import/detail`, { params })
+}
+// 导入列表
+export function getTaxImportList(params) {
+  return axios.get(`${baseApi}tax/import/list`, { params })
 }
 /***************************** 楼宇管理 *************************** */
 // 保存楼宇信息

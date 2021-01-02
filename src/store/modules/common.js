@@ -71,7 +71,22 @@ export default {
     buildingFloorList: [], // 楼层
     buildingRoomList: [], // 房间号
     yearList: [],
-    permissionList: [] // 权限按钮
+    permissionList: [], // 权限按钮
+    // 月度
+    monthList: [
+      { key: 1, value: '1月' },
+      { key: 2, value: '2月' },
+      { key: 3, value: '3月' },
+      { key: 4, value: '4月' },
+      { key: 5, value: '5月' },
+      { key: 6, value: '6月' },
+      { key: 7, value: '7月' },
+      { key: 8, value: '8月' },
+      { key: 9, value: '9月' },
+      { key: 10, value: '10月' },
+      { key: 11, value: '11月' },
+      { key: 12, value: '12月' },
+    ],
   },
   getters: {
     // 年度
@@ -147,7 +162,7 @@ export default {
     },
     SET_PERMISSION_LIST(state, val) {
       state.permissionList = val
-    }
+    },
   },
   actions: {
     // 获取省市区数据

@@ -165,6 +165,11 @@ const options = {
                 invisible: true,
               },
             },
+            {
+              path: 'import',
+              name: '数据导入管理',
+              component: () => import('@/pages/system-manage/import/index.vue'),
+            },
           ],
         },
       ],

@@ -93,6 +93,7 @@ export default {
       this.form.buildType = undefined
       this.form.floor = undefined
       this.form.roomNum = []
+      this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -107,6 +108,7 @@ export default {
     handleChangeMain() {
       this.form.floor = undefined
       this.form.roomNum = []
+      this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -120,6 +122,7 @@ export default {
     // 选择楼层
     handleChangeFloor() {
       this.form.roomNum = []
+      this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType && this.form.floor) {
         const params = {
@@ -165,7 +168,11 @@ export default {
     },
     // 选择房号
     handleChangeRoomNum() {
-      this.getBuildRoomCalc()
+      if (this.form.roomNum.length) {
+        this.getBuildRoomCalc()
+      } else {
+        this.form.totalArea = ''
+      }
     },
     // 根据房号计算面积
     async getBuildRoomCalc() {

@@ -128,6 +128,7 @@ export default {
       this.form.buildType = undefined
       this.form.floor = undefined
       this.form.roomNum = []
+      this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -142,6 +143,7 @@ export default {
     handleChangeMain() {
       this.form.floor = undefined
       this.form.roomNum = []
+      this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -155,6 +157,7 @@ export default {
     // 选择楼层
     handleChangeFloor() {
       this.form.roomNum = []
+      this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType && this.form.floor) {
         const params = {
@@ -167,7 +170,11 @@ export default {
     },
     // 选择房号
     handleChangeRoomNum() {
-      this.getBuildRoomCalc()
+      if (this.form.roomNum.length) {
+        this.getBuildRoomCalc()
+      } else {
+        this.form.totalArea = ''
+      }
     },
     // 新增用户
     handleAddHousehold() {
@@ -214,19 +221,28 @@ export default {
         return '未知类型'
       }
     },
+    // 校验
+    houseRoomTypeValid(rule, value, callback) {
+      console.log(rule, 'rule')
+      if (!value) {
+        callback(new Error('必填'))
+      } else {
+        callback()
+      }
+    },
     // 新增
     async saveHouse() {
       this.loading = true
       try {
         const params = {
           ...this.form,
-          roomNum: this.form.roomNum.join()
+          roomNum: this.form.roomNum.join(),
         }
         const { code } = await saveHouse(params)
         if (code === 200) {
-          if (this.dialogStatus === 'add'){
+          if (this.dialogStatus === 'add') {
             this.$message.success('住户信息新增成功！')
-          }else if (this.dialogStatus === 'edit') {
+          } else if (this.dialogStatus === 'edit') {
             this.$message.success('住户信息编辑成功！')
           }
           this.$emit('handleSuccess')

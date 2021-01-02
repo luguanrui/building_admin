@@ -1,4 +1,4 @@
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters,mapActions } from 'vuex'
 
 export default {
   data() {
@@ -32,27 +32,11 @@ export default {
         job: '', // 职务
         isContact: 1, // 是否为联系人
       },
-      rules: {
-        name: [{ required: true, message: '必填', trigger: 'blur' }],
-        cardType: [{ required: true, message: '必填', trigger: 'change' }],
-        country: [{ required: true, message: '必填', trigger: 'change' }],
-        cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
-        sex: [{ required: true, message: '必填', trigger: 'blur' }],
-        age: [{ required: true, message: '必填', trigger: 'blur' }],
-        employeeFromCopy: [{ required: true, message: '必填', trigger: 'change' }],
-        nation: [{ required: true, message: '必填', trigger: 'change' }],
-        politicalType: [{ required: true, message: '必填', trigger: 'change' }],
-        address: [{ required: true, message: '必填', trigger: 'blur' }],
-        education: [{ required: true, message: '必填', trigger: 'change' }],
-        outLimitDate: [{ required: true, message: '必填', trigger: 'blur' }],
-        repeatCheck: [{ required: true, message: '必填', trigger: 'blur' }],
-        phone: [{ required: true, message: '必填', trigger: 'blur' }],
-        job: [{ required: true, message: '必填', trigger: 'blur' }],
-        isContact: [{ required: true, message: '必填', trigger: 'blur' }],
-      },
+      rules: null,
     }
   },
   computed: {
+    ...mapGetters("account", ["user"]),
     ...mapState('common', ['carTypeList', 'countryList', 'genderList', 'regionList', 'nationList', 'politicalList', 'educationList', 'abilityList', 'whetherList']),
     // 显示详情
     disabled() {
@@ -67,6 +51,44 @@ export default {
       const { employeeObj, dialogStatus } = obj
       console.log(obj, 'handleVisible')
       Object.assign(this.$data, this.$options.data())
+      if (this.user.roleLevel<3) {
+        this.rules = {
+          name: [{ required: true, message: '必填', trigger: 'blur' }],
+          cardType: [{ required: true, message: '必填', trigger: 'change' }],
+          country: [{ required: true, message: '必填', trigger: 'change' }],
+          cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
+          sex: [{ required: true, message: '必填', trigger: 'blur' }],
+          age: [{ required: true, message: '必填', trigger: 'blur' }],
+          employeeFromCopy: [{ required: true, message: '必填', trigger: 'change' }],
+          nation: [{ required: true, message: '必填', trigger: 'change' }],
+          politicalType: [{ required: true, message: '必填', trigger: 'change' }],
+          address: [{ required: true, message: '必填', trigger: 'blur' }],
+          education: [{ required: true, message: '必填', trigger: 'change' }],
+          outLimitDate: [{ required: true, message: '必填', trigger: 'blur' }],
+          repeatCheck: [{ required: true, message: '必填', trigger: 'blur' }],
+          phone: [{ required: true, message: '必填', trigger: 'blur' }],
+          job: [{ required: true, message: '必填', trigger: 'blur' }],
+          isContact: [{ required: true, message: '必填', trigger: 'blur' }],
+        }
+      }else {
+        this.rules = {
+          name: [{ required: true, message: '必填', trigger: 'blur' }],
+          cardType: [{ required: true, message: '必填', trigger: 'change' }],
+          country: [{ required: true, message: '必填', trigger: 'change' }],
+          cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
+          sex: [{ required: true, message: '必填', trigger: 'blur' }],
+          age: [{ required: true, message: '必填', trigger: 'blur' }],
+          employeeFromCopy: [{ required: true, message: '必填', trigger: 'change' }],
+          nation: [{ required: true, message: '必填', trigger: 'change' }],
+          politicalType: [{ required: true, message: '必填', trigger: 'change' }],
+          address: [{ required: true, message: '必填', trigger: 'blur' }],
+          education: [{ required: true, message: '必填', trigger: 'change' }],
+          outLimitDate: [{ required: true, message: '必填', trigger: 'blur' }],
+          phone: [{ required: true, message: '必填', trigger: 'blur' }],
+          job: [{ required: true, message: '必填', trigger: 'blur' }],
+          isContact: [{ required: true, message: '必填', trigger: 'blur' }],
+        }
+      }
       this.employeeId = employeeObj ? employeeObj.id : ''
       //   this.form.id = id || ''
       this.visible = true

@@ -99,7 +99,7 @@
             </a-select>
           </a-form-model-item>
         </a-col>
-        <a-col :span="span">
+        <a-col :span="span" v-if="user.roleLevel<3">
           <a-form-model-item label="人才类别" prop="abilityType">
             <span v-if="disabled">{{ form.abilityType }}</span>
             <a-select v-else v-model="form.abilityType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
@@ -109,14 +109,14 @@
             </a-select>
           </a-form-model-item>
         </a-col>
-        <a-col :span="span">
+        <a-col :span="span" v-if="user.roleLevel<3">
           <a-form-model-item label="有效期限" prop="outLimitDateStart">
             <span v-if="disabled">{{ form.outLimitDateStart }}</span>
             <a-range-picker v-else v-model="form.outLimitDate" valueFormat="YYYY-MM-DD" allowClear />
             <!-- <a-input v-else v-model="form.outLimitDateStart" placeholder="请输入" allowClear :maxLength="200" /> -->
           </a-form-model-item>
         </a-col>
-        <a-col :span="span">
+        <a-col :span="span" v-if="user.roleLevel<3">
           <a-form-model-item label="复评情况" prop="repeatCheck">
             <span v-if="disabled">{{ form.repeatCheck }}</span>
             <a-input v-else v-model="form.repeatCheck" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />

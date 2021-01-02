@@ -1,6 +1,6 @@
 import { mapState, mapActions } from 'vuex'
 import dayjs from 'dayjs'
-import { saveCompany, getCompany } from '@/api/index'
+import { saveCompany, getCompany,getBuildRoomCalc } from '@/api/index'
 import EmployeeAdd from '../employee-add/index.vue'
 
 export default {
@@ -156,6 +156,7 @@ export default {
       this.form.buildType = undefined
       this.form.floor = undefined
       this.form.roomNum = []
+      this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -170,6 +171,7 @@ export default {
     handleChangeMain() {
       this.form.floor = undefined
       this.form.roomNum = []
+      this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType) {
@@ -183,6 +185,7 @@ export default {
     // 选择楼层
     handleChangeFloor() {
       this.form.roomNum = []
+      this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
       if (this.form.buildId && this.form.buildType && this.form.floor) {
         const params = {
@@ -191,6 +194,14 @@ export default {
           floor: this.form.floor,
         }
         this.getBuildRoomList(params)
+      }
+    },
+    // 选择房号
+    handleChangeRoomNum() {
+      if (this.form.roomNum.length) {
+        this.getBuildRoomCalc()
+      } else {
+        this.form.workRoomArea = ''
       }
     },
     // 提交信息
@@ -260,6 +271,19 @@ export default {
         // 编辑
         console.log(this.employeeListIndex, 'handleSuccess')
         this.form.employeeList[this.employeeListIndex] = Object.assign(this.form.employeeList[this.employeeListIndex], obj)
+      }
+    },
+    // 根据房号计算面积
+    async getBuildRoomCalc() {
+      const params = {
+        buildId: this.form.buildId,
+        buildType: this.form.buildType,
+        floor: this.form.floor,
+        roomNums: this.form.roomNum,
+      }
+      const { code, rs } = await getBuildRoomCalc(params)
+      if (code === 200) {
+        this.form.workRoomArea = rs
       }
     },
     // 详情

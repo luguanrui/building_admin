@@ -42,7 +42,7 @@
           <a-col :span="span">
             <a-form-model-item label="房号" prop="roomNum">
               <span v-if="disabled">{{ form.roomNum && form.roomNum.join() }}&nbsp;&nbsp;号</span>
-              <a-select v-else v-model="form.roomNum" placeholder="请选择" mode="multiple" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+              <a-select v-else v-model="form.roomNum" placeholder="请选择" mode="multiple" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false" @change="handleChangeRoomNum">
                 <a-select-option v-for="item in buildingRoomList" :value="item" :key="item">
                   {{ item }}
                 </a-select-option>
@@ -162,7 +162,7 @@
           <a-col :span="span">
             <a-form-model-item label="面积" prop="workRoomArea">
               <span v-if="disabled">{{ form.workRoomArea }}平方米</span>
-              <a-input v-else v-model="form.workRoomArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
+              <a-input v-else v-model="form.workRoomArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" :disabled="true"/>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">

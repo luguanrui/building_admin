@@ -3,8 +3,8 @@
     <div class="building-wrapper">
       <a-row type="flex" class="building-item" v-for="build in buildHomeList" :key="build.id">
         <a-col flex="280px" style="margin-right: 30px;">
-          <img :src="image" width="100%" />
-          <!-- <img :src="imageParese(build.buildingPic)" alt="楼宇图片" width="100%" /> -->
+          <!-- <img :src="image" width="100%" /> -->
+          <img :src="imageParese(build.buildingPic)" alt="楼宇图片" width="100%" />
         </a-col>
         <a-col flex="auto">
           <a-row style="margin-bottom: 50px">

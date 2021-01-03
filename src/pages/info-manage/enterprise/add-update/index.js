@@ -91,11 +91,11 @@ export default {
           dataIndex: 'createAt',
           customRender: (text, record) => dayjs(record.createAt).format('YYYY年MM月DD日'),
         },
-        {
-          title: '操作',
-          width: 180,
-          scopedSlots: { customRender: 'operation' },
-        },
+        // {
+        //   title: '操作',
+        //   width: 180,
+        //   scopedSlots: { customRender: 'operation' },
+        // },
       ],
     }
   },

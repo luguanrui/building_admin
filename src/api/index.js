@@ -110,7 +110,23 @@ export function saveCompanyOther(params) {
 export function getCompanyOtherList(params) {
   return axios.get(`${baseApi}company/other/list`, { params })
 }
+// 员工列表
+export function getEmployeeList(params) {
+  return axios.get(`${baseApi}employee/list`, { params })
+}
+// 删除员工能
+export function removeEmployee(params) {
+  return axios.post(`${baseApi}employee/remove`, params)
+}
+// 新增员工
+export function saveEmployee(params) {
+  return axios.post(`${baseApi}employee/save`, params)
+}
 
+// 查询单个员工
+export function getEmployee(params) {
+  return axios.get(`${baseApi}employee/get`, { params })
+}
 /***************************** 数据分析 *************************** */
 // 年度行业xx情况分析
 export function getDataByIndustry(params) {

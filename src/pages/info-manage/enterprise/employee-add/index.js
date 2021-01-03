@@ -1,4 +1,5 @@
-import { mapState, mapGetters,mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
+import { getEmployee, saveEmployee } from '@/api/index'
 
 export default {
   data() {
@@ -8,8 +9,9 @@ export default {
       wrapperCol: { span: 24 },
       span: 12,
       dialogStatus: '',
-      employeeId: '', // 员工id
       form: {
+        companyId: '',
+        employeeId: '',
         name: '', // 员工名称
         cardType: undefined, // 证件类型
         country: undefined, // 国籍
@@ -36,7 +38,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("account", ["user"]),
+    ...mapGetters('account', ['user']),
     ...mapState('common', ['carTypeList', 'countryList', 'genderList', 'regionList', 'nationList', 'politicalList', 'educationList', 'abilityList', 'whetherList']),
     // 显示详情
     disabled() {
@@ -48,10 +50,12 @@ export default {
     // 打开
     // employeeObj, dialogStatus
     handleVisible(obj) {
-      const { employeeObj, dialogStatus } = obj
-      console.log(obj, 'handleVisible')
       Object.assign(this.$data, this.$options.data())
-      if (this.user.roleLevel<3) {
+      const { companyId, employeeId, dialogStatus } = obj
+      console.log(obj, 'obj')
+      this.form.companyId = companyId
+      console.log(this.form, 'this.form')
+      if (this.user.roleLevel < 3) {
         this.rules = {
           name: [{ required: true, message: '必填', trigger: 'blur' }],
           cardType: [{ required: true, message: '必填', trigger: 'change' }],
@@ -70,7 +74,7 @@ export default {
           job: [{ required: true, message: '必填', trigger: 'blur' }],
           isContact: [{ required: true, message: '必填', trigger: 'blur' }],
         }
-      }else {
+      } else {
         this.rules = {
           name: [{ required: true, message: '必填', trigger: 'blur' }],
           cardType: [{ required: true, message: '必填', trigger: 'change' }],
@@ -89,7 +93,6 @@ export default {
           isContact: [{ required: true, message: '必填', trigger: 'blur' }],
         }
       }
-      this.employeeId = employeeObj ? employeeObj.id : ''
       //   this.form.id = id || ''
       this.visible = true
       this.dialogStatus = dialogStatus
@@ -109,15 +112,8 @@ export default {
       // 人才列表
       this.getAbilityList()
 
-      if (dialogStatus === 'edit') {
-        this.form = Object.assign(this.form, employeeObj)
-        console.log(this.form, 'this.form')
-        // 有效期限
-        if (this.form.outLimitDateStart && this.form.outLimitDateEnd) {
-          this.form.outLimitDate = [this.form.outLimitDateStart, this.form.outLimitDateEnd]
-        }
-        // 籍贯
-        this.form.employeeFromCopy = this.form.employeeFrom ? this.form.employeeFrom.split(',') : []
+      if (employeeId) {
+        this.getEmployee({ employeeId, companyId })
       }
     },
     // 关闭
@@ -127,8 +123,7 @@ export default {
     // 提交
     handleSubmit() {
       // 籍贯处理
-      const employeeFrom = this.form.employeeFromCopy.length ? this.form.employeeFromCopy.join() : ''
-      this.form.employeeFrom = employeeFrom
+      this.form.employeeFrom = this.form.employeeFromCopy.length ? this.form.employeeFromCopy.join() : ''
 
       // 有效期限处理
       this.form.outLimitDateStart = this.form.outLimitDate[0]
@@ -136,18 +131,36 @@ export default {
 
       this.$refs.form.validate(valid => {
         if (valid) {
-          const params = {
-            dialogStatus: this.dialogStatus,
-            obj: this.form,
-          }
-          console.log(params, 'handleSubmit')
-          this.$emit('handleSuccess', params)
-          this.handleClose()
+          this.saveEmployee(this.form)
         } else {
           console.log('error submit!!')
           return false
         }
       })
+    },
+    // 获取员工列表
+    async getEmployee(params) {
+      const { code, rs } = await getEmployee(params)
+      if (code === 200) {
+        Object.keys(this.form).forEach(key => {
+          this.form[key] = rs[key]
+        })
+        this.form.employeeId = rs.id
+        if (this.form.outLimitDateStart && this.form.outLimitDateEnd) {
+          this.form.outLimitDate = [this.form.outLimitDateStart, this.form.outLimitDateEnd]
+        }
+        this.form.employeeFromCopy = this.form.employeeFrom ? this.form.employeeFrom.split(',').map(item => Number(item)) : []
+      }
+    },
+    // 保存
+    async saveEmployee(params) {
+      const { code } = await saveEmployee(params)
+      console.log(code, 'code')
+      if (code === 200) {
+        this.$message.success('添加员工成功')
+        this.$emit('handleSuccess')
+        this.handleClose()
+      }
     },
   },
 }

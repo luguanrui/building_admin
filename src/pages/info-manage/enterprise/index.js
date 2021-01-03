@@ -2,12 +2,13 @@ import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
 import OtherInfo from './other-info/index.vue'
+import EmployeeList from './employee-list/index.vue'
 import { getCompanyList, removeCompany, exportCompanyList } from '@/api/index'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   mixins: [pagination],
-  components: { AddUpdate, OtherInfo },
+  components: { AddUpdate, OtherInfo,EmployeeList },
   data() {
     return {
       form: {
@@ -52,7 +53,7 @@ export default {
         },
         {
           title: '操作',
-          width: 180,
+          width: 220,
           scopedSlots: { customRender: 'operation' },
         },
       ],
@@ -148,6 +149,10 @@ export default {
     // 新增
     handleAdd() {
       this.$refs.addUpdate.handleVisible('', 'add')
+    },
+    // 员工列表
+    handleEmployee(record) {
+      this.$refs.employeeList.handleVisible(record.id)
     },
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys

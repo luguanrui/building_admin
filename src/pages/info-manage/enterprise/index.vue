@@ -51,6 +51,7 @@
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100022')">修改</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleEmployee(record)">员工列表</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100024')">删除</a-button>
           </a-popconfirm>
@@ -61,6 +62,8 @@
     <AddUpdate ref="addUpdate" @handleSuccess="handleSuccess" />
     <!-- 其他信息 -->
     <OtherInfo ref="otherInfo" @handleSuccess="handleSuccess" />
+    <!--员工列表 -->
+    <EmployeeList ref="employeeList" @handleSuccess="handleSuccess"/>
   </a-card>
 </template>
 

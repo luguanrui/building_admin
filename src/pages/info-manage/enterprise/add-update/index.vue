@@ -189,15 +189,15 @@
           <a-col :span="24">
             <h3 class="title">
               <span style="margin-right: 50px">入驻企业员工信息列表</span>
-              <a-button type="primary" @click="handleAddEmployee">增加员工</a-button>
+              <!-- <a-button type="primary" @click="handleAddEmployee">增加员工</a-button> -->
             </h3>
           </a-col>
           <a-col :span="24">
             <a-table :columns="columns" :data-source="form.employeeList" :rowKey="(record, index) => index" :pagination="false">
-              <template slot="operation" slot-scope="text, record, index">
+              <!-- <template slot="operation" slot-scope="text, record, index">
                 <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(index,record)">修改</a-button>
                 <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(index)">删除</a-button>
-              </template>
+              </template> -->
             </a-table>
           </a-col>
         </a-row>

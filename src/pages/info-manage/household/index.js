@@ -30,6 +30,7 @@ export default {
           title: '楼宇名称',
           dataIndex: 'buildName',
           ellipsis: true,
+          width: 120,
         },
         {
           title: '房产地址',
@@ -40,22 +41,22 @@ export default {
         {
           title: '住户联系人',
           dataIndex: 'contactName',
-          ellipsis: true,
+          width: 100,
         },
         {
           title: '人数',
           dataIndex: 'userCount',
-          ellipsis: true,
+          width: 70,
         },
         {
           title: '房屋性质',
           dataIndex: 'houseTypeName',
-          ellipsis: true,
+          width: 80,
         },
         {
           title: '入住时间',
           dataIndex: 'liveInTime',
-          ellipsis: true,
+          width: 120,
           customRender: (text, record) => record.liveInTime && dayjs(record.liveInTime).format('YYYY年MM月DD日'),
         },
         {

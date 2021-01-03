@@ -159,7 +159,7 @@ export function importTax(params) {
 }
 // 导入明细
 export function getTaxImportDetail(params) {
-  return axios.get(`${baseApi}tax/import/detail`, { params })
+  return axios.get(`${baseApi}tax/import/detail`, { params, responseType: 'blob' })
 }
 // 导入列表
 export function getTaxImportList(params) {

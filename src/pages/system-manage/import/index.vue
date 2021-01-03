@@ -162,31 +162,40 @@ export default {
         return
       }
       if (!this.file) {
-        this.$message.error('上传文件')
+        this.$message.error('请上传文件')
         return
       }
       let formdata = new FormData()
       formdata.append('file', this.file)
       formdata.append('year', this.form.year)
       formdata.append('month', this.form.month)
-      await importTax(formdata)
+      const { code } = await importTax(formdata)
+      if (code === 200) {
+        this.$message.success('导入成功')
+        // 初始化数据
+        this.form.year = undefined
+        this.form.month = undefined
+        this.showUploadFile = true
+        this.file = ''
+        this.fileName = ''
 
-      // 初始化数据
-      this.form.year = undefined
-      this.form.month = undefined
-      this.showUploadFile = true
-      this.file = ''
-      this.fileName = ''
-
-      this.visible = false
-      this.getTaxImportList()
+        this.visible = false
+        this.getTaxImportList()
+      }
     },
     // 查看明细
     async getTaxImportDetail(id) {
-      const { code, rs } = await getTaxImportDetail({importId: id})
-      if (code === 200) {
-        console.log(rs)
+      let result = await getTaxImportDetail({ importId: id })
+      if (result) {
+        this.downLoading = false
       }
+
+      let blob = new Blob([result], {
+        type: 'application/vnd.ms-excel,charset=UTF-8',
+      })
+
+      let fileName = `数据明细.xlsx`
+      this.downFile(blob, fileName)
     },
     // 列表
     async getTaxImportList() {
@@ -206,6 +215,18 @@ export default {
         this.loading = false
       } catch (error) {
         this.loading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },

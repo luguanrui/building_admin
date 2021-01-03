@@ -43,7 +43,7 @@ export default {
           ellipsis: true,
         },
         {
-          title: '人数',
+          title: '房号',
           dataIndex: 'roomNum',
           ellipsis: true,
         },

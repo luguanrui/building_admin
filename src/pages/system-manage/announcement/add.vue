@@ -75,6 +75,21 @@ export default {
     initEditor() {
       this.editor = new E(this.$refs.editor)
       this.editor.config.height = 400
+      this.editor.config.uploadImgAccept = ['jpg', 'jpeg', 'png', 'gif', 'bmp']
+      this.editor.config.uploadImgServer = 'http://60.191.18.38:8080/building/file/upload'
+      this.editor.config.uploadImgHeaders = {
+        TLSESSIONID: localStorage.getItem('sessionId'),
+      }
+      this.editor.config.uploadFileName = 'file'
+      this.editor.config.uploadImgHooks = {
+        customInsert: function(insertImgFn, result) {
+          // result 即服务端返回的接口
+          console.log('customInsert', result)
+
+          // insertImgFn 可把图片插入到编辑器，传入图片 src ，执行函数即可
+          insertImgFn(`${result.rs.url}?sessionId=${localStorage.getItem('sessionId')}`)
+        },
+      }
       this.editor.config.onchange = newHtml => {
         this.form.content = newHtml
       }
@@ -112,7 +127,7 @@ export default {
     async getNoticeDetail() {
       const { code, rs } = await getNoticeDetail({ id: this.form.id })
       if (code === 200) {
-        Object.keys(this.form).forEach(key => this.form[key] = rs[key])
+        Object.keys(this.form).forEach(key => (this.form[key] = rs[key]))
         this.initEditor()
         this.editor.txt.html(this.form.content)
       }

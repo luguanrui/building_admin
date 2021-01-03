@@ -29,34 +29,27 @@ export default {
         {
           title: '楼宇名称',
           dataIndex: 'buildName',
-          ellipsis: true,
-          width: 120,
         },
         {
           title: '房产地址',
           dataIndex: 'buildAddress',
-          ellipsis: true,
           scopedSlots: { customRender: 'name' },
         },
         {
           title: '住户联系人',
           dataIndex: 'contactName',
-          width: 100,
         },
         {
           title: '人数',
           dataIndex: 'userCount',
-          width: 70,
         },
         {
           title: '房屋性质',
           dataIndex: 'houseTypeName',
-          width: 80,
         },
         {
           title: '入住时间',
           dataIndex: 'liveInTime',
-          width: 120,
           customRender: (text, record) => record.liveInTime && dayjs(record.liveInTime).format('YYYY年MM月DD日'),
         },
         {
@@ -68,7 +61,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('common', ['permissionList','buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', ['permissionList', 'buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
   },
   activated() {
     this.getBuildAllList()

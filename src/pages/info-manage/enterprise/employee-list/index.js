@@ -106,6 +106,7 @@ export default {
       const { code } = await removeEmployee(params)
       if (code === 200) {
         this.$message.success('删除员工成功')
+        this.getEmployeeList()
       }
     },
   },

@@ -12,7 +12,9 @@
           <a-table :columns="columns" :data-source="employeeList" :rowKey="(record, index) => index" :pagination="false">
             <template slot="operation" slot-scope="text, record">
               <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
-              <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)">删除</a-button>
+              <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
+                <a-button type="danger" size="small" style="margin-right: 10px">删除</a-button>
+              </a-popconfirm>
             </template>
           </a-table>
         </a-col>

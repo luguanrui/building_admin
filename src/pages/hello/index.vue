@@ -10,7 +10,7 @@
         </div>
         <div v-for="(item, index) in carouselList" :key="index">
           <div class="carousel-item" @mouseenter="handleEnter(index)" @mouseleave="handleLeave(index)">
-            <img :src="item.imgSrc" alt="" />
+            <img :src="item.imgSrc+sessionId" alt="" />
             <div class="hover-content" v-if="showInfo === index">
               <pre>{{ item.text }}</pre>
             </div>

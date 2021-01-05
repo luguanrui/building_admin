@@ -23,6 +23,9 @@ export default {
   },
   computed: {
     ...mapState('common', ['noticeTypeList']),
+    sessionId() {
+      return `?sessionId=${localStorage.getItem('sessionId')}`
+    }
   },
   methods: {
     dayjs,

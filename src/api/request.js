@@ -9,9 +9,9 @@ axios.defaults.retryDelay = 1000
 // 请求拦截
 axios.interceptors.request.use(
   config => {
-    const sessionId = localStorage.getItem('sessionId')
-    if (sessionId) {
-      config.headers['LYXTSESSIONID'] = localStorage.getItem('sessionId')
+    const buildSessionId = localStorage.getItem('buildSessionId')
+    if (buildSessionId) {
+      config.headers['LYXTSESSIONID'] = localStorage.getItem('buildSessionId')
       config.timeout = 1000000
     }
     return config

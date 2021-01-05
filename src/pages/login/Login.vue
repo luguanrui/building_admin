@@ -93,7 +93,7 @@ export default {
       }
       const { code, rs } = await login(params)
       if (code === 200) {
-        localStorage.setItem('sessionId', rs.sessionId)
+        localStorage.setItem('buildSessionId', rs.sessionId)
         this.setUser(rs)
         this.$router.push("/index");
       }

@@ -109,7 +109,7 @@ export default {
   computed: {
     ...mapState('common', ['permissionList', 'yearList', 'monthList']),
     templateUrl() {
-      return `http://115.238.32.56:8080/file/prod/test/2021-01-02/f27a500e-e9ae-4328-ba6a-95689d251a97.xlsx?sessionId=${localStorage.getItem('sessionId')}`
+      return `http://60.191.18.38:8080/file/prod/test/2021-01-02/f27a500e-e9ae-4328-ba6a-95689d251a97.xlsx?sessionId=${localStorage.getItem('buildSessionId')}`
     },
   },
   activated() {

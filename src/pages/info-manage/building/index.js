@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     imageParese(urlString) {
-      return `${JSON.parse(urlString)[0].url}?sessionId=${localStorage.getItem('sessionId')}`
+      return `${JSON.parse(urlString)[0].url}?sessionId=${localStorage.getItem('buildSessionId')}`
     },
     // 列表
     async getBuildHome() {

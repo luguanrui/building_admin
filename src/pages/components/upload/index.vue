@@ -64,9 +64,9 @@ export default {
       handler(val) {
         let arr = val ? JSON.parse(val) : []
         if (arr.length) {
-          let sessionId = localStorage.getItem('sessionId')
+          let buildSessionId = localStorage.getItem('buildSessionId')
           arr.forEach(item => {
-            item.url += `?sessionId=${sessionId}`
+            item.url += `?sessionId=${buildSessionId}`
           })
         }
         this.fileList = arr
@@ -181,11 +181,11 @@ export default {
 
     // 图片格式化
     fileFormatter(name, url) {
-      let sessionId = localStorage.getItem('sessionId')
+      let buildSessionId = localStorage.getItem('buildSessionId')
       let file = {
         uid: _.uniqueId(),
         name: name,
-        url: url + `?sessionId=${sessionId}`,
+        url: url + `?sessionId=${buildSessionId}`,
       }
       return file
     },

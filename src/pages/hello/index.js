@@ -24,7 +24,7 @@ export default {
   computed: {
     ...mapState('common', ['noticeTypeList']),
     sessionId() {
-      return `?sessionId=${localStorage.getItem('sessionId')}`
+      return `?sessionId=${localStorage.getItem('buildSessionId')}`
     }
   },
   methods: {

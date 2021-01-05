@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { getEmployeeList, removeEmployee } from '@/api/index'
 import EmployeeAdd from '../employee-add/index.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: { EmployeeAdd },
@@ -38,6 +39,9 @@ export default {
         },
       ],
     }
+  },
+  computed: {
+    ...mapState('common', ['permissionList']),
   },
   methods: {
     dayjs,

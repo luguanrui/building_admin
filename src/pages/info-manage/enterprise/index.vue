@@ -34,11 +34,12 @@
     <div class="opreation-wrapper">
       <div>
         <a-button type="primary" @click="handleAdd" :disabled="!permissionList.includes('100022')">新增企业基础信息</a-button>
-        <a-button type="primary" @click="handleAddOther" :disabled="!permissionList.includes('100023')">新增企业其他信息</a-button>
+        <!-- <a-button type="primary" @click="handleAddOther" :disabled="!permissionList.includes('100023')">新增企业其他信息</a-button> -->
         <a-button type="primary" @click="handleExport" :loading="downLoading" :disabled="!permissionList.includes('100025')">导出</a-button>
       </div>
     </div>
     <div class="table-wrapper">
+      <!-- :row-selection="{ selectedRowKeys: selectedRowKeys,type: 'radio', onChange: onSelectChange }" -->
       <a-table
         :columns="columns"
         :data-source="data"
@@ -46,13 +47,12 @@
         @change="handleChange"
         :pagination="pagination"
         :loading="loading"
-        :row-selection="{ selectedRowKeys: selectedRowKeys,type: 'radio', onChange: onSelectChange }"
       >
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100022')">修改</a-button>
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleOther(record)">其他信息</a-button>
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleEmployee(record)">员工列表</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleOther(record)" :disabled="!permissionList.includes('100023')">其他信息</a-button>
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleEmployee(record)" :disabled="!permissionList.includes('100028')">员工列表</a-button>
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100024')">删除</a-button>
           </a-popconfirm>

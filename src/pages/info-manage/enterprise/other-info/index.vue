@@ -1,5 +1,5 @@
 <template>
-  <a-drawer :title="title" :width="800" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false">
+  <a-drawer title="企业其他信息" :width="800" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false">
     <div class="wrapper">
       <a-form-model ref="form" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol" :layout="'horizontal'">
         <a-row>
@@ -126,7 +126,7 @@
           </a-col>
         </a-row>
         <a-row class="other-item" v-for="(other, index) in otherList" :key="index">
-          <a-icon type="close-circle" class="close-icon" v-if="otherList.length > 1" @click="handleRemove(index)" />
+          <a-icon type="close-circle" class="close-icon" v-if="otherList.length > 1 && dialogStatus == 'add' || dialogStatus == 'edit'" @click="handleRemove(index)" />
           <a-col :span="24">
             <a-form-model-item label="年度" :prop="'otherList.' + index + '.year'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
               <span v-if="disabledOther">{{ other.year }}</span>
@@ -160,7 +160,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="政策期限" :prop="'otherList.' + index + '.outLimitDate'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
+            <a-form-model-item label="政策期限" :prop="'otherList.' + index + '.outLimitDate'" :rules="other.enjoy ? [{ required: true, validator: validChange, trigger: 'change' }] : []" :label-col="{ span: 5 }">
               <span v-if="disabledOther">{{ other.outLimitDate[0] }}~{{ other.outLimitDate[1] }}</span>
               <a-range-picker
                 v-else
@@ -180,13 +180,13 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="政策内容" :prop="'otherList.' + index + '.policyContent'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
+            <a-form-model-item label="政策内容" :prop="'otherList.' + index + '.policyContent'" :rules="other.enjoy ? [{ required: true, validator: validChange, trigger: 'change' }] : []" :label-col="{ span: 5 }">
               <pre v-if="disabledOther">{{ other.policyContent }}</pre>
               <a-input v-else v-model="other.policyContent" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="政策兑现情况" :prop="'otherList.' + index + '.policyPayDesc'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
+            <a-form-model-item label="政策兑现情况" :prop="'otherList.' + index + '.policyPayDesc'" :rules="other.enjoy ? [{ required: true, validator: validChange, trigger: 'change' }] : []" :label-col="{ span: 5 }">
               <pre v-if="disabledOther">{{ other.policyPayDesc }}</pre>
               <a-input v-else v-model="other.policyPayDesc" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
             </a-form-model-item>

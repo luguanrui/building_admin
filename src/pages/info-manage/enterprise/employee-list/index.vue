@@ -5,15 +5,15 @@
         <a-col :span="24">
           <h3 class="title">
             <span style="margin-right: 50px">入驻企业员工信息列表</span>
-            <a-button type="primary" @click="handleAddEmployee">增加员工</a-button>
+            <a-button type="primary" @click="handleAddEmployee" :disabled="!permissionList.includes('100026')">增加员工</a-button>
           </h3>
         </a-col>
         <a-col :span="24">
           <a-table :columns="columns" :data-source="employeeList" :rowKey="(record, index) => index" :pagination="false">
             <template slot="operation" slot-scope="text, record">
-              <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)">修改</a-button>
+              <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100026')">修改</a-button>
               <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
-                <a-button type="danger" size="small" style="margin-right: 10px">删除</a-button>
+                <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100027')">删除</a-button>
               </a-popconfirm>
             </template>
           </a-table>

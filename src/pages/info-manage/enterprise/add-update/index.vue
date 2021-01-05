@@ -185,7 +185,7 @@
             </span>
           </a-col>
         </a-row>
-        <a-row>
+        <a-row v-if="permissionList.includes('100028')">
           <a-col :span="24">
             <h3 class="title">
               <span style="margin-right: 50px">入驻企业员工信息列表</span>

@@ -101,7 +101,7 @@ export default {
   },
 
   computed: {
-    ...mapState('common', ['buildTypeList', 'buildingAllList', 'companyTypeList', 'belongList', 'industryList', 'workRoomTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', ['permissionList','buildTypeList', 'buildingAllList', 'companyTypeList', 'belongList', 'industryList', 'workRoomTypeList', 'buildingFloorList', 'buildingRoomList']),
     title() {
       switch (this.dialogStatus) {
         case 'add':

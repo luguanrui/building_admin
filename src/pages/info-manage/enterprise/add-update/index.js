@@ -146,6 +146,9 @@ export default {
       if (this.form.id) {
         this.getCompany()
       }
+      if (dialogStatus === 'detail'){
+        this.rules = {}
+      }
     },
     // 关闭弹窗
     onClose() {

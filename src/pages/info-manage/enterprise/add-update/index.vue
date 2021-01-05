@@ -224,6 +224,24 @@
         保存
       </a-button>
     </div>
+    <div
+      v-else
+      :style="{
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        borderTop: '1px solid #e9e9e9',
+        padding: '10px 16px',
+        background: '#fff',
+        textAlign: 'right',
+        zIndex: 1,
+      }"
+    >
+      <a-button type="primary" @click="onClose">
+        关闭
+      </a-button>
+    </div>
     <!-- 员工 -->
     <EmployeeAdd ref="employeeAdd" @handleSuccess="handleSuccess" />
   </a-drawer>

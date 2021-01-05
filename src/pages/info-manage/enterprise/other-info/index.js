@@ -45,22 +45,6 @@ export default {
           patentContent: '', // 专利内容
         },
       ],
-
-      // rules: {
-      //   name: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   buildId: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   buildType: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   floor: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   roomNum: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   companyType: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   belongType: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   creditCode: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   regAddress: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   regDate: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   iegalPerson: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   taxId: [{ required: true, message: '必填', trigger: 'blur' }],
-      //   businessScope: [{ required: true, message: '必填', trigger: 'blur' }],
-      // },
     }
   },
 

@@ -1,6 +1,6 @@
 import { mapState, mapActions } from 'vuex'
 import dayjs from 'dayjs'
-import { saveCompanyOther, getCompany } from '@/api/index'
+import { saveCompanyOther, getCompany, getCompanyOtherList } from '@/api/index'
 
 export default {
   data() {
@@ -91,7 +91,7 @@ export default {
     },
     // disabledOther
     disabledOther() {
-      return this.dialogStatus === 'add'
+      return this.dialogStatus === 'detail'
     },
     // 显示详情
     disabled() {
@@ -123,6 +123,10 @@ export default {
       this.getYearList()
 
       this.getCompany()
+
+      if (this.form.id) {
+        this.getCompanyOtherList()
+      }
     },
     // 关闭弹窗
     onClose() {
@@ -247,6 +251,29 @@ export default {
       const { code, rs } = await getCompany({ id: this.form.id })
       if (code === 200) {
         this.form = Object.assign(this.form, rs)
+      }
+    },
+    // 列表
+    async getCompanyOtherList() {
+      this.otherList = []
+      const { code, rs } = await getCompanyOtherList({ companyId: this.form.id })
+      if (code === 200) {
+        rs.forEach(info => {
+          this.otherList.push({
+            id: info.id,
+            year: info.year, // 年度
+            income: info.income, // 营收
+            tax: info.tax, // 税收
+            enjoy: info.enjoy, // 是否享受商务区政策；0-否；1-是
+            outLimitDate: [info.outLimitDateStart, info.outLimitDateEnd],
+            outLimitDateStart: info.outLimitDateStart, // 政策期限开始时间
+            outLimitDateEnd: info.outLimitDateEnd,
+            patent: info.patent, // 专利
+            policyContent: info.policyContent, // 政策内容
+            policyPayDesc: info.policyPayDesc, // 政策兑现情况
+            patentContent: info.patentContent, // 专利内容
+          })
+        })
       }
     },
     // 新增

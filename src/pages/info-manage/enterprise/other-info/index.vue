@@ -129,7 +129,8 @@
           <a-icon type="close-circle" class="close-icon" v-if="otherList.length > 1" @click="handleRemove(index)" />
           <a-col :span="24">
             <a-form-model-item label="年度" :prop="'otherList.' + index + '.year'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
-              <a-select v-model="other.year" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+              <span v-if="disabledOther">{{ other.year }}</span>
+              <a-select v-else v-model="other.year" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in yearList" :value="item.key" :key="item.key">
                   {{ item.value }}
                 </a-select-option>
@@ -138,17 +139,20 @@
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="营收" :prop="'otherList.' + index + '.income'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
-              <a-input v-model="other.income" placeholder="请输入" allowClear :maxLength="200" addon-after="万元" />
+              <span v-if="disabledOther">{{ other.income }}&nbsp;&nbsp;万元</span>
+              <a-input v-else v-model="other.income" placeholder="请输入" allowClear :maxLength="200" addon-after="万元" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="税收" :prop="'otherList.' + index + '.tax'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
-              <a-input v-model="other.tax" placeholder="请输入" allowClear :maxLength="200" addon-after="万元" />
+              <span v-if="disabledOther">{{ other.tax }}&nbsp;&nbsp;万元</span>
+              <a-input v-else v-model="other.tax" placeholder="请输入" allowClear :maxLength="200" addon-after="万元" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="是否享受商务区政策" :prop="'otherList.' + index + '.enjoy'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
-              <a-radio-group v-model="other.enjoy">
+              <span v-if="disabledOther">{{ findValue(whetherList, other.enjoy) }}</span>
+              <a-radio-group v-else v-model="other.enjoy">
                 <a-radio v-for="item in whetherList" :key="item.key" :value="item.key">
                   {{ item.value }}
                 </a-radio>
@@ -157,31 +161,44 @@
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="政策期限" :prop="'otherList.' + index + '.outLimitDate'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
-              <a-range-picker v-model="other.outLimitDate" format="YYYY/MM/DD" valueFormat="YYYY-MM-DD" :allowClear="true" style="width: 100%" :getPopupContainer="trigger => trigger.parentNode" />
+              <span v-if="disabledOther">{{ other.outLimitDate[0] }}~{{ other.outLimitDate[1] }}</span>
+              <a-range-picker
+                v-else
+                v-model="other.outLimitDate"
+                format="YYYY/MM/DD"
+                valueFormat="YYYY-MM-DD"
+                :allowClear="true"
+                style="width: 100%"
+                :getPopupContainer="trigger => trigger.parentNode"
+              />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="企业专利证书号" prop="" :label-col="{ span: 5 }">
-              <a-input v-model="other.patent" placeholder="请输入" allowClear :maxLength="200" />
+              <span v-if="disabledOther">{{ other.patent }}</span>
+              <a-input v-else v-model="other.patent" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="政策内容" :prop="'otherList.' + index + '.policyContent'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
-              <a-input v-model="other.policyContent" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
+              <pre v-if="disabledOther">{{ other.policyContent }}</pre>
+              <a-input v-else v-model="other.policyContent" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="政策兑现情况" :prop="'otherList.' + index + '.policyPayDesc'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
-              <a-input v-model="other.policyPayDesc" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
+              <pre v-if="disabledOther">{{ other.policyPayDesc }}</pre>
+              <a-input v-else v-model="other.policyPayDesc" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="专利内容" prop="" :label-col="{ span: 5 }">
-              <a-input v-model="other.patentContent" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
+              <pre v-if="disabledOther">{{ other.patentContent }}</pre>
+              <a-input v-else v-model="other.patentContent" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
             </a-form-model-item>
           </a-col>
         </a-row>
-        <a-row>
+        <a-row v-if="dialogStatus == 'add' || dialogStatus == 'edit'">
           <a-button type="primary" block @click="handleAddOtherInfo">
             新增入驻企业其他信息
           </a-button>
@@ -189,7 +206,6 @@
       </a-form-model>
     </div>
     <div
-      v-if="dialogStatus !== 'detail'"
       :style="{
         position: 'absolute',
         right: 0,
@@ -202,12 +218,23 @@
         zIndex: 1,
       }"
     >
-      <a-button :style="{ marginRight: '8px' }" @click="onClose">
-        取消
-      </a-button>
-      <a-button type="primary" @click="handleSubmit" :loading="loading">
-        保存
-      </a-button>
+      <div v-if="dialogStatus == 'add' || dialogStatus == 'edit'">
+        <a-button :style="{ marginRight: '8px' }" @click="onClose">
+          取消
+        </a-button>
+        <a-button type="primary" @click="handleSubmit" :loading="loading">
+          保存
+        </a-button>
+      </div>
+
+      <div v-if="dialogStatus == 'detail'">
+        <a-button :style="{ marginRight: '8px' }" @click="onClose">
+          关闭
+        </a-button>
+        <a-button type="primary" @click="dialogStatus = 'edit'" :loading="loading">
+          编辑
+        </a-button>
+      </div>
     </div>
   </a-drawer>
 </template>

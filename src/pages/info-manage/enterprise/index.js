@@ -53,7 +53,7 @@ export default {
         },
         {
           title: '操作',
-          width: 220,
+          width: 300,
           scopedSlots: { customRender: 'operation' },
         },
       ],
@@ -164,6 +164,9 @@ export default {
         return
       }
       this.$refs.otherInfo.handleVisible(this.selectedRowKeys[0], 'add')
+    },
+    handleOther(record) {
+      this.$refs.otherInfo.handleVisible(record.id, 'detail')
     },
     // 新增成功
     handleSuccess() {

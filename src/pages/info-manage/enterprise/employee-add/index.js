@@ -126,10 +126,10 @@ export default {
         let reg = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/
         if (reg.test(this.form.cardNum)) {
           this.getAge(this.form.cardNum)
-        }else {
+        } else {
           this.form.age = ''
         }
-      }else {
+      } else {
         this.form.age = ''
       }
     },
@@ -152,9 +152,12 @@ export default {
       // 籍贯处理
       this.form.employeeFrom = this.form.employeeFromCopy.length ? this.form.employeeFromCopy.join() : ''
 
+      console.log(this.form.outLimitDate,'this.form.outLimitDate')
       // 有效期限处理
-      this.form.outLimitDateStart = this.form.outLimitDate[0]
-      this.form.outLimitDateEnd = this.form.outLimitDate[1]
+      if (this.form.outLimitDate) {
+        this.form.outLimitDateStart = this.form.outLimitDate[0]
+        this.form.outLimitDateEnd = this.form.outLimitDate[1]
+      }
 
       this.$refs.form.validate(valid => {
         if (valid) {

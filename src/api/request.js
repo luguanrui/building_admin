@@ -11,7 +11,7 @@ axios.interceptors.request.use(
   config => {
     const sessionId = localStorage.getItem('sessionId')
     if (sessionId) {
-      config.headers['TLSESSIONID'] = localStorage.getItem('sessionId')
+      config.headers['LYXTSESSIONID'] = localStorage.getItem('sessionId')
       config.timeout = 1000000
     }
     return config

@@ -78,7 +78,7 @@ export default {
       this.editor.config.uploadImgAccept = ['jpg', 'jpeg', 'png', 'gif', 'bmp']
       this.editor.config.uploadImgServer = 'http://60.191.18.38:8080/building/file/upload'
       this.editor.config.uploadImgHeaders = {
-        TLSESSIONID: localStorage.getItem('sessionId'),
+        LYXTSESSIONID: localStorage.getItem('sessionId'),
       }
       this.editor.config.uploadFileName = 'file'
       this.editor.config.uploadImgHooks = {

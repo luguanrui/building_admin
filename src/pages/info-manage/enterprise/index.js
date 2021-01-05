@@ -53,7 +53,7 @@ export default {
         },
         {
           title: '操作',
-          width: 300,
+          width: 310,
           scopedSlots: { customRender: 'operation' },
         },
       ],

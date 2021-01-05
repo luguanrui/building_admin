@@ -32,7 +32,7 @@ axios.interceptors.response.use(
           break
         case 3011:
           localStorage.clear()
-          window.location.href = '/'
+          window.location.href = '/build'
           break
         default:
           Vue.prototype.$message.destroy()
@@ -48,7 +48,7 @@ axios.interceptors.response.use(
       switch (err.response.status) {
         case 403:
           err.message = '长时间未操作，请重新登录'
-          window.location.href = '/'
+          window.location.href = '/build'
           break
         case 413:
           err.message = '上传文件太大'

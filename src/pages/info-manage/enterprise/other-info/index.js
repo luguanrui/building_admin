@@ -128,6 +128,14 @@ export default {
     onClose() {
       Object.assign(this.$data, this.$options.data())
     },
+    validChange(rule, value, callback) {
+      console.log(rule, 'rule')
+      if (!value) {
+        callback(new Error('必填'))
+      } else {
+        callback()
+      }
+    },
     // 选择地址
     handleChangeBuild() {
       this.form.buildType = undefined

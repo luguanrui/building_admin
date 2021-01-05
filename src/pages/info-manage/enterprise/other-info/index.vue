@@ -116,6 +116,8 @@
             </a-form-model-item>
           </a-col>
         </a-row>
+      </a-form-model>
+      <a-form-model>
         <a-row>
           <a-col :span="24">
             <h3 class="title">
@@ -124,9 +126,9 @@
           </a-col>
         </a-row>
         <a-row class="other-item" v-for="(other, index) in otherList" :key="index">
-          <a-icon type="close-circle" class="close-icon" v-if="otherList.length>1" @click="handleRemove(index)"/>
+          <a-icon type="close-circle" class="close-icon" v-if="otherList.length > 1" @click="handleRemove(index)" />
           <a-col :span="24">
-            <a-form-model-item label="年度" prop="" :label-col="{ span: 5 }">
+            <a-form-model-item label="年度" :prop="'otherList.' + index + '.year'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
               <a-select v-model="other.year" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in yearList" :value="item.key" :key="item.key">
                   {{ item.value }}
@@ -135,17 +137,17 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="营收" prop="" :label-col="{ span: 5 }">
-              <a-input v-model="other.income" placeholder="请输入" allowClear :maxLength="200" addon-after="万元"/>
+            <a-form-model-item label="营收" :prop="'otherList.' + index + '.income'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
+              <a-input v-model="other.income" placeholder="请输入" allowClear :maxLength="200" addon-after="万元" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="税收" prop="" :label-col="{ span: 5 }">
-              <a-input v-model="other.tax" placeholder="请输入" allowClear :maxLength="200" addon-after="万元"/>
+            <a-form-model-item label="税收" :prop="'otherList.' + index + '.tax'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
+              <a-input v-model="other.tax" placeholder="请输入" allowClear :maxLength="200" addon-after="万元" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="是否享受商务区政策" prop="" :label-col="{ span: 5 }">
+            <a-form-model-item label="是否享受商务区政策" :prop="'otherList.' + index + '.enjoy'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
               <a-radio-group v-model="other.enjoy">
                 <a-radio v-for="item in whetherList" :key="item.key" :value="item.key">
                   {{ item.value }}
@@ -154,7 +156,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="政策期限" prop="" :label-col="{ span: 5 }">
+            <a-form-model-item label="政策期限" :prop="'otherList.' + index + '.outLimitDate'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
               <a-range-picker v-model="other.outLimitDate" format="YYYY/MM/DD" valueFormat="YYYY-MM-DD" :allowClear="true" style="width: 100%" :getPopupContainer="trigger => trigger.parentNode" />
             </a-form-model-item>
           </a-col>
@@ -164,12 +166,12 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="政策内容" prop="" :label-col="{ span: 5 }">
+            <a-form-model-item label="政策内容" :prop="'otherList.' + index + '.policyContent'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
               <a-input v-model="other.policyContent" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="政策兑现情况" prop="" :label-col="{ span: 5 }">
+            <a-form-model-item label="政策兑现情况" :prop="'otherList.' + index + '.policyPayDesc'" :rules="[{ required: true, validator: validChange, trigger: 'change' }]" :label-col="{ span: 5 }">
               <a-input v-model="other.policyPayDesc" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
             </a-form-model-item>
           </a-col>

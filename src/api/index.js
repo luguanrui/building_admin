@@ -333,3 +333,8 @@ export function getBuildRoomList(params) {
 export function getYearList() {
   return axios.get(`${baseApi}year/list`)
 }
+
+// 根据身份证号码获取年龄
+export function getAgeByIdNo(params) {
+  return axios.get(`${baseApi}getAgeByIdNo`, { params })
+}

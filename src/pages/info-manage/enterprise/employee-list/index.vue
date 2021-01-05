@@ -50,9 +50,6 @@
 }
 /deep/ .ant-form-item {
   display: flex;
-  .ant-form-explain {
-    display: none;
-  }
 }
 
 /deep/ .ant-form-item-control-wrapper {

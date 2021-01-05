@@ -1,5 +1,5 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
-import { getEmployee, saveEmployee } from '@/api/index'
+import { getEmployee, saveEmployee, getAgeByIdNo } from '@/api/index'
 
 export default {
   data() {
@@ -11,7 +11,7 @@ export default {
       dialogStatus: '',
       form: {
         companyId: '',
-        employeeId: '',
+        id: '',
         name: '', // 员工名称
         cardType: undefined, // 证件类型
         country: undefined, // 国籍
@@ -54,6 +54,7 @@ export default {
       const { companyId, employeeId, dialogStatus } = obj
       console.log(obj, 'obj')
       this.form.companyId = companyId
+      this.form.id = employeeId
       console.log(this.form, 'this.form')
       if (this.user.roleLevel < 3) {
         this.rules = {
@@ -120,6 +121,32 @@ export default {
     handleClose() {
       Object.assign(this.$data, this.$options.data())
     },
+    handleCardNum() {
+      if (this.form.cardType === 1) {
+        let reg = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/
+        if (reg.test(this.form.cardNum)) {
+          this.getAge(this.form.cardNum)
+        }else {
+          this.form.age = ''
+        }
+      }else {
+        this.form.age = ''
+      }
+    },
+    getAge(identify) {
+      var UUserCard = identify
+      if (UUserCard != null && UUserCard != '') {
+        //获取年龄
+        var myDate = new Date()
+        var month = myDate.getMonth() + 1
+        var day = myDate.getDate()
+        this.form.age = myDate.getFullYear() - UUserCard.substring(6, 10) - 1
+        if (UUserCard.substring(10, 12) < month || (UUserCard.substring(10, 12) == month && UUserCard.substring(12, 14) <= day)) {
+          this.form.age++
+        }
+        return this.form.age
+      }
+    },
     // 提交
     handleSubmit() {
       // 籍贯处理
@@ -145,7 +172,7 @@ export default {
         Object.keys(this.form).forEach(key => {
           this.form[key] = rs[key]
         })
-        this.form.employeeId = rs.id
+        this.form.id = rs.id
         if (this.form.outLimitDateStart && this.form.outLimitDateEnd) {
           this.form.outLimitDate = [this.form.outLimitDateStart, this.form.outLimitDateEnd]
         }
@@ -157,9 +184,19 @@ export default {
       const { code } = await saveEmployee(params)
       console.log(code, 'code')
       if (code === 200) {
-        this.$message.success('添加员工成功')
+        if (params.id) {
+          this.$message.success('修改员工成功')
+        } else {
+          this.$message.success('添加员工成功')
+        }
         this.$emit('handleSuccess')
         this.handleClose()
+      }
+    },
+    async getAgeByIdNo() {
+      const { code, rs } = await getAgeByIdNo({ idNo: this.form.cardNum })
+      if (code === 200) {
+        this.form.age = rs
       }
     },
   },

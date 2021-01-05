@@ -31,7 +31,7 @@
         <a-col :span="span">
           <a-form-model-item label="证件号" prop="cardNum">
             <span v-if="disabled">{{ form.cardNum }}</span>
-            <a-input v-else v-model="form.cardNum" placeholder="请输入" allowClear :maxLength="200" />
+            <a-input v-else v-model="form.cardNum" placeholder="请输入" allowClear :maxLength="200"  @change="handleCardNum"/>
           </a-form-model-item>
         </a-col>
         <a-col :span="span">

@@ -27,6 +27,7 @@ export default {
         constructCompany: '', // 建设单位
         address: '', // 建设单位地址
         propertyCompany: '', // 物业公司
+        contactName: '',
         contactUserId: undefined, // 负责人
         contactPhone: '', // 联系电话
         mainArea: '', // 主楼面积

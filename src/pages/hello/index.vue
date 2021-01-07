@@ -26,7 +26,7 @@
             <div class="name">{{ item.createUserName }}</div>
             <div class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日') }}</div>
           </li>
-          <div style="text-align: right;padding-right: 35px;">
+          <div style="text-align: right;padding-right: 35px;" v-if="msgList.length && msgList.length>10">
             <a-button type="link" @click="handleToMsg">更多</a-button>
           </div>
         </div>

@@ -60,7 +60,7 @@ export default {
       const { code, rs } = await getMsgList()
       if (code === 200) {
         console.log(rs)
-        this.msgList = rs.data
+        this.msgList = rs.data || []
       }
     },
     // 图片
@@ -68,12 +68,14 @@ export default {
       const { code, rs } = await getImgWelcomeList()
       if (code === 200) {
         const list = []
-        rs.data.forEach(img => {
-          list.push({
-            imgSrc: JSON.parse(img.fileList)[0].url,
-            text: img.content,
+        if (rs.data) {
+          rs.data.forEach(img => {
+            list.push({
+              imgSrc: JSON.parse(img.fileList)[0].url,
+              text: img.content,
+            })
           })
-        })
+        }
         this.carouselList = list
       }
     },
@@ -81,7 +83,7 @@ export default {
     async getNoticeWelcomeList() {
       const { code, rs } = await getNoticeWelcomeList()
       if (code === 200) {
-        this.announcementList = rs.data
+        this.announcementList = rs.data || []
       }
     },
   },

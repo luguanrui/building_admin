@@ -70,7 +70,6 @@ export default {
           address: [{ required: true, message: '必填', trigger: 'blur' }],
           education: [{ required: true, message: '必填', trigger: 'change' }],
           outLimitDate: [{ required: true, message: '必填', trigger: 'blur' }],
-          repeatCheck: [{ required: true, message: '必填', trigger: 'blur' }],
           phone: [{ required: true, message: '必填', trigger: 'blur' }],
           job: [{ required: true, message: '必填', trigger: 'blur' }],
           isContact: [{ required: true, message: '必填', trigger: 'blur' }],

@@ -31,7 +31,7 @@ export default {
         regDate: '', // 注册时间
         industryType: undefined, // 行业类别
         iegalPerson: '', // 法人
-        taxId: '', // 纳税人识别号
+        // taxId: '', // 纳税人识别号
         businessScope: '', // 经营范围
 
         // 联系方式
@@ -42,7 +42,7 @@ export default {
         // 办公场所
         workRoomType: undefined, // 所属权
         workRoomArea: '', // 面积
-        workRoomPhone: '', // 联系电话
+        // workRoomPhone: '', // 联系电话
 
         // 入驻企业员工信息列表
         employeeList: [],
@@ -60,7 +60,7 @@ export default {
         regAddress: [{ required: true, message: '必填', trigger: 'blur' }],
         regDate: [{ required: true, message: '必填', trigger: 'change' }],
         iegalPerson: [{ required: true, message: '必填', trigger: 'blur' }],
-        taxId: [{ required: true, message: '必填', trigger: 'blur' }],
+        // taxId: [{ required: true, message: '必填', trigger: 'blur' }],
         businessScope: [{ required: true, message: '必填', trigger: 'blur' }],
 
         contactJob: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -68,7 +68,7 @@ export default {
 
         workRoomType: [{ required: true, message: '必填', trigger: 'blur' }],
         workRoomArea: [{ required: true, message: '必填', trigger: 'blur' }],
-        workRoomPhone: [{ required: true, message: '必填', trigger: 'blur' }],
+        // workRoomPhone: [{ required: true, message: '必填', trigger: 'blur' }],
       },
       data: [],
       columns: [

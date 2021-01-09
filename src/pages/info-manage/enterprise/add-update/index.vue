@@ -111,12 +111,12 @@
               <a-input v-else v-model="form.iegalPerson" placeholder="请输入" allowClear :maxLength="20" />
             </a-form-model-item>
           </a-col>
-          <a-col :span="span">
+          <!-- <a-col :span="span">
             <a-form-model-item label="纳税人识别号" prop="taxId">
               <span v-if="disabled">{{ form.taxId }}</span>
               <a-input v-else v-model="form.taxId" placeholder="请输入" allowClear :maxLength="20" />
             </a-form-model-item>
-          </a-col>
+          </a-col> -->
           <a-col :span="span">
             <a-form-model-item label="经营范围" prop="businessScope">
               <span v-if="disabled">{{ form.businessScope }}</span>
@@ -165,12 +165,12 @@
               <a-input v-else v-model="form.workRoomArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" :disabled="true"/>
             </a-form-model-item>
           </a-col>
-          <a-col :span="span">
+          <!-- <a-col :span="span">
             <a-form-model-item label="电话" prop="workRoomPhone">
               <span v-if="disabled">{{ form.workRoomPhone }}</span>
               <a-input v-else v-model="form.workRoomPhone" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
-          </a-col>
+          </a-col> -->
         </a-row>
 
         <a-row v-if="dialogStatus === 'detail'">

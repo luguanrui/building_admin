@@ -37,7 +37,6 @@ export default {
         cardType: [{ required: true, message: '必填', trigger: 'blur' }],
         country: [{ required: true, message: '必填', trigger: 'blur' }],
         phone: [{ required: true, message: '必填', trigger: 'blur' }],
-        ownerCardNo: [{ required: true, message: '必填', trigger: 'blur' }],
       },
     }
   },

@@ -1,4 +1,4 @@
-import { saveBuild, getBuildDetail,getUserList } from '@/api/index'
+import { saveBuild, getBuildDetail, getUserList, importData } from '@/api/index'
 import Upload from '@/pages/components/upload'
 import { mapState } from 'vuex'
 
@@ -6,6 +6,10 @@ export default {
   components: { Upload },
   data() {
     return {
+      importVisible: false,
+      showUploadFile: false,
+      file: '',
+      fileName: '',
       labelCol: { span: 7 },
       wrapperCol: { span: 24 },
       span: 12,
@@ -79,6 +83,9 @@ export default {
     // 显示详情
     disabled() {
       return this.dialogStatus === 'detail' ? true : false
+    },
+    templateUrl() {
+      return `http://60.191.18.38:8080/file/prod/test/2021-01-02/f27a500e-e9ae-4328-ba6a-95689d251a97.xlsx?sessionId=${localStorage.getItem('buildSessionId')}`
     },
   },
   methods: {
@@ -167,9 +174,48 @@ export default {
         }
       })
     },
+    // 上传
+    handleImport() {
+      this.importVisible = true
+    },
+    handleChangeUpload(info) {
+      info.file.status = 'done'
+      this.showUploadFile = false
+    },
+    customRequest(data) {
+      this.fileName = data.file.name
+      this.file = data.file
+    },
+    handleRemoveFile() {
+      this.showUploadFile = true
+    },
+    // 确定导入成功
+    handleConfirmImport() {
+      this.importData()
+    },
+    // 上传
+    async importData() {
+      if (!this.file) {
+        this.$message.error('请上传文件')
+        return
+      }
+      let formdata = new FormData()
+      formdata.append('file', this.file)
+      const { code } = await importData(formdata)
+      if (code === 200) {
+        this.$message.success('导入成功')
+        // 初始化数据
+        this.showUploadFile = true
+        this.file = ''
+        this.fileName = ''
+
+        this.importVisible = false
+        this.getTaxImportList()
+      }
+    },
     // 用户列表
     async getUserList() {
-      const {code, rs} = await getUserList()
+      const { code, rs } = await getUserList()
       if (code === 200) {
         this.userList = rs || []
       }
@@ -179,7 +225,7 @@ export default {
       const { code, rs } = await getBuildDetail({ id: this.form.id })
       if (code === 200) {
         rs.employeeList = rs.employeeList || []
-        Object.keys(this.form).forEach(key => this.form[key] = rs[key])
+        Object.keys(this.form).forEach(key => (this.form[key] = rs[key]))
       }
     },
     // 新增

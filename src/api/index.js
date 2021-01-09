@@ -346,3 +346,11 @@ export function getYearList() {
 export function getAgeByIdNo(params) {
   return axios.get(`${baseApi}getAgeByIdNo`, { params })
 }
+
+// 导入数据
+export function importData(params) {
+  let config = {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }
+  return axios.post(`${baseApi}tax/import`, params, config)
+}

@@ -34,10 +34,10 @@
             <a-form-model-item label="负责人" prop="contactUserId">
               <span v-if="disabled">{{ form.contactName }}</span>
               <a-select v-else v-model="form.contactUserId" placeholder="请选择" allowClear style="width: 100%" @change="handleContact">
-                  <a-select-option v-for="item in userList" :value="item.userId" :key="item.userId">
-                    {{ item.realName }}
-                  </a-select-option>
-                </a-select>
+                <a-select-option v-for="item in userList" :value="item.userId" :key="item.userId">
+                  {{ item.realName }}
+                </a-select-option>
+              </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -90,6 +90,7 @@
             <h3 class="title">
               <span style="margin-right: 50px">房间面积</span>
               <!-- <a-button type="primary" @click="handleAddRoom">+房间面积</a-button> -->
+              <a-button type="primary" style="margin-right: 10px" @click="handleImport">导入</a-button>
             </h3>
           </a-col>
         </a-row>
@@ -118,9 +119,9 @@
                     {{ item.value }}
                   </a-select-option>
                 </a-select>
-                <span>楼层：</span><a-input v-model="item.floor" placeholder="请输入" addon-after="层" style="width: 110px; margin-right: 10px" />
-                <span>房号：</span><a-input v-model="item.roomNum" placeholder="请输入" addon-after="号" style="width: 110px; margin-right: 10px" /> 
-                <span>面积：</span><a-input v-model="item.area" placeholder="请输入" addon-after="平方米" style="width: 140px; margin-right: 10px" />
+                <span>楼层：</span><a-input v-model="item.floor" placeholder="请输入" addon-after="层" style="width: 110px; margin-right: 10px" /> <span>房号：</span
+                ><a-input v-model="item.roomNum" placeholder="请输入" addon-after="号" style="width: 110px; margin-right: 10px" /> <span>面积：</span
+                ><a-input v-model="item.area" placeholder="请输入" addon-after="平方米" style="width: 140px; margin-right: 10px" />
                 <a-icon v-if="form.roomList.length > 1" class="dynamic-delete-button" type="minus-circle-o" :disabled="form.roomList.length === 1" @click="handleRemove(item)" />
               </div>
             </a-form-model-item>
@@ -130,6 +131,30 @@
           </a-col>
         </a-row>
       </a-form-model>
+      <!-- 导入 -->
+      <a-modal v-model="importVisible" title="导入数据" @ok="handleConfirmImport">
+        <div class="step">
+          <h5>使用模板并按照要求填写</h5>
+          <p>使用导入模板，可以保证所有信息统一</p>
+          <a :href="templateUrl" title="点击下载模板"><a-icon type="cloud-download" />&nbsp;&nbsp;模板下载</a>
+        </div>
+        <div class="step" v-if="visible">
+          <h5>上传文件</h5>
+          <p>导入按照模板要求填写的Excel文件</p>
+          <a-upload-dragger v-if="showUploadFile" name="file" :multiple="false" @change="handleChangeUpload" :customRequest="customRequest" :show-upload-list="false">
+            <p class="ant-upload-drag-icon">
+              <a-icon type="cloud-upload" />
+            </p>
+            <p class="ant-upload-text">
+              点击或拖拽上传
+            </p>
+          </a-upload-dragger>
+          <div class="file-content" v-else>
+            <span>{{ fileName }}</span>
+            <a-icon type="delete" class="delete" @click="handleRemoveFile" />
+          </div>
+        </div>
+      </a-modal>
     </div>
     <div
       v-if="dialogStatus !== 'detail'"
@@ -170,5 +195,14 @@
 
 /deep/ .ant-form-item-control-wrapper {
   flex: 1;
+}
+.step {
+  margin-bottom: 20px;
+  h5 {
+    font-size: 14px;
+  }
+  p {
+    font-size: 12px;
+  }
 }
 </style>

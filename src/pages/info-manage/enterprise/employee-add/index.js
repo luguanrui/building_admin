@@ -146,12 +146,17 @@ export default {
         return this.form.age
       }
     },
+    handleSearch(value) {
+      this.form.country = !isNaN(value) && value != '' ? this.countryList[value].value : value
+    },
+    handleBlur(value) {
+      this.form.country = value
+    },
     // 提交
     handleSubmit() {
       // 籍贯处理
       this.form.employeeFrom = this.form.employeeFromCopy.length ? this.form.employeeFromCopy.join() : ''
 
-      console.log(this.form.outLimitDate,'this.form.outLimitDate')
       // 有效期限处理
       if (this.form.outLimitDate) {
         this.form.outLimitDateStart = this.form.outLimitDate[0]
@@ -179,6 +184,12 @@ export default {
           this.form.outLimitDate = [this.form.outLimitDateStart, this.form.outLimitDateEnd]
         }
         this.form.employeeFromCopy = this.form.employeeFrom ? this.form.employeeFrom.split(',').map(item => Number(item)) : []
+
+        // 其他国籍
+        const isCountry = this.countryList.find(country => country.key == this.form.country)
+        if (isCountry) {
+          this.form.country = this.form.country * 1
+        }
       }
     },
     // 保存

@@ -230,6 +230,12 @@ export default {
         callback()
       }
     },
+    handleSearch(value,index) {
+      this.form.userList[index].country = !isNaN(value) && value != '' ? this.countryList[value].value : value
+    },
+    handleBlur(value, index) {
+      this.form.userList[index].country = value
+    },
     // 新增
     async saveHouse() {
       this.loading = true
@@ -273,6 +279,11 @@ export default {
         const { id, buildId, buildType, floor, roomNum, totalArea, userList } = rs
         let userListCopy = []
         userList.forEach(user => {
+          // 其他国籍
+          const isCountry = this.countryList.find(country => country.key == user.country)
+          if (isCountry) {
+            user.country = user.country * 1
+          }
           userListCopy.push({
             houseRoomType: user.houseRoomType, // 房屋性质：所属权；1-自住；2-租赁
             houseName: user.houseName, // 居住人姓名

@@ -87,7 +87,7 @@
           <a-col :span="span">
             <a-form-model-item label="国籍" prop="country">
               <span v-if="disabled">{{ findValue(countryList, form.country) }}</span>
-              <a-select v-else v-model="form.country" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+              <a-select v-else v-model="form.country" placeholder="请选择" allowClear :show-search="true" @blur="handleBlur" @search="handleSearch">
                 <a-select-option v-for="item in countryList" :value="item.key" :key="item.item">
                   {{ item.value }}
                 </a-select-option>

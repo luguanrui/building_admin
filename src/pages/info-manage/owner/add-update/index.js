@@ -173,6 +173,12 @@ export default {
         this.form.totalArea = ''
       }
     },
+    handleSearch(value) {
+      this.form.country = !isNaN(value) && value != '' ? this.countryList[value].value : value
+    },
+    handleBlur(value) {
+      this.form.country = value
+    },
     // 根据房号计算面积
     async getBuildRoomCalc() {
       const params = {
@@ -213,6 +219,12 @@ export default {
         // Object.keys(this.form).forEach(key => this.form[key] = rs[key])
         // this.form.roomNum = this.form.roomNum.split(',')
         Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum })
+
+        // 其他国籍
+        const isCountry = this.countryList.find(country => country.key == this.form.country)
+        if (isCountry) {
+          this.form.country = this.form.country * 1
+        }
       }
     },
   },

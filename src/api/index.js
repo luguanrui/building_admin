@@ -231,6 +231,10 @@ export function getNoticeDetail(params) {
 export function publishNotice(params) {
   return axios.post(`${baseApi}notice/publish`, params)
 }
+// 撤回公告
+export function backNotice(params) {
+  return axios.post(`${baseApi}notice/back`, params)
+}
 /***************************** 图片 *************************** */
 // 保存公告
 export function saveImg(params) {
@@ -251,6 +255,10 @@ export function getImgDetail(params) {
 // 发布图片
 export function publishImg(params) {
   return axios.post(`${baseApi}img/publish`, params)
+}
+// 撤回
+export function backImg(params) {
+  return axios.post(`${baseApi}img/back`, params)
 }
 /***************************** 通用 *************************** */
 // 上传

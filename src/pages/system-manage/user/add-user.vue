@@ -35,6 +35,9 @@
             </a-select-option>
           </a-select>
         </a-form-model-item>
+        <a-form-model-item label="单位名称" prop="companyName">
+          <a-input v-model="form.companyName" placeholder="请输入" allowClear :maxLength="30"/>
+        </a-form-model-item>
       </a-form-model>
     </div>
     <div
@@ -77,6 +80,7 @@ export default {
         deptId: undefined,
         role: undefined,
         userId: "",
+        companyName: ''
       },
       rules: {
         userName: [{ required: true, message: "必填", trigger: "blur" }],

@@ -25,7 +25,8 @@
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100093')">删除</a-button>
           </a-popconfirm>
-          <a-button size="small" @click="handlePublish(record)" :disabled="record.isPublish === 1 && !permissionList.includes('100092')">发布</a-button>
+          <a-button size="small" @click="handlePublish(record)" v-if="record.isPublish === 1 && !permissionList.includes('100092')">发布</a-button>
+          <a-button size="small" @click="handleBack(record)" v-else>撤回</a-button>
         </template>
       </a-table>
     </div>
@@ -39,7 +40,7 @@ import dayjs from 'dayjs'
 import { mapState } from 'vuex'
 import pagination from '@/mixins/pagination'
 import AddAnnouncement from './add.vue'
-import { getImgList, removeImg, publishImg } from '@/api/index'
+import { getImgList, removeImg, publishImg, backImg } from '@/api/index'
 
 export default {
   components: { AddAnnouncement },
@@ -131,6 +132,10 @@ export default {
     handlePublish(record) {
       this.publishImg(record.id)
     },
+    // 撤回
+    handleBack(record) {
+      this.backImg(record.id)
+    },
     // 分页
     handleChange(pagination) {
       Object.assign(this.pagination, pagination)
@@ -168,6 +173,14 @@ export default {
     // 发布
     async publishImg(id) {
       const { code } = await publishImg({ id })
+      if (code === 200) {
+        this.$message.success('发布成功')
+        this.getImgList()
+      }
+    },
+    // 撤回
+    async backImg(id) {
+      const { code } = await backImg({ id })
       if (code === 200) {
         this.$message.success('发布成功')
         this.getImgList()

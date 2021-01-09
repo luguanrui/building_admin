@@ -159,6 +159,14 @@ export default {
         // 编辑
       }
     },
+    // 选择负责人
+    handleContact(userId) {
+      this.userList.forEach(user => {
+        if (user.userId === userId) {
+          this.form.contactPhone = user.phone
+        }
+      })
+    },
     // 用户列表
     async getUserList() {
       const {code, rs} = await getUserList()

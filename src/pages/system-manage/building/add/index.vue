@@ -33,7 +33,7 @@
           <a-col :span="span">
             <a-form-model-item label="负责人" prop="contactUserId">
               <span v-if="disabled">{{ form.contactName }}</span>
-              <a-select v-else v-model="form.contactUserId" placeholder="请选择" allowClear style="width: 100%">
+              <a-select v-else v-model="form.contactUserId" placeholder="请选择" allowClear style="width: 100%" @change="handleContact">
                   <a-select-option v-for="item in userList" :value="item.userId" :key="item.userId">
                     {{ item.realName }}
                   </a-select-option>

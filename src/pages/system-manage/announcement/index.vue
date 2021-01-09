@@ -33,7 +33,8 @@
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100083')">删除</a-button>
           </a-popconfirm>
-          <a-button size="small" @click="handlePublish(record)" :disabled="record.isPublish === 1 && !permissionList.includes('100082')">发布</a-button>
+          <a-button size="small" @click="handlePublish(record)" v-if="record.isPublish === 1 && !permissionList.includes('100082')">发布</a-button>
+          <a-button size="small" @click="handleBack(record)" v-else>撤回</a-button>
         </template>
       </a-table>
     </div>
@@ -44,7 +45,7 @@
 import dayjs from 'dayjs'
 import pagination from '@/mixins/pagination'
 import { mapState } from 'vuex'
-import { getNoticeList, removeNotice, publishNotice } from '@/api/index'
+import { getNoticeList, removeNotice, publishNotice, backNotice } from '@/api/index'
 
 export default {
   mixins: [pagination],
@@ -104,7 +105,7 @@ export default {
     this.getNoticeList()
   },
   computed: {
-    ...mapState('common', ['permissionList','noticeTypeList']),
+    ...mapState('common', ['permissionList', 'noticeTypeList']),
   },
   methods: {
     dayjs,
@@ -155,6 +156,10 @@ export default {
     handlePublish(record) {
       this.publishNotice(record.id)
     },
+    // 撤回
+    handleBack(record) {
+      this.backNotice(record.id)
+    },
     // 分页
     handleChange(pagination) {
       Object.assign(this.pagination, pagination)
@@ -192,6 +197,14 @@ export default {
     // 发布
     async publishNotice(id) {
       const { code } = await publishNotice({ id })
+      if (code === 200) {
+        this.$message.success('发布成功')
+        this.getNoticeList()
+      }
+    },
+    // 撤回
+    async backNotice(id) {
+      const { code } = await backNotice({ id })
       if (code === 200) {
         this.$message.success('发布成功')
         this.getNoticeList()

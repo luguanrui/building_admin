@@ -4,7 +4,7 @@
       <div class="login-content">
       <div class="header">
         <!-- <img alt="logo" class="logo" src="@/assets/img/logo.png" /> -->
-        <span class="title">桐庐县楼宇管理系统</span>
+        <span class="title">桐庐迎春商务区楼宇信息管理系统</span>
       </div>
       <div class="left-bg"></div>
       <div class="login">

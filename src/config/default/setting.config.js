@@ -14,8 +14,8 @@ module.exports = {
   weekMode: false,                      //色弱模式，true:开启，false:不开启
   multiPage: false,                     //多页签模式，true:开启，false:不开启
   hideSetting: true,                   //隐藏设置抽屉，true:隐藏，false:不隐藏
-  systemName: '楼宇管理系统',         //系统名称
-  copyright: new Date().getFullYear() + '楼宇管理系统',    //copyright
+  systemName: '桐庐迎春商务区楼宇信息管理系统',         //系统名称
+  copyright: new Date().getFullYear() + '桐庐迎春商务区楼宇信息管理系统',    //copyright
   asyncRoutes: false,                    //异步加载路由，true:开启，false:不开启
   animate: {                            //动画设置
     disabled: false,                    //禁用动画，true:禁用，false:启用

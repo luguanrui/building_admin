@@ -40,7 +40,7 @@
               </a-statistic>
             </a-col>
             <a-col :span="6">
-              <a-statistic title="空置：" :value="item.mainAreaLeft">
+              <a-statistic title="主楼空置：" :value="item.mainAreaLeft">
                 <template #suffix>
                   <span>平方米</span>
                 </template>
@@ -63,7 +63,7 @@
               </a-statistic>
             </a-col>
             <a-col :span="6">
-              <a-statistic title="空置：" :value="item.viceAreaLeft">
+              <a-statistic title="副楼空置：" :value="item.viceAreaLeft">
                 <template #suffix>
                   <span>平方米</span>
                 </template>

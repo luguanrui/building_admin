@@ -1,16 +1,17 @@
 <template>
   <a-card>
     <div v-html="form.content"></div>
-    <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" :fileListLength="1" :multiple="false" :acceptStr="'img'" :disabled="true"/>
+    <!-- <Upload ref="upload" @uploadSuccess="uploadSuccess" :fileObjList="form.fileList" :fileListLength="1" :multiple="false" :acceptStr="'img'" :disabled="true"/> -->
+    <a @click="handleDownLoad">点击下载文件</a>
   </a-card>
 </template>
 <script>
-import Upload from '@/pages/components/upload'
+// import Upload from '@/pages/components/upload'
 import { mapState } from 'vuex'
 import { saveNotice, getNoticeDetail } from '@/api/index'
 
 export default {
-  components: { Upload },
+  // components: { Upload },
   data() {
     return {
       dialogStatus: '', // add ,update,detail
@@ -52,6 +53,9 @@ export default {
     // 上传成功
     uploadSuccess(list) {
       this.form.fileList = JSON.stringify(list)
+    },
+    handleDownLoad() {
+      window.open(JSON.parse(this.form.fileList)[0].url+`?sessionId=${localStorage.getItem('buildSessionId')}`)
     },
     // 关闭弹窗
     onClose() {

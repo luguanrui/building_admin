@@ -33,8 +33,8 @@
           <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100083')">删除</a-button>
           </a-popconfirm>
-          <a-button size="small" @click="handlePublish(record)" v-if="record.isPublish === 1 && !permissionList.includes('100082')">发布</a-button>
-          <a-button size="small" @click="handleBack(record)" v-else>撤回</a-button>
+          <a-button size="small" @click="handlePublish(record)" v-if="record.isPublish === 0 && permissionList.includes('100082')">发布</a-button>
+          <a-button size="small" @click="handleBack(record)" v-if="record.isPublish === 1 && permissionList.includes('100082')">撤回</a-button>
         </template>
       </a-table>
     </div>

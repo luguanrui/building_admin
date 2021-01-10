@@ -85,7 +85,7 @@ export default {
       return this.dialogStatus === 'detail' ? true : false
     },
     templateUrl() {
-      return `http://60.191.18.38:8080/file/prod/test/2021-01-02/f27a500e-e9ae-4328-ba6a-95689d251a97.xlsx?sessionId=${localStorage.getItem('buildSessionId')}`
+      return `http://115.238.32.56:8080/file/prod/lyxt/2021-01-10/fec0b17dcdc24a698b992892ba6bddb7.xlsx?sessionId=${localStorage.getItem('buildSessionId')}`
     },
   },
   methods: {
@@ -210,7 +210,7 @@ export default {
         this.fileName = ''
 
         this.importVisible = false
-        this.getTaxImportList()
+        this.getBuildDetail()
       }
     },
     // 用户列表

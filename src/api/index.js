@@ -352,5 +352,5 @@ export function importData(params) {
   let config = {
     headers: { 'Content-Type': 'multipart/form-data' },
   }
-  return axios.post(`${baseApi}tax/import`, params, config)
+  return axios.post(`${baseApi}room/import`, params, config)
 }

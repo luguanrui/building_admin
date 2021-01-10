@@ -4,14 +4,7 @@ export default {
   data() {
     return {
       loading: false,
-      data: [
-        {
-          id: 1,
-          address: '11',
-          company: '11',
-          time: '11',
-        },
-      ],
+      data: [],
       image: require('@/pages/login/images/bg_copy.png'),
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },

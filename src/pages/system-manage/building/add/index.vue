@@ -90,7 +90,7 @@
             <h3 class="title">
               <span style="margin-right: 50px">房间面积</span>
               <!-- <a-button type="primary" @click="handleAddRoom">+房间面积</a-button> -->
-              <a-button type="primary" style="margin-right: 10px" @click="handleImport">导入</a-button>
+              <a-button type="primary" style="margin-right: 10px" @click="handleImport" v-if="dialogStatus == 'edit'">导入</a-button>
             </h3>
           </a-col>
         </a-row>

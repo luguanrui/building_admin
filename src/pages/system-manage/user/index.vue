@@ -69,9 +69,15 @@ export default {
           ellipsis: true,
         },
         {
-          title: '所属角色',
-          dataIndex: 'orgName',
-          key: 'orgName',
+          title: '角色名称',
+          dataIndex: 'roleName',
+          key: 'roleName',
+          ellipsis: true,
+        },
+        {
+          title: '所属企业',
+          dataIndex: 'companyName',
+          key: 'companyName',
           ellipsis: true,
         },
         {

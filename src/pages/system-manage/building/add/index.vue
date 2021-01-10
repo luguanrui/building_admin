@@ -122,7 +122,7 @@
                 <span>楼层：</span><a-input v-model="item.floor" placeholder="请输入" addon-after="层" style="width: 110px; margin-right: 10px" /> <span>房号：</span
                 ><a-input v-model="item.roomNum" placeholder="请输入" addon-after="号" style="width: 110px; margin-right: 10px" /> <span>面积：</span
                 ><a-input v-model="item.area" placeholder="请输入" addon-after="平方米" style="width: 140px; margin-right: 10px" />
-                <a-icon v-if="form.roomList.length > 1" class="dynamic-delete-button" type="minus-circle-o" :disabled="form.roomList.length === 1" @click="handleRemove(item)" />
+                <a-icon class="dynamic-delete-button" type="minus-circle-o" :disabled="form.roomList.length === 1" @click="handleRemove(item)" />
               </div>
             </a-form-model-item>
             <a-form-model-item v-if="!disabled" style="margin-top: 20px">

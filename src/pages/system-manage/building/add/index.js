@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       importVisible: false,
-      showUploadFile: false,
+      showUploadFile: true,
       file: '',
       fileName: '',
       labelCol: { span: 7 },
@@ -40,14 +40,7 @@ export default {
         viceArea: '', // 副楼面积
         viceAreaLeft: '', // 副楼空置
         buildingPic: '', // 楼宇照片
-        roomList: [
-          {
-            buildType: undefined,
-            floor: undefined,
-            roomNum: undefined,
-            area: undefined,
-          },
-        ], // 楼宇的房间列表
+        roomList: [], // 楼宇的房间列表
       },
 
       rules: {
@@ -151,9 +144,10 @@ export default {
     },
     handleRemove(item) {
       let index = this.form.roomList.indexOf(item)
-      if (index !== -1) {
-        this.form.roomList.splice(index, 1)
-      }
+      this.form.roomList.splice(index, 1)
+      // if (index !== -1) {
+      //   this.form.roomList.splice(index, 1)
+      // }
     },
     // 新增员工成功
     handleSuccess(dialogStatus, obj) {

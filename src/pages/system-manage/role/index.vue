@@ -28,10 +28,6 @@ export default {
           dataIndex: "value",
         },
         {
-          title: "权限名称",
-          dataIndex: "perName",
-        },
-        {
           title: "权限设置",
           scopedSlots: { customRender: "more" },
         },

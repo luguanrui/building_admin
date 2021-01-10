@@ -5,6 +5,7 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
+      current: 0,
       carouselList: [],
       showInfo: undefined,
       msgList: [],
@@ -29,6 +30,9 @@ export default {
   },
   methods: {
     dayjs,
+    afterChange(current) {
+      console.log(current,'current')
+    },
     handleEnter(index) {
       this.showInfo = index
     },
@@ -71,12 +75,16 @@ export default {
         if (rs.data) {
           rs.data.forEach(img => {
             list.push({
+              title: img.title,
               imgSrc: JSON.parse(img.fileList)[0].url,
               text: img.content,
             })
           })
         }
         this.carouselList = list
+        if (this.carouselList.length === 1) {
+          this.current = 0
+        }
       }
     },
     // 通知公告

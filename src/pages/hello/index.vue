@@ -1,22 +1,28 @@
 <template>
   <a-card>
     <div class="wrapper">
-      <a-carousel arrows autoplay>
-        <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
-          <a-icon type="left" />
-        </div>
-        <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
-          <a-icon type="right" />
-        </div>
-        <div v-for="(item, index) in carouselList" :key="index">
-          <div class="carousel-item" @mouseenter="handleEnter(index)" @mouseleave="handleLeave(index)">
-            <img :src="item.imgSrc+sessionId" alt="" />
-            <div class="hover-content" v-if="showInfo === index">
-              <pre>{{ item.text }}</pre>
+      <div class="carousel-content">
+        <a-carousel arrows autoplay @afterChange="afterChange">
+          <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
+            <a-icon type="left" />
+          </div>
+          <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
+            <a-icon type="right" />
+          </div>
+          <div v-for="(item, index) in carouselList" :key="index">
+            <div class="carousel-item" @mouseenter="handleEnter(index)" @mouseleave="handleLeave(index)">
+              <img :src="item.imgSrc + sessionId" alt="" />
+              <!-- <div class="hover-content" v-if="showInfo === index">
+                <pre>{{ item.text }}</pre>
+              </div> -->
             </div>
           </div>
+        </a-carousel>
+        <div class="text-content">
+          <h4>{{carouselList[current].title}}</h4>
+          <pre>{{carouselList[current].text}}</pre>
         </div>
-      </a-carousel>
+      </div>
       <div class="msg-wrapper">
         <div class="msg-content">
           <h3 class="title">消息中心</h3>
@@ -26,7 +32,7 @@
             <div class="name">{{ item.createUserName }}</div>
             <div class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日') }}</div>
           </li>
-          <div style="text-align: right;padding-right: 35px;" v-if="msgList.length && msgList.length>10">
+          <div style="text-align: right;padding-right: 35px;" v-if="msgList.length && msgList.length > 10">
             <a-button type="link" @click="handleToMsg">更多</a-button>
           </div>
         </div>
@@ -108,7 +114,18 @@
     }
   }
 }
-
+.carousel-content {
+  display: flex;
+  align-items: flex-start;
+  justify-items: center;
+}
+.ant-carousel {
+  flex: 1;
+}
+.text-content {
+  flex: 1;
+  padding: 0 20px;
+}
 .ant-carousel /deep/ .custom-slick-arrow {
   width: 30px;
   height: 30px;
@@ -124,7 +141,7 @@
   opacity: 0.5;
 }
 .carousel-item {
-  height: 350px;
+  height: 300px;
   position: relative;
   img {
     width: 100%;

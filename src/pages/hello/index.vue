@@ -2,7 +2,7 @@
   <a-card>
     <div class="wrapper">
       <div class="carousel-content">
-        <a-carousel arrows autoplay @afterChange="afterChange">
+        <a-carousel arrows autoplay :afterChange="afterChange">
           <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
             <a-icon type="left" />
           </div>
@@ -18,7 +18,7 @@
             </div>
           </div>
         </a-carousel>
-        <div class="text-content">
+        <div class="text-content" v-if="carouselList.length">
           <h4>{{carouselList[current].title}}</h4>
           <pre>{{carouselList[current].text}}</pre>
         </div>
@@ -115,12 +115,14 @@
   }
 }
 .carousel-content {
+  width: 100%;
   display: flex;
   align-items: flex-start;
   justify-items: center;
 }
 .ant-carousel {
   flex: 1;
+  width: 300px;
 }
 .text-content {
   flex: 1;

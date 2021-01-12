@@ -31,7 +31,7 @@ export default {
   methods: {
     dayjs,
     afterChange(current) {
-      console.log(current,'current')
+      this.current = current
     },
     handleEnter(index) {
       this.showInfo = index
@@ -85,6 +85,7 @@ export default {
         if (this.carouselList.length === 1) {
           this.current = 0
         }
+        console.log(this.carouselList,'this.carouselList')
       }
     },
     // 通知公告

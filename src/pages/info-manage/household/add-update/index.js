@@ -26,6 +26,7 @@ export default {
             houseName: '', // 居住人姓名
             cardType: undefined, // 证件类型
             country: undefined, // 国籍
+            countryName: '', // 国籍
             cardNum: undefined, // 证件号码
             tempCardNum: undefined, // 暂住证号码
             sex: undefined, // 性别；1-男；2-女；
@@ -38,6 +39,8 @@ export default {
             address: '', // 户籍地址
             phone: '', // 联系电话
             liveInTime: undefined, // 入住时间
+            leaveDate: undefined, // 搬离日期
+            remark: '', // 备注
           },
         ],
       },
@@ -65,6 +68,7 @@ export default {
       'regionList',
       'nationList',
       'politicalList',
+      'roomTypeList'
     ]),
     title() {
       switch (this.dialogStatus) {
@@ -94,6 +98,7 @@ export default {
       'getRegionList',
       'getNationList',
       'getPoliticalList',
+      'getRoomTypeList'
     ]),
     /**
      *
@@ -112,6 +117,7 @@ export default {
       this.getRegionList()
       this.getNationList()
       this.getPoliticalList()
+      this.getRoomTypeList()
       if (id) {
         this.getHouse()
       }
@@ -184,6 +190,9 @@ export default {
     handleRemoveHousehold(index) {
       this.form.userList.splice(index, 1)
     },
+    handleChangeuserFromCopy(val, select) {
+      console.log(val, select)
+    },
     // 提交信息
     handleSubmit() {
       this.form.userList.map(item => {
@@ -210,6 +219,14 @@ export default {
         return result.value
       } else {
         return '未知类型'
+      }
+    },
+    findCountryValue(arr, key) {
+      let result = arr.find(item => item.key === key)
+      if (result) {
+        return result.value
+      } else {
+        return key
       }
     },
     // 房地产
@@ -289,18 +306,21 @@ export default {
             houseName: user.houseName, // 居住人姓名
             cardType: user.cardType, // 证件类型
             country: user.country, // 国籍
+            countryName: user.countryName, // 国籍
             cardNum: user.cardNum, // 证件号码
             tempCardNum: user.tempCardNum, // 暂住证号码
             sex: user.sex, // 性别；1-男；2-女；
             age: user.age, // 年龄
             carNum: user.carNum, // 车牌号码
-            userFromCopy: [user.province, user.city, user.zone],
+            userFromCopy: user.userFrom ? user.userFrom.split(',').map(item=>Number(item)):[],
             userFrom: user.userFrom, // 籍贯
             nation: user.nation, // 民族
             politicalType: user.politicalType, // 政治面貌；0-无；1-团员；2-党员
             address: user.address, // 户籍地址
             phone: user.phone, // 联系电话
             liveInTime: user.liveInTime, // 入住时间
+            leaveDate: user.leaveDate, // 搬离日期
+            remark: user.remark, // 备注
           })
         })
         Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, userList: userListCopy })

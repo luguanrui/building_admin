@@ -74,9 +74,9 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="房屋性质" :prop="'userList.' + index + '.houseRoomType'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
-              <span v-if="disabled">{{ findValue(houseNatureList, user.houseRoomType) }}</span>
+              <span v-if="disabled">{{ findValue(roomTypeList, user.houseRoomType) }}</span>
               <a-select v-else v-model="user.houseRoomType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <a-select-option v-for="item in houseNatureList" :value="item.key" :key="item.item">
+                <a-select-option v-for="item in roomTypeList" :value="item.key" :key="item.item">
                   {{ item.value }}
                 </a-select-option>
               </a-select>
@@ -100,8 +100,18 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="国籍" :prop="'userList.' + index + '.country'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
-              <span v-if="disabled">{{ findValue(countryList, user.country) }}</span>
-              <a-select v-else v-model="user.country" placeholder="请选择" allowClear :show-search="true" @blur="handleBlur($event, index)" @search="handleSearch($event, index)" :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+              <span v-if="disabled">{{ findCountryValue(countryList,user.country) }}</span>
+              <a-select
+                v-else
+                v-model="user.country"
+                placeholder="请选择"
+                allowClear
+                :show-search="true"
+                @blur="handleBlur($event, index)"
+                @search="handleSearch($event, index)"
+                :getPopupContainer="trigger => trigger.parentNode"
+                :dropdownMatchSelectWidth="false"
+              >
                 <a-select-option v-for="item in countryList" :value="item.key" :key="item.item">
                   {{ item.value }}
                 </a-select-option>
@@ -146,13 +156,16 @@
             <a-form-model-item label="籍贯" :prop="'userList.' + index + '.userFrom'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ user.userFrom }}</span>
               <a-cascader
+                ref="cascader"
                 v-else
                 placeholder="请选择"
                 allowClear
                 v-model="user.userFromCopy"
                 :options="regionList"
                 :field-names="{ label: 'name', value: 'id', children: 'childList' }"
-              />
+                @change="handleChangeuserFromCopy"
+              >
+              </a-cascader>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -207,6 +220,26 @@
                 style="width: 100%"
                 :getPopupContainer="trigger => trigger.parentNode"
               />
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="搬离时间" :prop="'userList.' + index + '.leaveDate'" :rules="user.houseRoomType === 3 ? [{ required: true, validator: houseRoomTypeValid, trigger: 'change' }] : []">
+              <span v-if="disabled">{{ dayjs(user.leaveDate).format('YYYY年MM月DD日') }}</span>
+              <a-date-picker
+                v-else
+                v-model="user.leaveDate"
+                format="YYYY/MM/DD"
+                valueFormat="YYYY-MM-DD"
+                :allowClear="true"
+                style="width: 100%"
+                :getPopupContainer="trigger => trigger.parentNode"
+              />
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="备注" :prop="'userList.' + index + '.remark'">
+              <span v-if="disabled">{{ user.remark }}</span>
+              <a-input v-else v-model="user.remark" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
             </a-form-model-item>
           </a-col>
         </a-row>

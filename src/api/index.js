@@ -347,6 +347,11 @@ export function getAgeByIdNo(params) {
   return axios.get(`${baseApi}getAgeByIdNo`, { params })
 }
 
+// 房屋性质
+export function getRoomTypeList() {
+  return axios.get(`${baseApi}roomType/list`)
+}
+
 // 导入数据
 export function importData(params) {
   let config = {

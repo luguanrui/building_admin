@@ -1,6 +1,6 @@
 import { mapState, mapActions } from 'vuex'
 import dayjs from 'dayjs'
-import { saveCompany, getCompany,getBuildRoomCalc } from '@/api/index'
+import { saveCompany, getCompany, getBuildRoomCalc } from '@/api/index'
 import EmployeeAdd from '../employee-add/index.vue'
 
 export default {
@@ -29,7 +29,8 @@ export default {
         creditCode: '', // 统一信用代码
         regAddress: '', // 注册地址
         regDate: '', // 注册时间
-        industryType: undefined, // 行业类别
+        industryType: '', // 行业类别
+        industryTypeCopy: [],
         iegalPerson: '', // 法人
         // taxId: '', // 纳税人识别号
         businessScope: '', // 经营范围
@@ -43,6 +44,8 @@ export default {
         workRoomType: undefined, // 所属权
         workRoomArea: '', // 面积
         // workRoomPhone: '', // 联系电话
+        leaveDate: '', // 搬离时间
+        remark: '', // 备注
 
         // 入驻企业员工信息列表
         employeeList: [],
@@ -101,7 +104,17 @@ export default {
   },
 
   computed: {
-    ...mapState('common', ['permissionList','buildTypeList', 'buildingAllList', 'companyTypeList', 'belongList', 'industryList', 'workRoomTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', [
+      'permissionList',
+      'buildTypeList',
+      'buildingAllList',
+      'companyTypeList',
+      'belongList',
+      'industryList',
+      'roomTypeList',
+      'buildingFloorList',
+      'buildingRoomList',
+    ]),
     title() {
       switch (this.dialogStatus) {
         case 'add':
@@ -121,7 +134,7 @@ export default {
   },
   methods: {
     dayjs,
-    ...mapActions('common', ['getBuildAllList', 'getCompanyTypeList', 'getBelongList', 'getIndustryList', 'getBuildFloorList', 'getBuildRoomList']),
+    ...mapActions('common', ['getBuildAllList', 'getCompanyTypeList', 'getBelongList', 'getIndustryList', 'getBuildFloorList', 'getBuildRoomList', 'getRoomTypeList']),
     /**
      *
      * @param {*} id 项目id
@@ -141,12 +154,14 @@ export default {
       this.getBelongList()
       // 行业类别列表
       this.getIndustryList()
+      // 房屋性质
+      this.getRoomTypeList()
 
       // 详情/编辑
       if (this.form.id) {
         this.getCompany()
       }
-      if (dialogStatus === 'detail'){
+      if (dialogStatus === 'detail') {
         this.rules = {}
       }
     },
@@ -304,12 +319,19 @@ export default {
         this.form.educationCountList.forEach(item => {
           this.totalCount += item.count
         })
+        // 处理老数据
+        if (typeof this.form.industryType === 'number') {
+          this.form.industryTypeCopy = []
+        }
       }
     },
     // 新增
     async saveCompany() {
       try {
         this.loading = true
+        if (this.form.industryTypeCopy.length) {
+          this.form.industryType = this.form.industryTypeCopy.join()
+        }
         // 参数
         const params = {
           ...this.form,

@@ -36,6 +36,7 @@ export default {
         ownerName: [{ required: true, message: '必填', trigger: 'blur' }],
         cardType: [{ required: true, message: '必填', trigger: 'blur' }],
         country: [{ required: true, message: '必填', trigger: 'blur' }],
+        ownerContact: [{ required: true, message: '必填', trigger: 'blur' }],
         phone: [{ required: true, message: '必填', trigger: 'blur' }],
       },
     }
@@ -156,6 +157,14 @@ export default {
         return '未知类型'
       }
     },
+    findCountryValue(arr, key) {
+      let result = arr.find(item => item.key === key)
+      if (result) {
+        return result.value
+      } else {
+        return key
+      }
+    },
     // 房地产
     findBuildingValue(arr, key) {
       let result = arr.find(item => item.id === key)
@@ -198,7 +207,7 @@ export default {
       try {
         const params = {
           ...this.form,
-          roomNum: this.form.roomNum.join()
+          roomNum: this.form.roomNum.join(),
         }
         const { code } = await saveOwner(params)
         if (code === 200) {

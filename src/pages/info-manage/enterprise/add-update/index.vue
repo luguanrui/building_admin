@@ -32,7 +32,15 @@
           <a-col :span="span">
             <a-form-model-item label="楼层" prop="floor">
               <span v-if="disabled">{{ form.floor }}&nbsp;&nbsp;层</span>
-              <a-select v-else v-model="form.floor" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false" @change="handleChangeFloor">
+              <a-select
+                v-else
+                v-model="form.floor"
+                placeholder="请选择"
+                allowClear
+                :getPopupContainer="trigger => trigger.parentNode"
+                :dropdownMatchSelectWidth="false"
+                @change="handleChangeFloor"
+              >
                 <a-select-option v-for="item in buildingFloorList" :value="item" :key="item">
                   {{ item }}
                 </a-select-option>
@@ -42,7 +50,16 @@
           <a-col :span="span">
             <a-form-model-item label="房号" prop="roomNum">
               <span v-if="disabled">{{ form.roomNum && form.roomNum.join() }}&nbsp;&nbsp;号</span>
-              <a-select v-else v-model="form.roomNum" placeholder="请选择" mode="multiple" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false" @change="handleChangeRoomNum">
+              <a-select
+                v-else
+                v-model="form.roomNum"
+                placeholder="请选择"
+                mode="multiple"
+                allowClear
+                :getPopupContainer="trigger => trigger.parentNode"
+                :dropdownMatchSelectWidth="false"
+                @change="handleChangeRoomNum"
+              >
                 <a-select-option v-for="item in buildingRoomList" :value="item" :key="item">
                   {{ item }}
                 </a-select-option>
@@ -51,7 +68,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="企业性质" prop="companyType">
-              <span v-if="disabled">{{ findValue(companyTypeList,form.companyType) }}</span>
+              <span v-if="disabled">{{ findValue(companyTypeList, form.companyType) }}</span>
               <a-select v-else v-model="form.companyType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in companyTypeList" :value="item.key" :key="item.key">
                   {{ item.value }}
@@ -61,7 +78,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="属地性质" prop="belongType">
-              <span v-if="disabled">{{ findValue(belongList,form.belongType) }}</span>
+              <span v-if="disabled">{{ findValue(belongList, form.belongType) }}</span>
               <a-select v-else v-model="form.belongType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in belongList" :value="item.key" :key="item.key">
                   {{ item.value }}
@@ -97,12 +114,19 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="行业类别" prop="industryType">
-              <span v-if="disabled">{{ findValue(industryList,form.industryType) }}</span>
-              <a-select v-else v-model="form.industryType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+              <span v-if="disabled">{{ findValue(industryList, form.industryType) }}</span>
+              <!-- <a-select v-else v-model="form.industryType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in industryList" :value="item.key" :key="item.key">
                   {{ item.value }}
                 </a-select-option>
-              </a-select>
+              </a-select> -->
+              <a-cascader
+                placeholder="请选择"
+                allowClear
+                v-model="form.industryTypeCopy"
+                :options="industryList"
+                :field-names="{ label: 'name', value: 'id', children: 'childList' }"
+              />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -151,9 +175,9 @@
           <a-col :span="24"><h3 class="title">办公场所</h3></a-col>
           <a-col :span="span">
             <a-form-model-item label="所属权" prop="workRoomType">
-              <span v-if="disabled">{{ findValue(workRoomTypeList,form.workRoomType) }}</span>
+              <span v-if="disabled">{{ findValue(roomTypeList, form.workRoomType) }}</span>
               <a-select v-else v-model="form.workRoomType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
-                <a-select-option v-for="item in workRoomTypeList" :value="item.key" :key="item.key">
+                <a-select-option v-for="item in roomTypeList" :value="item.key" :key="item.key">
                   {{ item.value }}
                 </a-select-option>
               </a-select>
@@ -162,7 +186,7 @@
           <a-col :span="span">
             <a-form-model-item label="面积" prop="workRoomArea">
               <span v-if="disabled">{{ form.workRoomArea }}平方米</span>
-              <a-input v-else v-model="form.workRoomArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" :disabled="true"/>
+              <a-input v-else v-model="form.workRoomArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" :disabled="true" />
             </a-form-model-item>
           </a-col>
           <!-- <a-col :span="span">
@@ -171,6 +195,26 @@
               <a-input v-else v-model="form.workRoomPhone" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col> -->
+          <a-col :span="span">
+            <a-form-model-item label="搬离时间" prop="leaveDate" :rules="form.workRoomType === 3 ? [{ required: true, validator: houseRoomTypeValid, trigger: 'change' }] : []">
+              <span v-if="disabled">{{ dayjs(form.leaveDate).format('YYYY年MM月DD日') }}</span>
+              <a-date-picker
+                v-else
+                v-model="form.leaveDate"
+                format="YYYY/MM/DD"
+                valueFormat="YYYY-MM-DD"
+                :allowClear="true"
+                style="width: 100%"
+                :getPopupContainer="trigger => trigger.parentNode"
+              />
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="备注" prop="remark">
+              <span v-if="disabled">{{ form.remark }}</span>
+              <a-input v-else v-model="form.remark" placeholder="请输入" type="textarea" :rows="4" :maxLength="2000" />
+            </a-form-model-item>
+          </a-col>
         </a-row>
 
         <a-row v-if="dialogStatus === 'detail'">

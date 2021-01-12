@@ -86,7 +86,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="国籍" prop="country">
-              <span v-if="disabled">{{ findValue(countryList, form.country) }}</span>
+              <span v-if="disabled">{{ findCountryValue(countryList, form.country) }}</span>
               <a-select v-else v-model="form.country" placeholder="请选择" allowClear :show-search="true" @blur="handleBlur" @search="handleSearch">
                 <a-select-option v-for="item in countryList" :value="item.key" :key="item.item">
                   {{ item.value }}
@@ -98,6 +98,12 @@
             <a-form-model-item label="证件号" prop="cardNum">
               <span v-if="disabled">{{ form.cardNum }}</span>
               <a-input v-else v-model="form.cardNum" placeholder="请输入" allowClear :maxLength="50" />
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="联系人" prop="ownerContact">
+              <span v-if="disabled">{{ form.ownerContact }}</span>
+              <a-input v-else v-model="form.ownerContact" placeholder="请输入" allowClear :maxLength="20" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">

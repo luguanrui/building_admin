@@ -18,6 +18,7 @@ import {
   getBuildRoomList,
   getYearList,
   getHasPermissionList,
+  getRoomTypeList
 } from '@/api/index'
 export default {
   namespaced: true,
@@ -72,6 +73,7 @@ export default {
     buildingRoomList: [], // 房间号
     yearList: [],
     permissionList: [], // 权限按钮
+    roomTypeList: [], // 房屋状况
     // 月度
     monthList: [
       { key: 1, value: '1月' },
@@ -163,6 +165,9 @@ export default {
     SET_PERMISSION_LIST(state, val) {
       state.permissionList = val
     },
+    SET_ROOM_TYPE_LIST(state, val) {
+      state.roomTypeList = val
+    }
   },
   actions: {
     // 获取省市区数据
@@ -298,5 +303,12 @@ export default {
         commit('SET_PERMISSION_LIST', rs)
       }
     },
+    // 房屋性质
+    async getRoomTypeList({ commit }) {
+      const { code, rs } = await getRoomTypeList()
+      if (code === 200) {
+        commit('SET_ROOM_TYPE_LIST', rs)
+      }
+    }
   },
 }

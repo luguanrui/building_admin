@@ -38,6 +38,7 @@ export default {
         country: [{ required: true, message: '必填', trigger: 'blur' }],
         ownerContact: [{ required: true, message: '必填', trigger: 'blur' }],
         phone: [{ required: true, message: '必填', trigger: 'blur' }],
+        cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
       },
     }
   },

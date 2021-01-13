@@ -319,10 +319,7 @@ export default {
         this.form.educationCountList.forEach(item => {
           this.totalCount += item.count
         })
-        // 处理老数据
-        if (typeof this.form.industryType === 'number') {
-          this.form.industryTypeCopy = []
-        }
+        this.form.industryTypeCopy = this.form.industryType.split(',').map(item=> Number(item))
       }
     },
     // 新增

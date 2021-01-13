@@ -114,13 +114,14 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="行业类别" prop="industryType">
-              <span v-if="disabled">{{ findValue(industryList, form.industryType) }}</span>
+              <span v-if="disabled">{{form.industryTypeName}}</span>
               <!-- <a-select v-else v-model="form.industryType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in industryList" :value="item.key" :key="item.key">
                   {{ item.value }}
                 </a-select-option>
               </a-select> -->
               <a-cascader
+                v-else
                 placeholder="请选择"
                 allowClear
                 v-model="form.industryTypeCopy"

@@ -154,7 +154,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="籍贯" :prop="'userList.' + index + '.userFrom'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
-              <span v-if="disabled">{{ user.userFrom }}</span>
+              <span v-if="disabled">{{ user.userFromName }}</span>
               <a-cascader
                 ref="cascader"
                 v-else

@@ -64,9 +64,6 @@ export default {
           cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
           sex: [{ required: true, message: '必填', trigger: 'blur' }],
           age: [{ required: true, message: '必填', trigger: 'blur' }],
-          employeeFromCopy: [{ required: true, message: '必填', trigger: 'change' }],
-          nation: [{ required: true, message: '必填', trigger: 'change' }],
-          politicalType: [{ required: true, message: '必填', trigger: 'change' }],
           address: [{ required: true, message: '必填', trigger: 'blur' }],
           education: [{ required: true, message: '必填', trigger: 'change' }],
           outLimitDate: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -82,9 +79,6 @@ export default {
           cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
           sex: [{ required: true, message: '必填', trigger: 'blur' }],
           age: [{ required: true, message: '必填', trigger: 'blur' }],
-          employeeFromCopy: [{ required: true, message: '必填', trigger: 'change' }],
-          nation: [{ required: true, message: '必填', trigger: 'change' }],
-          politicalType: [{ required: true, message: '必填', trigger: 'change' }],
           address: [{ required: true, message: '必填', trigger: 'blur' }],
           education: [{ required: true, message: '必填', trigger: 'change' }],
           outLimitDate: [{ required: true, message: '必填', trigger: 'blur' }],
@@ -119,6 +113,20 @@ export default {
     // 关闭
     handleClose() {
       Object.assign(this.$data, this.$options.data())
+    },
+    validatorChangeCountry(rule, value, callback) {
+      if (!value.length) {
+        callback(new Error('必填'))
+      } else {
+        callback()
+      }
+    },
+    validatorChange(rule, value, callback) {
+      if (!value) {
+        callback(new Error('必填'))
+      } else {
+        callback()
+      }
     },
     handleCardNum() {
       if (this.form.cardType === 1) {

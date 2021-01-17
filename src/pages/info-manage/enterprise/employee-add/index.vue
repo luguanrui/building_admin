@@ -45,7 +45,7 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="span">
-          <a-form-model-item label="籍贯" prop="employeeFromCopy">
+          <a-form-model-item label="籍贯" prop="employeeFromCopy" :rules="form.country == 1 ? [{ type: 'array',required: true, validator: validatorChangeCountry, trigger: 'change' }] : []">
             <a-cascader
               placeholder="请选择"
               allowClear
@@ -56,7 +56,7 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="span">
-          <a-form-model-item label="民族" prop="nation">
+          <a-form-model-item label="民族" prop="nation" :rules="form.country == 1 ? [{ required: true, validator: validatorChange, trigger: 'change' }] : []">
             <a-select v-model="form.nation" placeholder="请选择" allowClear>
               <a-select-option v-for="item in nationList" :value="item.key" :key="item.key">
                 {{ item.value }}
@@ -65,7 +65,7 @@
           </a-form-model-item>
         </a-col>
         <a-col :span="span">
-          <a-form-model-item label="政治面貌" prop="politicalType">
+          <a-form-model-item label="政治面貌" prop="politicalType" :rules="form.country == 1 ? [{ required: true, validator: validatorChange, trigger: 'change' }] : []">
             <a-select v-model="form.politicalType" placeholder="请选择" allowClear>
               <a-select-option v-for="item in politicalList" :value="item.key" :key="item.key">
                 {{ item.value }}

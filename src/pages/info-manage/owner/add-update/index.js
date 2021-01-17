@@ -26,6 +26,7 @@ export default {
         phone: '', // 联系电话
         ownerCardNo: '', // 产权证号
         carNum: '', // 车牌号码
+        ownerContact: '',
       },
 
       rules: {
@@ -38,6 +39,7 @@ export default {
         country: [{ required: true, message: '必填', trigger: 'blur' }],
         ownerContact: [{ required: true, message: '必填', trigger: 'blur' }],
         phone: [{ required: true, message: '必填', trigger: 'blur' }],
+        cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
       },
     }
   },
@@ -224,10 +226,10 @@ export default {
     async getOwner() {
       const { code, rs } = await getOwner({ id: this.form.id })
       if (code === 200) {
-        const { id, buildId, buildType, floor, roomNum, totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum } = rs
+        const { id, buildId, buildType, floor, roomNum, totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum,ownerContact } = rs
         // Object.keys(this.form).forEach(key => this.form[key] = rs[key])
         // this.form.roomNum = this.form.roomNum.split(',')
-        Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum })
+        Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum,ownerContact })
 
         // 其他国籍
         const isCountry = this.countryList.find(country => country.key == this.form.country)

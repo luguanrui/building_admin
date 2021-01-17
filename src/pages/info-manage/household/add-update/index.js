@@ -34,6 +34,7 @@ export default {
             carNum: '', // 车牌号码
             userFromCopy: [],
             userFrom: '', // 籍贯
+            userFromName: '',
             nation: undefined, // 民族
             politicalType: undefined, // 政治面貌；0-无；1-团员；2-党员
             address: '', // 户籍地址
@@ -313,6 +314,7 @@ export default {
             age: user.age, // 年龄
             carNum: user.carNum, // 车牌号码
             userFromCopy: user.userFrom ? user.userFrom.split(',').map(item=>Number(item)):[],
+            userFromName: user.userFromName,
             userFrom: user.userFrom, // 籍贯
             nation: user.nation, // 民族
             politicalType: user.politicalType, // 政治面貌；0-无；1-团员；2-党员

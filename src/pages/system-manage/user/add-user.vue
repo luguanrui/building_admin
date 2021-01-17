@@ -95,6 +95,7 @@ export default {
         ],
         deptId: [{ required: true, message: "必填", trigger: "blur" }],
         role: [{ required: true, message: "必填", trigger: "blur" }],
+        companyName: [{ required: true, message: "必填", trigger: "blur" }]
       },
     };
   },

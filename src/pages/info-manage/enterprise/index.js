@@ -14,7 +14,7 @@ export default {
       form: {
         companyName: '', // 企业名称
         buildId: undefined, // 楼宇名称
-        buildType: undefined, // 主楼副楼
+        buildType: undefined, // 主楼裙房
         floor: undefined, // 楼层
         roomNum: undefined, // 房号
       },
@@ -87,7 +87,7 @@ export default {
         this.getBuildFloorList(params)
       }
     },
-    // 选择主楼副楼
+    // 选择主楼裙房
     handleChangeMain() {
       this.form.floor = undefined
       this.form.roomNum = undefined

@@ -21,7 +21,7 @@ export default {
         id: '',
         name: '', // 企业名称
         buildId: undefined, // 楼宇ID
-        buildType: undefined, // 主楼副楼
+        buildType: undefined, // 主楼裙房
         floor: undefined, // 楼层
         roomNum: [], // 房号
         companyType: undefined, // 企业性质
@@ -86,13 +86,12 @@ export default {
           dataIndex: 'name',
         },
         {
-          title: '证件号码',
-          dataIndex: 'cardNum',
+          title: '职务',
+          dataIndex: 'job',
         },
         {
-          title: '创建时间',
-          dataIndex: 'createAt',
-          customRender: (text, record) => dayjs(record.createAt).format('YYYY年MM月DD日'),
+          title: '联系电话',
+          dataIndex: 'phone'
         },
         // {
         //   title: '操作',
@@ -185,7 +184,7 @@ export default {
         this.getBuildFloorList(params)
       }
     },
-    // 选择主楼副楼
+    // 选择主楼裙房
     handleChangeMain() {
       this.form.floor = undefined
       this.form.roomNum = []

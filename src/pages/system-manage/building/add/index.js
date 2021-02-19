@@ -20,7 +20,7 @@ export default {
 
       roomTypeList: [
         { key: 1, value: '主楼' },
-        { key: 2, value: '副楼' },
+        { key: 2, value: '裙房' },
         { key: 3, value: '单身公寓' },
       ],
       userList: [],
@@ -37,8 +37,8 @@ export default {
         mainArea: '', // 主楼面积
         singleApartmentArea: '', // 单身公寓面积
         mainAreaLeft: '', // 主楼空置
-        viceArea: '', // 副楼面积
-        viceAreaLeft: '', // 副楼空置
+        viceArea: '', // 裙房面积
+        viceAreaLeft: '', // 裙房空置
         buildingPic: '', // 楼宇照片
         roomList: [], // 楼宇的房间列表
       },

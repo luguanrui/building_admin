@@ -23,10 +23,10 @@ import {
 export default {
   namespaced: true,
   state: {
-    // 主楼副楼
+    // 主楼裙房
     buildTypeList: [
       { key: 1, value: '主楼' },
-      { key: 2, value: '副楼' },
+      { key: 2, value: '裙房' },
     ],
     // 性别
     genderList: [

@@ -12,7 +12,7 @@ export default {
       form: {
         contactName: '', // 房屋联系人
         buildId: undefined, // 楼宇名称
-        buildType: undefined, // 主楼副楼
+        buildType: undefined, // 主楼裙房
         floor: undefined, // 楼层
         roomNum: undefined, // 房号
       },
@@ -27,31 +27,35 @@ export default {
           customRender: (text, record, index) => index + 1,
         },
         {
-          title: '楼宇名称',
-          dataIndex: 'buildName',
-        },
-        {
           title: '房产地址',
           dataIndex: 'buildAddress',
-          scopedSlots: { customRender: 'name' },
+          scopedSlots: { customRender: 'buildAddress' },
         },
+        // {
+        //   title: '楼宇名称',
+        //   dataIndex: 'buildName',
+        // },
         {
           title: '住户联系人',
           dataIndex: 'contactName',
         },
         {
-          title: '人数',
+          title: '联系电话',
+          dataIndex: 'phone',
+        },
+        {
+          title: '居住人数',
           dataIndex: 'userCount',
         },
-        {
-          title: '房屋性质',
-          dataIndex: 'houseTypeName',
-        },
-        {
-          title: '入住时间',
-          dataIndex: 'liveInTime',
-          customRender: (text, record) => record.liveInTime && dayjs(record.liveInTime).format('YYYY年MM月DD日'),
-        },
+        // {
+        //   title: '房屋性质',
+        //   dataIndex: 'houseTypeName',
+        // },
+        // {
+        //   title: '入住时间',
+        //   dataIndex: 'liveInTime',
+        //   customRender: (text, record) => record.liveInTime && dayjs(record.liveInTime).format('YYYY年MM月DD日'),
+        // },
         {
           title: '操作',
           width: 100,
@@ -89,7 +93,7 @@ export default {
         this.getBuildFloorList(params)
       }
     },
-    // 选择主楼副楼
+    // 选择主楼裙房
     handleChangeMain() {
       this.form.floor = undefined
       this.form.roomNum = undefined

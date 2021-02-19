@@ -11,7 +11,7 @@ export default {
     return {
       form: {
         buildId: undefined, // 楼宇名称
-        buildType: undefined, // 主楼副楼
+        buildType: undefined, // 主楼裙房
         floor: undefined, // 楼层
         roomNum: undefined, // 房号
         ownerName: '', // 联系人
@@ -27,32 +27,37 @@ export default {
           customRender: (text, record, index) => index + 1,
         },
         {
-          title: '楼宇名称',
-          dataIndex: 'buildName',
-          ellipsis: true,
-          scopedSlots: { customRender: 'name' },
-        },
-        {
-          title: '楼宇地址',
+          title: '房产地址',
           dataIndex: 'ownerAddress',
-          ellipsis: true,
+          scopedSlots: { customRender: 'ownerAddress' },
         },
+        // {
+        //   title: '楼宇名称',
+        //   dataIndex: 'buildName',
+        //   ellipsis: true,
+        //   scopedSlots: { customRender: 'name' },
+        // },
         {
-          title: '房产联系人',
+          title: '联系人',
           dataIndex: 'ownerName',
           ellipsis: true,
         },
         {
-          title: '房号',
-          dataIndex: 'roomNum',
+          title: '联系电话',
+          dataIndex: 'phone',
           ellipsis: true,
         },
-        {
-          title: '创建时间',
-          dataIndex: 'createAt',
-          ellipsis: true,
-          customRender: (text, record) => record.createAt && dayjs(record.createAt).format('YYYY年MM月DD日'),
-        },
+        // {
+        //   title: '房号',
+        //   dataIndex: 'roomNum',
+        //   ellipsis: true,
+        // },
+        // {
+        //   title: '创建时间',
+        //   dataIndex: 'createAt',
+        //   ellipsis: true,
+        //   customRender: (text, record) => record.createAt && dayjs(record.createAt).format('YYYY年MM月DD日'),
+        // },
         {
           title: '操作',
           width: 100,
@@ -90,7 +95,7 @@ export default {
         this.getBuildFloorList(params)
       }
     },
-    // 选择主楼副楼
+    // 选择主楼裙房
     handleChangeMain() {
       this.form.floor = undefined
       this.form.roomNum = undefined

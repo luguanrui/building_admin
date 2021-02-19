@@ -16,7 +16,7 @@ export default {
       form: {
         id: '',
         buildId: undefined, // 楼宇ID
-        buildType: undefined, // 1-主楼；2-副楼
+        buildType: undefined, // 1-主楼；2-裙房
         floor: undefined, // 楼层
         roomNum: [], // 房号
         totalArea: '', // 根据房号计算的面积
@@ -146,7 +146,7 @@ export default {
         this.getBuildFloorList(params)
       }
     },
-    // 选择主楼副楼
+    // 选择主楼裙房
     handleChangeMain() {
       this.form.floor = undefined
       this.form.roomNum = []

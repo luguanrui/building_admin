@@ -49,7 +49,7 @@
           </a-row>
           <a-row type="flex" justify="start">
             <a-col :span="6">
-              <a-statistic title="副楼：" :value="item.viceArea">
+              <a-statistic title="裙房：" :value="item.viceArea">
                 <template #suffix>
                   <span>平方米</span>
                 </template>
@@ -63,7 +63,7 @@
               </a-statistic>
             </a-col>
             <a-col :span="6">
-              <a-statistic title="副楼空置：" :value="item.viceAreaLeft">
+              <a-statistic title="裙房空置：" :value="item.viceAreaLeft">
                 <template #suffix>
                   <span>平方米</span>
                 </template>

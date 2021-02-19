@@ -68,13 +68,13 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="副楼" prop="viceArea">
+            <a-form-model-item label="裙房" prop="viceArea">
               <span v-if="disabled">{{ form.viceArea }}&nbsp;&nbsp;平方米</span>
               <a-input v-else v-model="form.viceArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="副楼空置" prop="viceAreaLeft">
+            <a-form-model-item label="裙房空置" prop="viceAreaLeft">
               <span v-if="disabled">{{ form.viceAreaLeft }}&nbsp;&nbsp;平方米</span>
               <a-input v-else v-model="form.viceAreaLeft" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" />
             </a-form-model-item>

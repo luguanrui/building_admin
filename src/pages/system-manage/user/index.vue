@@ -28,7 +28,9 @@
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" :pagination="false" :loading="loading">
         <template slot="operation" slot-scope="record, text" @click="handleRecord(text)">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100063')">修改</a-button>
-          <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)" :disabled="!permissionList.includes('100064')">删除</a-button>
+          <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
+            <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100064')">删除</a-button>
+          </a-popconfirm>
           <a-button size="small" @click="handleResetPwd(record)">重置密码</a-button>
         </template>
       </a-table>

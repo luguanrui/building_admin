@@ -69,7 +69,7 @@
         </a-row>
         <a-col :span="24"><h3 class="title">住户</h3></a-col>
         <a-row v-for="(user, index) in form.userList" :key="index">
-          <a-col :span="24">
+          <a-col :span="24" v-if="form.userList.length>1">
             <h6 style="padding-left: 10px;margin: 20px 0;">住户{{ index + 1 }}</h6>
           </a-col>
           <a-col :span="span">

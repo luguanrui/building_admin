@@ -24,8 +24,8 @@
                 <div class="type">{{ noticeTypeListText(item.noticeType) }}</div>
                 <div class="time">{{ item.publishTime && dayjs(item.publishTime).format('YYYY年MM月DD日') }}</div>
               </li>
-              <div style="text-align: right;padding-right: 10px;" v-if="announcementList.length > 10">
-                <a-button type="link">更多</a-button>
+              <div style="text-align: right;padding-right: 10px;margin-top: 10px" v-if="actPagination.total>10">
+                <a-pagination size="small" :default-current="6" :total="actPagination.total" :pageSize="actPagination.pageSize" :current="actPagination.current" @change="handleChangActPagination"/>
               </div>
             </div>
             <div class="msg-content">
@@ -36,8 +36,8 @@
                 <div class="name">{{ item.createUserName }}</div>
                 <div class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日') }}</div>
               </li>
-              <div style="text-align: right;padding-right: 35px;" v-if="msgList.length && msgList.length > 10">
-                <a-button type="link" @click="handleToMsg">更多</a-button>
+              <div style="text-align: right;padding-right: 35px;margin-top: 10px" v-if="msgPagination.total>10">
+                <a-pagination size="small" :default-current="6" :total="msgPagination.total" :pageSize="msgPagination.pageSize" :current="msgPagination.current" @change="handleChangeMsgPagination"/>
               </div>
             </div>
           </div>

@@ -12,6 +12,16 @@ export default {
       showInfo: undefined,
       msgList: [],
       announcementList: [],
+      msgPagination: {
+        total: 0,
+        pageSize: 10,
+        current: 1
+      },
+      actPagination: {
+        total: 0,
+        pageSize: 10,
+        current: 1
+      }
     }
   },
   activated() {
@@ -75,11 +85,25 @@ export default {
         this.$Message.info("您暂无查看此楼宇信息的权限")
       }
     },
+    handleChangeMsgPagination(current) {
+      this.msgPagination.current = current
+      this.getMsgList()
+    },
+    handleChangActPagination(current) {
+      this.actPagination.current = current
+      this.getNoticeWelcomeList()
+    },
     // 消息
     async getMsgList() {
-      const { code, rs } = await getMsgList()
+      const params = {
+        pageNum: this.msgPagination.current,
+        pageSize: this.msgPagination.pageSize
+      }
+      const { code, rs } = await getMsgList(params)
       if (code === 200) {
         this.msgList = rs.data || []
+        this.msgPagination.current = rs.current
+        this.msgPagination.total = rs.total
       }
     },
     // 图片
@@ -104,9 +128,15 @@ export default {
     },
     // 通知公告
     async getNoticeWelcomeList() {
-      const { code, rs } = await getNoticeWelcomeList()
+      const params = {
+        pageNum: this.actPagination.current,
+        pageSize: this.actPagination.pageSize
+      }
+      const { code, rs } = await getNoticeWelcomeList(params)
       if (code === 200) {
         this.announcementList = rs.data || []
+        this.actPagination.current = rs.current
+        this.actPagination.total = rs.total
       }
     },
   },

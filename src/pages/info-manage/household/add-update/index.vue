@@ -248,7 +248,7 @@
           </a-col>
         </a-row>
         <a-row v-if="!disabled">
-          <div style="margin: 20px 20px">
+          <div>
             <a-button type="primary" block @click="handleAddHousehold">新增住户</a-button>
           </div>
         </a-row>
@@ -303,7 +303,7 @@
 .title {
   border-left: 3px solid #1890ff;
   padding-left: 10px;
-  margin: 20px 0;
+  margin: 2px 0;
 }
 /deep/ .ant-form-item {
   display: flex;

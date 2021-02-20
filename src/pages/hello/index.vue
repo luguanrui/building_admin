@@ -45,13 +45,16 @@
       </a-row>
     </div>
     <!-- 详情 -->
-    <BuildInfo  ref="buildingAdd"/>
+    <BuildInfo ref="buildingAdd" />
   </a-card>
 </template>
 
 <script src="./index.js"></script>
 <style lang="less" scoped>
 .wrapper {
+  .title {
+    padding: 8px 16px;
+  }
   .building-list-content {
     .modal {
       position: absolute;
@@ -72,13 +75,10 @@
   }
   .msg-wrapper {
     .msg-content {
-      .title {
-        padding: 8px 16px;
-      }
       .msg-content-item {
         display: flex;
         align-content: center;
-        justify-content: center;
+        justify-content: flex-start;
         padding: 4px 16px;
       }
       .number {
@@ -86,7 +86,7 @@
       }
       .content {
         cursor: pointer;
-        width: 200px;
+        width: 270px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

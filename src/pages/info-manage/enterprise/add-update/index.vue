@@ -197,7 +197,7 @@
             </a-form-model-item>
           </a-col> -->
           <a-col :span="span">
-            <a-form-model-item label="搬离时间" prop="leaveDate" :rules="form.workRoomType === 3 ? [{ required: true, validator: houseRoomTypeValid, trigger: 'change' }] : []">
+            <a-form-model-item label="搬离时间" prop="leaveDate" :rules="form.workRoomType === 3 ? [{ required: true, validator: validChange, trigger: 'change' }] : []">
               <span v-if="disabled">{{ dayjs(form.leaveDate).format('YYYY年MM月DD日') }}</span>
               <a-date-picker
                 v-else
@@ -208,6 +208,20 @@
                 style="width: 100%"
                 :getPopupContainer="trigger => trigger.parentNode"
               />
+            </a-form-model-item>
+          </a-col>
+          <!-- 租赁时显示 -->
+          <a-col :span="span" v-if="form.workRoomType == 2">
+            <a-form-model-item label="联系人" prop="ownerName" :rules="dialogStatus !== 'detail' && form.workRoomType === 2 ? [{ required: true, validator: validChange, trigger: 'change' }] : []">
+              <span v-if="disabled">{{ form.ownerName }}</span>
+              <a-input v-else v-model="form.ownerName" placeholder="多个联系人请以英文逗号隔开" allowClear :maxLength="200"/>
+            </a-form-model-item>
+          </a-col>
+          <!-- 租赁时显示 -->
+          <a-col :span="span" v-if="form.workRoomType == 2">
+            <a-form-model-item label="联系电话" prop="ownerPhone" :rules="dialogStatus !== 'detail' && form.workRoomType === 2 ? [{ required: true, validator: validChange, trigger: 'change' }] : []">
+              <span v-if="disabled">{{ form.ownerPhone }}</span>
+              <a-input v-else v-model="form.ownerPhone" placeholder="多个联系电话请以英文逗号隔开" allowClear :maxLength="50" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">

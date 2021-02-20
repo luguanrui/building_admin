@@ -53,9 +53,11 @@
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100022')">修改</a-button>
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleOther(record)" :disabled="!permissionList.includes('100023')">其他信息</a-button>
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleEmployee(record)" :disabled="!permissionList.includes('100028')">员工列表</a-button>
-          <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
+          <!--  :disabled="!permissionList.includes('100030')" -->
+          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleMoveOut(record)">搬迁</a-button>
+          <!-- <a-popconfirm title="您确定要删除吗？" ok-text="确定" cancel-text="取消" @confirm="handleDel(record)">
             <a-button type="danger" size="small" style="margin-right: 10px" :disabled="!permissionList.includes('100024')">删除</a-button>
-          </a-popconfirm>
+          </a-popconfirm> -->
         </template>
       </a-table>
     </div>
@@ -65,6 +67,8 @@
     <OtherInfo ref="otherInfo" @handleSuccess="handleSuccess" />
     <!--员工列表 -->
     <EmployeeList ref="employeeList" @handleSuccess="handleSuccess"/>
+    <!-- 搬迁 -->
+    <MoveOut ref="moveOut" @handleSuccess="handleSuccess"/>
   </a-card>
 </template>
 

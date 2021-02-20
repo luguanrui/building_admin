@@ -1,164 +1,129 @@
 <template>
   <a-card>
     <div class="wrapper">
-      <div class="carousel-content">
-        <a-carousel arrows autoplay :afterChange="afterChange">
-          <div slot="prevArrow" class="custom-slick-arrow" style="left: 10px;zIndex: 1">
-            <a-icon type="left" />
+      <a-row>
+        <a-col :span="12">
+          <h3 class="title">楼宇中心</h3>
+          <div class="building-list-content">
+            <a-row :gutter="[24, 8]">
+              <a-col :span="8" v-for="(item, index) in buildingAllList" :key="index">
+                <div style="position:relative">
+                  <img :src="getUrl(item)" alt="" width="100%" height="100%" />
+                  <div class="modal" @click="handleToDetail(item)">{{ item.name }}</div>
+                </div>
+              </a-col>
+            </a-row>
           </div>
-          <div slot="nextArrow" class="custom-slick-arrow" style="right: 10px">
-            <a-icon type="right" />
-          </div>
-          <div v-for="(item, index) in carouselList" :key="index">
-            <div class="carousel-item" @mouseenter="handleEnter(index)" @mouseleave="handleLeave(index)">
-              <img :src="item.imgSrc + sessionId" alt="" />
-              <!-- <div class="hover-content" v-if="showInfo === index">
-                <pre>{{ item.text }}</pre>
-              </div> -->
+        </a-col>
+        <a-col :span="12">
+          <div class="msg-wrapper">
+            <div class="announcement-content">
+              <h3 class="title">通知公告</h3>
+              <li v-for="(item, index) in announcementList" :key="index" class="announcement-content-item">
+                <div class="content" @click="handleToAnnouncement(item)">{{ item.title }}</div>
+                <div class="type">{{ noticeTypeListText(item.noticeType) }}</div>
+                <div class="time">{{ item.publishTime && dayjs(item.publishTime).format('YYYY年MM月DD日') }}</div>
+              </li>
+              <div style="text-align: right;padding-right: 10px;" v-if="announcementList.length > 10">
+                <a-button type="link">更多</a-button>
+              </div>
+            </div>
+            <div class="msg-content">
+              <h3 class="title">消息中心</h3>
+              <li v-for="(item, index) in msgList" :key="index" class="msg-content-item">
+                <div class="number">{{ index + 1 }}</div>
+                <div class="content">{{ item.title }}</div>
+                <div class="name">{{ item.createUserName }}</div>
+                <div class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日') }}</div>
+              </li>
+              <div style="text-align: right;padding-right: 35px;" v-if="msgList.length && msgList.length > 10">
+                <a-button type="link" @click="handleToMsg">更多</a-button>
+              </div>
             </div>
           </div>
-        </a-carousel>
-        <div class="text-content" v-if="carouselList.length">
-          <h4>{{carouselList[current].title}}</h4>
-          <pre>{{carouselList[current].text}}</pre>
-        </div>
-      </div>
-      <div class="msg-wrapper">
-        <div class="msg-content">
-          <h3 class="title">消息中心</h3>
-          <li v-for="(item, index) in msgList" :key="index" class="msg-content-item">
-            <div class="number">{{ index + 1 }}</div>
-            <div class="content">{{ item.title }}</div>
-            <div class="name">{{ item.createUserName }}</div>
-            <div class="time">{{ item.updateAt && dayjs(item.updateAt).format('YYYY年MM月DD日') }}</div>
-          </li>
-          <div style="text-align: right;padding-right: 35px;" v-if="msgList.length && msgList.length > 10">
-            <a-button type="link" @click="handleToMsg">更多</a-button>
-          </div>
-        </div>
-        <div class="announcement-content">
-          <h3 class="title">通知公告</h3>
-          <li v-for="(item, index) in announcementList" :key="index" class="announcement-content-item">
-            <div class="content" @click="handleToAnnouncement(item)">{{ item.title }}</div>
-            <div class="type">{{ noticeTypeListText(item.noticeType) }}</div>
-            <div class="time">{{ item.publishTime && dayjs(item.publishTime).format('YYYY年MM月DD日') }}</div>
-          </li>
-          <div style="text-align: right;padding-right: 10px;" v-if="announcementList.length > 10">
-            <a-button type="link">更多</a-button>
-          </div>
-        </div>
-      </div>
+        </a-col>
+      </a-row>
     </div>
+    <!-- 详情 -->
+    <BuildInfo  ref="buildingAdd"/>
   </a-card>
 </template>
 
 <script src="./index.js"></script>
 <style lang="less" scoped>
-.msg-wrapper {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  .msg-content {
-    flex: 1;
-    .title {
-      padding: 8px 16px;
-    }
-    .msg-content-item {
+.wrapper {
+  .building-list-content {
+    .modal {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      color: #fff;
       display: flex;
-      align-content: center;
+      align-items: center;
       justify-content: center;
-      padding: 4px 16px;
-    }
-    .number {
-      width: 30px;
-    }
-    .content {
       cursor: pointer;
-      width: 200px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .name {
-      width: 80px;
-      padding-left: 20px;
-    }
-    .time {
-      width: 150px;
-    }
   }
-  .announcement-content {
-    flex: 1;
-    .title {
-      padding: 8px 16px;
+  .msg-wrapper {
+    .msg-content {
+      .title {
+        padding: 8px 16px;
+      }
+      .msg-content-item {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        padding: 4px 16px;
+      }
+      .number {
+        width: 30px;
+      }
+      .content {
+        cursor: pointer;
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .name {
+        width: 80px;
+        padding-left: 20px;
+      }
+      .time {
+        width: 150px;
+      }
     }
-    .announcement-content-item {
-      display: flex;
-      align-content: center;
-      justify-content: center;
-      padding: 4px 16px;
+    .announcement-content {
+      .title {
+        padding: 8px 16px;
+      }
+      .announcement-content-item {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        padding: 4px 16px;
+      }
+      .content {
+        cursor: pointer;
+        width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .type {
+        padding-left: 20px;
+        width: 80px;
+      }
+      .time {
+        width: 150px;
+      }
     }
-    .content {
-      cursor: pointer;
-      width: 300px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .type {
-      padding-left: 20px;
-      width: 80px;
-    }
-    .time {
-      width: 150px;
-    }
-  }
-}
-.carousel-content {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-items: center;
-}
-.ant-carousel {
-  flex: 1;
-  width: 300px;
-}
-.text-content {
-  flex: 1;
-  padding: 0 20px;
-}
-.ant-carousel /deep/ .custom-slick-arrow {
-  width: 30px;
-  height: 30px;
-  font-size: 30px;
-  color: #fff;
-  background-color: rgba(31, 45, 61, 0.11);
-  opacity: 0.3;
-}
-.ant-carousel /deep/ .custom-slick-arrow:before {
-  display: none;
-}
-.ant-carousel /deep/ .custom-slick-arrow:hover {
-  opacity: 0.5;
-}
-.carousel-item {
-  height: 300px;
-  position: relative;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .hover-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.55);
-    color: #fff;
-    padding: 10px 50px;
   }
 }
 </style>

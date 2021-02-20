@@ -3,12 +3,13 @@ import pagination from '@/mixins/pagination'
 import AddUpdate from './add-update/index.vue'
 import OtherInfo from './other-info/index.vue'
 import EmployeeList from './employee-list/index.vue'
+import MoveOut from './move-out/index.vue'
 import { getCompanyList, removeCompany, exportCompanyList } from '@/api/index'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   mixins: [pagination],
-  components: { AddUpdate, OtherInfo,EmployeeList },
+  components: { AddUpdate, OtherInfo,EmployeeList,MoveOut },
   data() {
     return {
       form: {
@@ -153,6 +154,10 @@ export default {
     // 员工列表
     handleEmployee(record) {
       this.$refs.employeeList.handleVisible(record.id)
+    },
+    // 搬迁
+    handleMoveOut(record) {
+      this.$refs.moveOut.handleVisible(record.id)
     },
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys

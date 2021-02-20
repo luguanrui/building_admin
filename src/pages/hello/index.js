@@ -1,8 +1,10 @@
 import { getImgWelcomeList, getNoticeWelcomeList, getMsgList } from '@/api/index'
 import dayjs from 'dayjs'
-import { mapState } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
+import BuildInfo from '@/pages/system-manage/building/add/index.vue'
 
 export default {
+  components: { BuildInfo },
   data() {
     return {
       current: 0,
@@ -16,20 +18,24 @@ export default {
     this.getImgWelcomeList()
     this.getNoticeWelcomeList()
     this.getMsgList()
+    this.getBuildAllList()
   },
   mounted() {
     this.getImgWelcomeList()
     this.getNoticeWelcomeList()
     this.getMsgList()
+    this.getBuildAllList()
   },
   computed: {
-    ...mapState('common', ['noticeTypeList']),
+    ...mapGetters('account', ['user']),
+    ...mapState('common', ['permissionList', 'buildingAllList', 'noticeTypeList']),
     sessionId() {
       return `?sessionId=${localStorage.getItem('buildSessionId')}`
-    }
+    },
   },
   methods: {
     dayjs,
+    ...mapActions('common', ['getBuildAllList']),
     afterChange(current) {
       this.current = current
     },
@@ -59,11 +65,20 @@ export default {
         path: 'system-manage/msg',
       })
     },
+    getUrl(item) {
+      return JSON.parse(item.buildingPic)[0].url + `?sessionId=${localStorage.getItem('buildSessionId')}`
+    },
+    handleToDetail(item) {
+      if (this.user.roleLevel < 3) {
+        this.$refs.buildingAdd.handleVisible(item.id, 'detail')
+      }else {
+        this.$Message.info("您暂无查看此楼宇信息的权限")
+      }
+    },
     // 消息
     async getMsgList() {
       const { code, rs } = await getMsgList()
       if (code === 200) {
-        console.log(rs)
         this.msgList = rs.data || []
       }
     },
@@ -85,7 +100,6 @@ export default {
         if (this.carouselList.length === 1) {
           this.current = 0
         }
-        console.log(this.carouselList,'this.carouselList')
       }
     },
     // 通知公告

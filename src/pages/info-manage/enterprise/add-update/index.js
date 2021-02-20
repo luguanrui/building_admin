@@ -46,6 +46,8 @@ export default {
         // workRoomPhone: '', // 联系电话
         leaveDate: '', // 搬离时间
         remark: '', // 备注
+        ownerName: '',
+        ownerPhone: '',
 
         // 入驻企业员工信息列表
         employeeList: [],
@@ -252,6 +254,14 @@ export default {
         return '未知类型'
       }
     },
+    validChange(rule, value, callback) {
+      console.log(rule, 'rule')
+      if (!value) {
+        callback(new Error('必填'))
+      } else {
+        callback()
+      }
+    },
     // 新增员工
     handleAddEmployee() {
       const params = {
@@ -319,6 +329,10 @@ export default {
           this.totalCount += item.count
         })
         this.form.industryTypeCopy = this.form.industryType.split(',').map(item=> Number(item))
+        // 所属权为 租赁显示联系人和联系电话
+        const ownerInfo = this.form.ownerInfo ? JSON.parse(this.form.ownerInfo) : {}
+        this.form.ownerName = ownerInfo.ownerName
+        this.form.ownerPhone = ownerInfo.ownerPhone
       }
     },
     // 新增
@@ -332,6 +346,11 @@ export default {
         const params = {
           ...this.form,
           roomNum: this.form.roomNum.join(),
+        }
+
+        // 所属权为 租赁时保存联系人和联系电话
+        if (this.form.workRoomType == 2) {
+          params.ownerInfo = JSON.stringify({ownerName: this.form.ownerName,ownerPhone: this.form.ownerPhone})
         }
         if (params) {
           const { code } = await saveCompany(params)

@@ -110,6 +110,11 @@ export function saveCompanyOther(params) {
 export function getCompanyOtherList(params) {
   return axios.get(`${baseApi}company/other/list`, { params })
 }
+// 搬迁
+export function companyMove(params) {
+  return axios.get(`${baseApi}company/move`, { params })
+}
+
 // 员工列表
 export function getEmployeeList(params) {
   return axios.get(`${baseApi}employee/list`, { params })

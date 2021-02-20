@@ -3,7 +3,7 @@
     :title="type ? '修改用户' : '新增用户'"
     :width="720"
     :visible="visible"
-    :body-style="{ paddingBottom: '80px' }"
+    :body-style="{ paddingBottom: '53px' }"
     @close="onClose"
     :maskClosable="false"
   >

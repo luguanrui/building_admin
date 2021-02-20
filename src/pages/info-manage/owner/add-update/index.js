@@ -1,7 +1,9 @@
 import { mapState, mapActions } from 'vuex'
 import { saveOwner, getOwner, getBuildRoomCalc } from '@/api/index'
+import print from '@/mixins/print'
 
 export default {
+  mixins: [print],
   data() {
     return {
       labelCol: { span: 7 },

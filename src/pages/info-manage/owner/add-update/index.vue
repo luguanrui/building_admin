@@ -1,5 +1,5 @@
 <template>
-  <a-drawer :title="title" :width="720" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false">
+  <a-drawer :title="title" :width="720" :visible="visible" :body-style="{ paddingBottom: '53px' }" @close="onClose" :maskClosable="false">
     <div class="wrapper">
       <a-form-model ref="form" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" :layout="'horizontal'">
         <a-row>
@@ -160,6 +160,27 @@
         保存
       </a-button>
     </div>
+    <div
+      v-else
+      :style="{
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        borderTop: '1px solid #e9e9e9',
+        padding: '10px 16px',
+        background: '#fff',
+        textAlign: 'right',
+        zIndex: 1,
+      }"
+    >
+      <a-button @click="handlePrint" :loading="printDisabled" style="margin-right: 20px">打印</a-button>
+      <a-button type="primary" @click="onClose">
+        关闭
+      </a-button>
+    </div>
+    <!-- 打印 -->
+    <iframe width="100%" height="200px" ref="iframe" style="display: none;"></iframe>
   </a-drawer>
 </template>
 <script src="./index"></script>

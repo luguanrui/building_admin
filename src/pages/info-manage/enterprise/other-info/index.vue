@@ -1,5 +1,5 @@
 <template>
-  <a-drawer title="企业其他信息" :width="800" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false">
+  <a-drawer title="企业其他信息" :width="800" :visible="visible" :body-style="{ paddingBottom: '53px' }" @close="onClose" :maskClosable="false">
     <div class="wrapper">
       <a-form-model ref="form" :model="form" :label-col="labelCol" :wrapper-col="wrapperCol" :layout="'horizontal'">
         <a-row>

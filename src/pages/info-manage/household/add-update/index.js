@@ -1,8 +1,10 @@
 import dayjs from 'dayjs'
 import { mapState, mapActions } from 'vuex'
 import { saveHouse, getHouse, getBuildRoomCalc } from '@/api/index'
+import print from '@/mixins/print'
 
 export default {
+  mixins: [print],
   data() {
     return {
       labelCol: { span: 7 },
@@ -12,7 +14,7 @@ export default {
       visible: false,
       loading: false,
       dialogStatus: '', // add ,edit,detail
-
+      isRequired: true,
       form: {
         id: '',
         buildId: undefined, // 楼宇ID
@@ -124,6 +126,7 @@ export default {
       }
       if (dialogStatus === 'detail') {
         this.rules = {}
+        this.isRequired = false
       }
     },
     // 关闭弹窗

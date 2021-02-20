@@ -1,5 +1,5 @@
 <template>
-  <a-drawer title="设置权限" :width="720" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false" :loading="drawerLoading">
+  <a-drawer title="设置权限" :width="720" :visible="visible" :body-style="{ paddingBottom: '53px' }" @close="onClose" :maskClosable="false" :loading="drawerLoading">
     <div class="wrapper">
       <a-tree v-if="treeData.length" :tree-data="treeData" checkable v-model="checkedKeys" :default-expand-all="defaultExpandAll" :replaceFields="replaceFields"> </a-tree>
     </div>

@@ -11,6 +11,7 @@ export default {
       this.printDisabled = true // 点击打印按钮禁止重复点击
       setTimeout(() => {
         // 按钮显示为禁止了再去执行截图功能
+        console.log(this.$refs.form,'this.$refs.form')
         html2canvas(this.$refs.form.$el, {
           backgroundColor: null,
           scale: 1.3,

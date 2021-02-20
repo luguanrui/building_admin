@@ -1,5 +1,5 @@
 <template>
-  <a-drawer title="员工列表" :width="800" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false">
+  <a-drawer title="员工列表" :width="800" :visible="visible" :body-style="{ paddingBottom: '53px' }" @close="onClose" :maskClosable="false">
     <div class="wrapper">
       <a-row>
         <a-col :span="24">

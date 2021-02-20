@@ -1,5 +1,5 @@
 <template>
-  <a-drawer :title="title" :width="720" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false">
+  <a-drawer :title="title" :width="720" :visible="visible" :body-style="{ paddingBottom: '53px' }" @close="onClose" :maskClosable="false">
     <div class="wrapper">
       <a-form-model ref="form" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" :layout="'horizontal'">
         <a-row>
@@ -73,7 +73,7 @@
             <h6 style="padding-left: 10px;margin: 20px 0;">住户{{ index + 1 }}</h6>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="房屋性质" :prop="'userList.' + index + '.houseRoomType'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
+            <a-form-model-item label="房屋性质" :prop="'userList.' + index + '.houseRoomType'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ findValue(roomTypeList, user.houseRoomType) }}</span>
               <a-select v-else v-model="user.houseRoomType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in roomTypeList" :value="item.key" :key="item.item">
@@ -83,13 +83,13 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="居主人姓名" :prop="'userList.' + index + '.houseName'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'blur' }]">
+            <a-form-model-item label="居主人姓名" :prop="'userList.' + index + '.houseName'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'blur' }]">
               <span v-if="disabled">{{ user.houseName }}</span>
               <a-input v-else v-model="user.houseName" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="证件类型" :prop="'userList.' + index + '.cardType'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
+            <a-form-model-item label="证件类型" :prop="'userList.' + index + '.cardType'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ findValue(carTypeList, user.cardType) }}</span>
               <a-select v-else v-model="user.cardType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in carTypeList" :value="item.key" :key="item.item">
@@ -99,8 +99,8 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="国籍" :prop="'userList.' + index + '.country'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
-              <span v-if="disabled">{{ findCountryValue(countryList,user.country) }}</span>
+            <a-form-model-item label="国籍" :prop="'userList.' + index + '.country'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
+              <span v-if="disabled">{{ findCountryValue(countryList, user.country) }}</span>
               <a-select
                 v-else
                 v-model="user.country"
@@ -119,7 +119,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="证件号" :prop="'userList.' + index + '.cardNum'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'blur' }]">
+            <a-form-model-item label="证件号" :prop="'userList.' + index + '.cardNum'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'blur' }]">
               <span v-if="disabled">{{ user.cardNum }}</span>
               <a-input v-else v-model="user.cardNum" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
@@ -131,7 +131,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="性别" :prop="'userList.' + index + '.sex'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
+            <a-form-model-item label="性别" :prop="'userList.' + index + '.sex'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ findValue(genderList, user.sex) }}</span>
               <a-select v-else v-model="user.sex" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in genderList" :value="item.key" :key="item.item">
@@ -141,7 +141,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="年龄" :prop="'userList.' + index + '.age'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'blur' }]">
+            <a-form-model-item label="年龄" :prop="'userList.' + index + '.age'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'blur' }]">
               <span v-if="disabled">{{ user.age }}</span>
               <a-input v-else v-model="user.age" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
@@ -153,7 +153,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="籍贯" :prop="'userList.' + index + '.userFrom'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
+            <a-form-model-item label="籍贯" :prop="'userList.' + index + '.userFrom'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ user.userFromName }}</span>
               <a-cascader
                 ref="cascader"
@@ -169,7 +169,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="民族" :prop="'userList.' + index + '.nation'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
+            <a-form-model-item label="民族" :prop="'userList.' + index + '.nation'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ findValue(nationList, user.nation) }}</span>
               <a-select v-else v-model="user.nation" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in nationList" :value="item.key" :key="item.item">
@@ -179,7 +179,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="政治面貌" :prop="'userList.' + index + '.politicalType'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
+            <a-form-model-item label="政治面貌" :prop="'userList.' + index + '.politicalType'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ findValue(politicalList, user.politicalType) }}</span>
               <a-select v-else v-model="user.politicalType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in politicalList" :value="item.key" :key="item.item">
@@ -189,7 +189,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="户籍地址" :prop="'userList.' + index + '.address'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
+            <a-form-model-item label="户籍地址" :prop="'userList.' + index + '.address'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ user.address }}</span>
               <a-input v-else v-model="user.address" placeholder="请输入" allowClear :maxLength="200" />
               <!-- <a-cascader
@@ -203,13 +203,13 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="联系电话" :prop="'userList.' + index + '.phone'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'blur' }]">
+            <a-form-model-item label="联系电话" :prop="'userList.' + index + '.phone'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'blur' }]">
               <span v-if="disabled">{{ user.phone }}</span>
               <a-input v-else v-model="user.phone" placeholder="请输入" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="入住时间" :prop="'userList.' + index + '.liveInTime'" :rules="[{ required: true, validator: houseRoomTypeValid, trigger: 'change' }]">
+            <a-form-model-item label="入住时间" :prop="'userList.' + index + '.liveInTime'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ dayjs(user.liveInTime).format('YYYY年MM月DD日') }}</span>
               <a-date-picker
                 v-else
@@ -223,7 +223,11 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
-            <a-form-model-item label="搬离时间" :prop="'userList.' + index + '.leaveDate'" :rules="user.houseRoomType === 3 ? [{ required: true, validator: houseRoomTypeValid, trigger: 'change' }] : []">
+            <a-form-model-item
+              label="搬离时间"
+              :prop="'userList.' + index + '.leaveDate'"
+              :rules="user.houseRoomType === 3 ? [{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }] : []"
+            >
               <span v-if="disabled">{{ dayjs(user.leaveDate).format('YYYY年MM月DD日') }}</span>
               <a-date-picker
                 v-else
@@ -271,6 +275,27 @@
         保存
       </a-button>
     </div>
+    <div
+      v-else
+      :style="{
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        borderTop: '1px solid #e9e9e9',
+        padding: '10px 16px',
+        background: '#fff',
+        textAlign: 'right',
+        zIndex: 1,
+      }"
+    >
+      <a-button @click="handlePrint" :loading="printDisabled" style="margin-right: 20px">打印</a-button>
+      <a-button type="primary" @click="onClose">
+        关闭
+      </a-button>
+    </div>
+    <!-- 打印 -->
+    <iframe width="100%" height="200px" ref="iframe" style="display: none;"></iframe>
   </a-drawer>
 </template>
 <script src="./index"></script>

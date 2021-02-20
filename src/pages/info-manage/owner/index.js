@@ -31,12 +31,12 @@ export default {
           dataIndex: 'ownerAddress',
           scopedSlots: { customRender: 'ownerAddress' },
         },
-        // {
-        //   title: '楼宇名称',
-        //   dataIndex: 'buildName',
-        //   ellipsis: true,
-        //   scopedSlots: { customRender: 'name' },
-        // },
+        {
+          title: '楼宇名称',
+          dataIndex: 'buildName',
+          ellipsis: true,
+          scopedSlots: { customRender: 'name' },
+        },
         {
           title: '联系人',
           dataIndex: 'ownerName',

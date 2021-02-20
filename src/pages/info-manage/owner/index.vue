@@ -39,9 +39,7 @@
     </div>
     <div class="table-wrapper">
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="pagination" :loading="loading">
-        <template slot="ownerAddress" slot-scope="text, record">
-          {{text}}<a @click="handleDetail(record)">({{ record.buildName }})</a>
-        </template>
+        <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{text}}</a>
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100042')">修改</a-button>
           <!-- <a-button type="danger" size="small" style="margin-right: 10px" @click="handleDel(record)">删除</a-button> -->

@@ -31,10 +31,10 @@ export default {
           dataIndex: 'buildAddress',
           scopedSlots: { customRender: 'buildAddress' },
         },
-        // {
-        //   title: '楼宇名称',
-        //   dataIndex: 'buildName',
-        // },
+        {
+          title: '楼宇名称',
+          dataIndex: 'buildName',
+        },
         {
           title: '住户联系人',
           dataIndex: 'contactName',

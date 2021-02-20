@@ -2,8 +2,11 @@ import { mapState, mapActions } from 'vuex'
 import dayjs from 'dayjs'
 import { saveCompany, getCompany, getBuildRoomCalc } from '@/api/index'
 import EmployeeAdd from '../employee-add/index.vue'
+import print from '@/mixins/print'
+
 
 export default {
+  mixins: [print],
   components: { EmployeeAdd },
   data() {
     return {
@@ -13,6 +16,7 @@ export default {
 
       visible: false,
       loading: false,
+      printDisabled: false,
       dialogStatus: '', // add ,edit,detail
 
       totalCount: 0,

@@ -1,6 +1,6 @@
 <template>
   <a-drawer :title="title" :width="800" :visible="visible" :body-style="{ paddingBottom: '80px' }" @close="onClose" :maskClosable="false">
-    <div class="wrapper">
+    <div class="wrapper" ref="printContent">
       <a-form-model ref="form" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" :layout="'horizontal'">
         <a-row>
           <a-col :span="24">
@@ -32,15 +32,7 @@
           <a-col :span="span">
             <a-form-model-item label="楼层" prop="floor">
               <span v-if="disabled">{{ form.floor }}&nbsp;&nbsp;层</span>
-              <a-select
-                v-else
-                v-model="form.floor"
-                placeholder="请选择"
-                allowClear
-                :getPopupContainer="trigger => trigger.parentNode"
-                :dropdownMatchSelectWidth="false"
-                @change="handleChangeFloor"
-              >
+              <a-select v-else v-model="form.floor" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false" @change="handleChangeFloor">
                 <a-select-option v-for="item in buildingFloorList" :value="item" :key="item">
                   {{ item }}
                 </a-select-option>
@@ -101,33 +93,18 @@
           <a-col :span="span">
             <a-form-model-item label="注册时间" prop="regDate">
               <span v-if="disabled">{{ dayjs(form.regDate).format('YYYY年MM月DD日') }}</span>
-              <a-date-picker
-                v-else
-                v-model="form.regDate"
-                format="YYYY/MM/DD"
-                valueFormat="YYYY-MM-DD"
-                :allowClear="true"
-                style="width: 100%"
-                :getPopupContainer="trigger => trigger.parentNode"
-              />
+              <a-date-picker v-else v-model="form.regDate" format="YYYY/MM/DD" valueFormat="YYYY-MM-DD" :allowClear="true" style="width: 100%" :getPopupContainer="trigger => trigger.parentNode" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="行业类别" prop="industryType">
-              <span v-if="disabled">{{form.industryTypeName}}</span>
+              <span v-if="disabled">{{ form.industryTypeName }}</span>
               <!-- <a-select v-else v-model="form.industryType" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                 <a-select-option v-for="item in industryList" :value="item.key" :key="item.key">
                   {{ item.value }}
                 </a-select-option>
               </a-select> -->
-              <a-cascader
-                v-else
-                placeholder="请选择"
-                allowClear
-                v-model="form.industryTypeCopy"
-                :options="industryList"
-                :field-names="{ label: 'name', value: 'id', children: 'childList' }"
-              />
+              <a-cascader v-else placeholder="请选择" allowClear v-model="form.industryTypeCopy" :options="industryList" :field-names="{ label: 'name', value: 'id', children: 'childList' }" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -199,22 +176,14 @@
           <a-col :span="span">
             <a-form-model-item label="搬离时间" prop="leaveDate" :rules="form.workRoomType === 3 ? [{ required: true, validator: validChange, trigger: 'change' }] : []">
               <span v-if="disabled">{{ dayjs(form.leaveDate).format('YYYY年MM月DD日') }}</span>
-              <a-date-picker
-                v-else
-                v-model="form.leaveDate"
-                format="YYYY/MM/DD"
-                valueFormat="YYYY-MM-DD"
-                :allowClear="true"
-                style="width: 100%"
-                :getPopupContainer="trigger => trigger.parentNode"
-              />
+              <a-date-picker v-else v-model="form.leaveDate" format="YYYY/MM/DD" valueFormat="YYYY-MM-DD" :allowClear="true" style="width: 100%" :getPopupContainer="trigger => trigger.parentNode" />
             </a-form-model-item>
           </a-col>
           <!-- 租赁时显示 -->
           <a-col :span="span" v-if="form.workRoomType == 2">
             <a-form-model-item label="联系人" prop="ownerName" :rules="dialogStatus !== 'detail' && form.workRoomType === 2 ? [{ required: true, validator: validChange, trigger: 'change' }] : []">
               <span v-if="disabled">{{ form.ownerName }}</span>
-              <a-input v-else v-model="form.ownerName" placeholder="多个联系人请以英文逗号隔开" allowClear :maxLength="200"/>
+              <a-input v-else v-model="form.ownerName" placeholder="多个联系人请以英文逗号隔开" allowClear :maxLength="200" />
             </a-form-model-item>
           </a-col>
           <!-- 租赁时显示 -->
@@ -297,12 +266,15 @@
         zIndex: 1,
       }"
     >
+      <a-button @click="handlePrint" :loading="printDisabled" style="margin-right: 20px">打印</a-button>
       <a-button type="primary" @click="onClose">
         关闭
       </a-button>
     </div>
     <!-- 员工 -->
     <EmployeeAdd ref="employeeAdd" @handleSuccess="handleSuccess" />
+    <!-- 打印 -->
+    <iframe width="100%" height="200px" ref="iframe" style="display: none;"></iframe>
   </a-drawer>
 </template>
 <script src="./index"></script>

@@ -5,7 +5,7 @@
         <!-- <a-form-model-item label="楼宇名称" prop="">
           <a-input v-model="form.contactName" placeholder="请输入" allowClear style="width: 180px" />
         </a-form-model-item> -->
-        <a-form-model-item label="办公地址">
+        <a-form-model-item label="地址">
           <a-select v-model="form.buildId" placeholder="请选择" style="width: 120px" allowClear @change="handleChangeBuild">
             <a-select-option v-for="item in buildingAllList" :key="item.id" :value="item.id">
               {{ item.name }}

@@ -70,6 +70,11 @@
               </a-statistic>
             </a-col>
           </a-row>
+          <a-row>
+            <a-col :span="6" v-for="(floor, index) in item.buildFloor" :key="index">
+              <a @click="handleClickFloor(floor)">第{{ floor.floor }}层（{{ floor.buildTypeName }}）</a>
+            </a-col>
+          </a-row>
         </div>
       </div>
     </div>
@@ -82,7 +87,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  border-bottom: 1px solid #EBEEF5;
+  border-bottom: 1px solid #ebeef5;
   margin-bottom: 20px;
   padding: 10px 0;
   .left {

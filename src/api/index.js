@@ -112,7 +112,7 @@ export function getCompanyOtherList(params) {
 }
 // 搬迁
 export function companyMove(params) {
-  return axios.get(`${baseApi}company/move`, { params })
+  return axios.post(`${baseApi}company/move`, params)
 }
 
 // 员工列表
@@ -215,6 +215,15 @@ export function getBuildDetail(params) {
 export function getBuildRoomCalc(params) {
   return axios.post(`${baseApi}build/room/calc`, params)
 }
+// 获取楼宇的楼层列表
+export function getBuildFloor(params) {
+  return axios.get(`${baseApi}build/floor`, {params})
+}
+// 获取楼宇楼层的住户-企业列表
+export function getBuildFloorOwnerList(params) {
+  return axios.get(`${baseApi}build/floor/ownerList`, {params})
+}
+
 /***************************** 公告管理 *************************** */
 // 保存公告
 export function saveNotice(params) {

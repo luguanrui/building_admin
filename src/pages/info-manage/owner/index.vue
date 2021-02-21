@@ -2,7 +2,7 @@
   <a-card>
     <div class="search-wrapper">
       <a-form-model :model="form" :layout="'inline'">
-        <a-form-model-item label="办公地址">
+        <a-form-model-item label="房产地址">
           <a-select v-model="form.buildId" placeholder="请选择" style="width: 120px" allowClear @change="handleChangeBuild">
             <a-select-option v-for="item in buildingAllList" :key="item.id" :value="item.id">
               {{ item.name }}

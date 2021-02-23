@@ -167,7 +167,7 @@
               <a-input v-else v-model="form.workRoomArea" placeholder="请输入" allowClear :maxLength="10" addon-after="平方米" :disabled="true" />
             </a-form-model-item>
           </a-col>
-          <a-col :span="span">
+          <a-col :span="span" v-if="form.workRoomType !== 2">
             <a-form-model-item label="搬离时间" prop="leaveDate" :rules="form.workRoomType === 3 ? [{ required: true, validator: validChange, trigger: 'change' }] : []">
               <span v-if="disabled">{{ dayjs(form.leaveDate).format('YYYY年MM月DD日') }}</span>
               <a-date-picker v-else v-model="form.leaveDate" format="YYYY/MM/DD" valueFormat="YYYY-MM-DD" :allowClear="true" style="width: 100%"/>

@@ -219,6 +219,7 @@ export default {
       const { code, rs } = await getBuildDetail({ id: this.form.id })
       if (code === 200) {
         rs.employeeList = rs.employeeList || []
+        rs.roomList = rs.roomList || []
         Object.keys(this.form).forEach(key => (this.form[key] = rs[key]))
       }
     },

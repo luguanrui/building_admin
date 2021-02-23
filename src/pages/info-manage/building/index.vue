@@ -71,13 +71,14 @@
             </a-col>
           </a-row>
           <a-row>
-            <a-col :span="6" v-for="(floor, index) in item.buildFloor" :key="index">
+            <a-col :span="6" v-for="(floor, index) in item.buildFloor" :key="index" style="height: 44px;line-height: 44px">
               <a @click="handleClickFloor(floor)">第{{ floor.floor }}层（{{ floor.buildTypeName }}）</a>
             </a-col>
           </a-row>
         </div>
       </div>
     </div>
+    <InfoDialog ref="infoDialog"/>
   </a-card>
 </template>
 

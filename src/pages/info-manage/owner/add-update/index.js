@@ -17,8 +17,8 @@ export default {
       form: {
         id: '',
         buildId: undefined, // 楼宇名称
-        buildType: 1, // 	0-无；1-主楼；2-裙房
-        floor: undefined, // 楼层
+        buildType: [], // 	0-无；1-主楼；2-裙房
+        floor: [], // 楼层
         roomNum: [], // 房号
         totalArea: '', // 面积
         ownerName: '', // 产权所有人
@@ -94,31 +94,31 @@ export default {
     },
     // 选择地址
     handleChangeBuild() {
-      this.form.buildType = undefined
-      this.form.floor = undefined
+      this.form.buildType = []
+      this.form.floor = []
       this.form.roomNum = []
       this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType) {
+      if (this.form.buildId && this.form.buildType.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
+          buildType: this.form.buildType.join(),
         }
         this.getBuildFloorList(params)
       }
     },
     // 选择主楼裙房
     handleChangeMain() {
-      this.form.floor = undefined
+      this.form.floor = []
       this.form.roomNum = []
       this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType) {
+      if (this.form.buildId && this.form.buildType.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
+          buildType: this.form.buildType.join(),
         }
         this.getBuildFloorList(params)
       }
@@ -128,11 +128,11 @@ export default {
       this.form.roomNum = []
       this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType && this.form.floor) {
+      if (this.form.buildId && this.form.buildType.length && this.form.floor.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
-          floor: this.form.floor,
+          buildType: this.form.buildType.join(),
+          floor: this.form.floor.join(),
         }
         this.getBuildRoomList(params)
       }
@@ -160,6 +160,18 @@ export default {
       } else {
         return '未知类型'
       }
+    },
+    // 房间类型
+    buildTypeName(arr, key) {
+      let result = []
+      key.forEach(id => {
+        arr.forEach(item => {
+          if (item.key === id) {
+            result.push(item.value)
+          }
+        })
+      })
+      return result.join()
     },
     findCountryValue(arr, key) {
       let result = arr.find(item => item.key === key)
@@ -231,7 +243,7 @@ export default {
         const { id, buildId, buildType, floor, roomNum, totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum,ownerContact } = rs
         // Object.keys(this.form).forEach(key => this.form[key] = rs[key])
         // this.form.roomNum = this.form.roomNum.split(',')
-        Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum,ownerContact })
+        Object.assign(this.form, { id, buildId, buildType:buildType.split(',').map(item=> Number(item)), floor:floor.split(',').map(item=> Number(item)), roomNum: roomNum.split(','), totalArea, ownerName, cardType, country, cardNum, phone, ownerCardNo, carNum,ownerContact })
 
         // 其他国籍
         const isCountry = this.countryList.find(country => country.key == this.form.country)

@@ -18,8 +18,8 @@ export default {
       form: {
         id: '',
         buildId: undefined, // 楼宇ID
-        buildType: undefined, // 1-主楼；2-裙房
-        floor: undefined, // 楼层
+        buildType: [], // 1-主楼；2-裙房
+        floor: [], // 楼层
         roomNum: [], // 房号
         totalArea: '', // 根据房号计算的面积
         userList: [
@@ -71,7 +71,7 @@ export default {
       'regionList',
       'nationList',
       'politicalList',
-      'roomTypeList'
+      'roomTypeList',
     ]),
     title() {
       switch (this.dialogStatus) {
@@ -92,17 +92,7 @@ export default {
   },
   methods: {
     dayjs,
-    ...mapActions('common', [
-      'getBuildAllList',
-      'getBuildFloorList',
-      'getBuildRoomList',
-      'getCardTypeList',
-      'getCountryList',
-      'getRegionList',
-      'getNationList',
-      'getPoliticalList',
-      'getRoomTypeList'
-    ]),
+    ...mapActions('common', ['getBuildAllList', 'getBuildFloorList', 'getBuildRoomList', 'getCardTypeList', 'getCountryList', 'getRegionList', 'getNationList', 'getPoliticalList', 'getRoomTypeList']),
     /**
      *
      * @param {*} id 项目id
@@ -135,31 +125,31 @@ export default {
     },
     // 选择地址
     handleChangeBuild() {
-      this.form.buildType = undefined
-      this.form.floor = undefined
+      this.form.buildType = []
+      this.form.floor = []
       this.form.roomNum = []
       this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType) {
+      if (this.form.buildId && this.form.buildType.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
+          buildType: this.form.buildType.join(),
         }
         this.getBuildFloorList(params)
       }
     },
     // 选择主楼裙房
     handleChangeMain() {
-      this.form.floor = undefined
+      this.form.floor = []
       this.form.roomNum = []
       this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType) {
+      if (this.form.buildId && this.form.buildType.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
+          buildType: this.form.buildType.join(),
         }
         this.getBuildFloorList(params)
       }
@@ -169,11 +159,11 @@ export default {
       this.form.roomNum = []
       this.form.totalArea = ''
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType && this.form.floor) {
+      if (this.form.buildId && this.form.buildType.length && this.form.floor.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
-          floor: this.form.floor,
+          buildType: this.form.buildType.join(),
+          floor: this.form.floor.join(),
         }
         this.getBuildRoomList(params)
       }
@@ -225,6 +215,18 @@ export default {
         return '未知类型'
       }
     },
+    // 房间类型
+    buildTypeName(arr, key) {
+      let result = []
+      key.forEach(id => {
+        arr.forEach(item => {
+          if (item.key === id) {
+            result.push(item.value)
+          }
+        })
+      })
+      return result.join()
+    },
     findCountryValue(arr, key) {
       let result = arr.find(item => item.key === key)
       if (result) {
@@ -251,7 +253,7 @@ export default {
         callback()
       }
     },
-    handleSearch(value,index) {
+    handleSearch(value, index) {
       this.form.userList[index].country = !isNaN(value) && value != '' ? this.countryList[value].value : value
     },
     handleBlur(value, index) {
@@ -316,7 +318,7 @@ export default {
             sex: user.sex, // 性别；1-男；2-女；
             age: user.age, // 年龄
             carNum: user.carNum, // 车牌号码
-            userFromCopy: user.userFrom ? user.userFrom.split(',').map(item=>Number(item)):[],
+            userFromCopy: user.userFrom ? user.userFrom.split(',').map(item => Number(item)) : [],
             userFromName: user.userFromName,
             userFrom: user.userFrom, // 籍贯
             nation: user.nation, // 民族
@@ -328,7 +330,15 @@ export default {
             remark: user.remark, // 备注
           })
         })
-        Object.assign(this.form, { id, buildId, buildType, floor, roomNum: roomNum.split(','), totalArea, userList: userListCopy })
+        Object.assign(this.form, {
+          id,
+          buildId,
+          buildType: buildType.split(',').map(item => Number(item)),
+          floor: floor.split(',').map(item => Number(item)),
+          roomNum: roomNum.split(','),
+          totalArea,
+          userList: userListCopy,
+        })
       }
     },
   },

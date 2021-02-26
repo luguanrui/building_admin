@@ -8,33 +8,28 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="房产地址" prop="buildId">
-              <span v-if="disabled">{{ findBuildingValue(buildingAllList, form.buildId) }}({{ findValue(buildTypeList, form.buildType) }})</span>
-              <a-input-group compact v-else>
-                <a-select v-model="form.buildId" placeholder="请选择" allowClear style="width: 153px" @change="handleChangeBuild">
-                  <a-select-option v-for="item in buildingAllList" :value="item.id" :key="item.id">
-                    {{ item.name }}
-                  </a-select-option>
-                </a-select>
-                <a-select v-model="form.buildType" placeholder="请选择" allowClear style="width: 90px" @change="handleChangeMain">
-                  <a-select-option v-for="item in buildTypeList" :value="item.key" :key="item.key">
-                    {{ item.value }}
-                  </a-select-option>
-                </a-select>
-              </a-input-group>
+              <span v-if="disabled">{{ findBuildingValue(buildingAllList, form.buildId) }})</span>
+              <a-select v-else v-model="form.buildId" placeholder="请选择" allowClear @change="handleChangeBuild">
+                <a-select-option v-for="item in buildingAllList" :value="item.id" :key="item.id">
+                  {{ item.name }}
+                </a-select-option>
+              </a-select>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="房间类型" prop="buildType">
+              <span v-if="disabled">{{ buildTypeName(buildTypeList, form.buildType) }}</span>
+              <a-select v-else v-model="form.buildType" placeholder="请选择" allowClear @change="handleChangeMain" mode="multiple">
+                <a-select-option v-for="item in buildTypeList" :value="item.key" :key="item.key">
+                  {{ item.value }}
+                </a-select-option>
+              </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="楼层" prop="floor">
-              <span v-if="disabled">{{ form.floor }} &nbsp;&nbsp;层</span>
-              <a-select
-                v-else
-                v-model="form.floor"
-                placeholder="请选择"
-                allowClear
-                :getPopupContainer="trigger => trigger.parentNode"
-                :dropdownMatchSelectWidth="false"
-                @change="handleChangeFloor"
-              >
+              <span v-if="disabled">{{ form.floor.join() }} &nbsp;&nbsp;层</span>
+              <a-select v-else v-model="form.floor" placeholder="请选择" allowClear mode="multiple" :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false" @change="handleChangeFloor">
                 <a-select-option v-for="item in buildingFloorList" :value="item" :key="item">
                   {{ item }}
                 </a-select-option>
@@ -69,7 +64,7 @@
         </a-row>
         <a-col :span="24"><h3 class="title">住户</h3></a-col>
         <a-row v-for="(user, index) in form.userList" :key="index">
-          <a-col :span="24" v-if="form.userList.length>1">
+          <a-col :span="24" v-if="form.userList.length > 1">
             <h6 style="padding-left: 10px;margin: 20px 0;">住户{{ index + 1 }}</h6>
           </a-col>
           <a-col :span="span">
@@ -211,15 +206,7 @@
           <a-col :span="span">
             <a-form-model-item label="入住时间" :prop="'userList.' + index + '.liveInTime'" :rules="[{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }]">
               <span v-if="disabled">{{ dayjs(user.liveInTime).format('YYYY年MM月DD日') }}</span>
-              <a-date-picker
-                v-else
-                v-model="user.liveInTime"
-                format="YYYY/MM/DD"
-                valueFormat="YYYY-MM-DD"
-                :allowClear="true"
-                style="width: 100%"
-                :getPopupContainer="trigger => trigger.parentNode"
-              />
+              <a-date-picker v-else v-model="user.liveInTime" format="YYYY/MM/DD" valueFormat="YYYY-MM-DD" :allowClear="true" style="width: 100%" :getPopupContainer="trigger => trigger.parentNode" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
@@ -229,15 +216,7 @@
               :rules="user.houseRoomType === 3 ? [{ required: isRequired, validator: houseRoomTypeValid, trigger: 'change' }] : []"
             >
               <span v-if="disabled">{{ dayjs(user.leaveDate).format('YYYY年MM月DD日') }}</span>
-              <a-date-picker
-                v-else
-                v-model="user.leaveDate"
-                format="YYYY/MM/DD"
-                valueFormat="YYYY-MM-DD"
-                :allowClear="true"
-                style="width: 100%"
-                :getPopupContainer="trigger => trigger.parentNode"
-              />
+              <a-date-picker v-else v-model="user.leaveDate" format="YYYY/MM/DD" valueFormat="YYYY-MM-DD" :allowClear="true" style="width: 100%" :getPopupContainer="trigger => trigger.parentNode" />
             </a-form-model-item>
           </a-col>
           <a-col :span="span">

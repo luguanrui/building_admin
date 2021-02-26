@@ -4,7 +4,6 @@ import { saveCompany, getCompany, getBuildRoomCalc } from '@/api/index'
 import EmployeeAdd from '../employee-add/index.vue'
 import print from '@/mixins/print'
 
-
 export default {
   mixins: [print],
   components: { EmployeeAdd },
@@ -25,8 +24,8 @@ export default {
         id: '',
         name: '', // 企业名称
         buildId: undefined, // 楼宇ID
-        buildType: undefined, // 主楼裙房
-        floor: undefined, // 楼层
+        buildType: [], // 主楼裙房
+        floor: [], // 楼层
         roomNum: [], // 房号
         companyType: undefined, // 企业性质
         belongType: undefined, // 属地性质
@@ -97,7 +96,7 @@ export default {
         },
         {
           title: '联系电话',
-          dataIndex: 'phone'
+          dataIndex: 'phone',
         },
         // {
         //   title: '操作',
@@ -109,17 +108,7 @@ export default {
   },
 
   computed: {
-    ...mapState('common', [
-      'permissionList',
-      'buildTypeList',
-      'buildingAllList',
-      'companyTypeList',
-      'belongList',
-      'industryList',
-      'roomTypeList',
-      'buildingFloorList',
-      'buildingRoomList',
-    ]),
+    ...mapState('common', ['permissionList', 'buildTypeList', 'buildingAllList', 'companyTypeList', 'belongList', 'industryList', 'roomTypeList', 'buildingFloorList', 'buildingRoomList']),
     title() {
       switch (this.dialogStatus) {
         case 'add':
@@ -176,31 +165,31 @@ export default {
     },
     // 选择地址
     handleChangeBuild() {
-      this.form.buildType = undefined
-      this.form.floor = undefined
+      this.form.buildType = []
+      this.form.floor = []
       this.form.roomNum = []
       this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType) {
+      if (this.form.buildId && this.form.buildType.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
+          buildType: this.form.buildType.join(),
         }
         this.getBuildFloorList(params)
       }
     },
     // 选择主楼裙房
     handleChangeMain() {
-      this.form.floor = undefined
+      this.form.floor = []
       this.form.roomNum = []
       this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType) {
+      if (this.form.buildId && this.form.buildType.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
+          buildType: this.form.buildType.join(),
         }
         this.getBuildFloorList(params)
       }
@@ -210,11 +199,11 @@ export default {
       this.form.roomNum = []
       this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType && this.form.floor) {
+      if (this.form.buildId && this.form.buildType.length && this.form.floor.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
-          floor: this.form.floor,
+          buildType: this.form.buildType.join(),
+          floor: this.form.floor.join(),
         }
         this.getBuildRoomList(params)
       }
@@ -248,6 +237,18 @@ export default {
       } else {
         return '未知类型'
       }
+    },
+    // 房间类型
+    buildTypeName(arr, key) {
+      let result = []
+      key.forEach(id => {
+        arr.forEach(item => {
+          if (item.key === id) {
+            result.push(item.value)
+          }
+        })
+      })
+      return result.join()
     },
     // 房地产
     findBuildingValue(arr, key) {
@@ -325,6 +326,8 @@ export default {
         let rsObj = {
           ...rs,
           roomNum: rs.roomNum.split(','),
+          buildType: rs.buildType.split(',').map(id => Number(id)),
+          floor: rs.floor.split(',').map(id => Number(id)),
         }
         this.form = Object.assign(this.form, rsObj)
         // 员工情况,总人数
@@ -332,7 +335,7 @@ export default {
         this.form.educationCountList.forEach(item => {
           this.totalCount += item.count
         })
-        this.form.industryTypeCopy = this.form.industryType.split(',').map(item=> Number(item))
+        this.form.industryTypeCopy = this.form.industryType.split(',').map(item => Number(item))
         // 所属权为 租赁显示联系人和联系电话
         const ownerInfo = this.form.ownerInfo ? JSON.parse(this.form.ownerInfo) : {}
         this.form.ownerName = ownerInfo.ownerName
@@ -354,7 +357,7 @@ export default {
 
         // 所属权为 租赁时保存联系人和联系电话
         if (this.form.workRoomType == 2) {
-          params.ownerInfo = JSON.stringify({ownerName: this.form.ownerName,ownerPhone: this.form.ownerPhone})
+          params.ownerInfo = JSON.stringify({ ownerName: this.form.ownerName, ownerPhone: this.form.ownerPhone })
         }
         if (params) {
           const { code } = await saveCompany(params)

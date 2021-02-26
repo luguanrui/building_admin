@@ -8,24 +8,27 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="房产地址" prop="buildId">
-              <span v-if="disabled">{{ findBuildingValue(buildingAllList, form.buildId) }}({{ findValue(buildTypeList, form.buildType) }})</span>
-              <a-input-group compact v-else>
-                <a-select v-model="form.buildId" placeholder="请选择" allowClear style="width: 153px" @change="handleChangeBuild">
-                  <a-select-option v-for="item in buildingAllList" :value="item.id" :key="item.id">
-                    {{ item.name }}
-                  </a-select-option>
-                </a-select>
-                <a-select v-model="form.buildType" placeholder="请选择" allowClear style="width: 90px" @change="handleChangeMain">
-                  <a-select-option v-for="item in buildTypeList" :value="item.key" :key="item.key">
-                    {{ item.value }}
-                  </a-select-option>
-                </a-select>
-              </a-input-group>
+              <span v-if="disabled">{{ findBuildingValue(buildingAllList, form.buildId) }}</span>
+              <a-select v-else v-model="form.buildId" placeholder="请选择" allowClear @change="handleChangeBuild">
+                <a-select-option v-for="item in buildingAllList" :value="item.id" :key="item.id">
+                  {{ item.name }}
+                </a-select-option>
+              </a-select>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="span">
+            <a-form-model-item label="房间类型" prop="buildType">
+              <span v-if="disabled">{{ buildTypeName(buildTypeList, form.buildType) }}</span>
+              <a-select v-else v-model="form.buildType" placeholder="请选择" allowClear @change="handleChangeMain" mode="multiple">
+                <a-select-option v-for="item in buildTypeList" :value="item.key" :key="item.key">
+                  {{ item.value }}
+                </a-select-option>
+              </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="楼层" prop="floor">
-              <span v-if="disabled">{{ form.floor }} &nbsp;&nbsp;层</span>
+              <span v-if="disabled">{{ form.floor.join() }} &nbsp;&nbsp;层</span>
               <a-select
                 v-else
                 v-model="form.floor"
@@ -34,6 +37,7 @@
                 :getPopupContainer="trigger => trigger.parentNode"
                 :dropdownMatchSelectWidth="false"
                 @change="handleChangeFloor"
+                 mode="multiple"
               >
                 <a-select-option v-for="item in buildingFloorList" :value="item" :key="item">
                   {{ item }}

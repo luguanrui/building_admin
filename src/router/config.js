@@ -67,6 +67,11 @@ const options = {
               name: '业主信息',
               component: () => import('@/pages/info-manage/owner/index.vue'),
             },
+            {
+              path: 'search',
+              name: '综合查询',
+              component: () => import('@/pages/info-manage/search/index.vue'),
+            },
           ],
         },
         {

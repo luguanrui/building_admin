@@ -10,7 +10,7 @@ export default {
       columns: [],
       data: [],
 
-      visible: true,
+      visible: false,
       checkValue: [],
       employeeCountList: [],
       form: {

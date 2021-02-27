@@ -223,7 +223,10 @@ export function getBuildFloor(params) {
 export function getBuildFloorOwnerList(params) {
   return axios.get(`${baseApi}build/floor/ownerList`, {params})
 }
-
+// 查询列
+export function getBuildAggrList(params) {
+  return axios.get(`${baseApi}build/aggr/list`, {params})
+}
 /***************************** 公告管理 *************************** */
 // 保存公告
 export function saveNotice(params) {
@@ -372,4 +375,9 @@ export function importData(params) {
     headers: { 'Content-Type': 'multipart/form-data' },
   }
   return axios.post(`${baseApi}room/import`, params, config)
+}
+
+// 企业人数
+export function getEmployeeCountList() {
+  return axios.get(`${baseApi}employeeCount/list`)
 }

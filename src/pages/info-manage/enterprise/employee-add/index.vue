@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="visible" title="入驻企业员工信息" :width="900" @cancel="handleClose" @ok="handleSubmit">
+  <a-modal v-model="visible" title="入驻企业员工信息" :width="900" @cancel="handleClose" @ok="handleSubmit" :maskClosable="false">
     <a-form-model ref="form" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" :layout="'horizontal'">
       <a-row>
         <a-col :span="span">

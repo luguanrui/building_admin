@@ -9,7 +9,7 @@
       </template>
     </a-table>
     <!-- 导入 -->
-    <a-modal v-model="visible" title="导入数据" @ok="handleConfirmImport">
+    <a-modal v-model="visible" title="导入数据" @ok="handleConfirmImport" :maskClosable="false">
       <div class="step">
         <h5>使用模板并按照要求填写</h5>
         <p>使用导入模板，可以保证所有信息统一</p>

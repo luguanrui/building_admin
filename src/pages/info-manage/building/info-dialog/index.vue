@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="visible" title="信息" :width="900" @cancel="handleClose">
+  <a-modal v-model="visible" title="信息" :width="900" @cancel="handleClose" :maskClosable="false">
     <a-descriptions size="small" :column="2" v-for="(item, index) in list" :key="index" style="margin-bottom: 20px">
       <a-descriptions-item label="房号">
         {{ item.roomNum }}

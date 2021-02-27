@@ -172,8 +172,8 @@ export default {
                 ellipsis: true,
               })
               obj[col.props] = col.value
-              this.data.push(obj)
             })
+            this.data.push(obj)
           })
           this.visible = false
         }else {

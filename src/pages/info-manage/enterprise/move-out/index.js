@@ -15,8 +15,8 @@ export default {
         companyId: '',
         inOut: undefined, // 区内、区外
         buildId: undefined, // 楼宇ID
-        buildType: undefined, // 主楼裙房
-        floor: undefined, // 楼层
+        buildType: [], // 主楼裙房
+        floor: [], // 楼层
         roomNum: [], // 房号
         moveDate: '', // 搬离时间
         moveAddress: '', // 区外地址
@@ -68,31 +68,31 @@ export default {
     },
     // 选择地址
     handleChangeBuild() {
-      this.form.buildType = undefined
-      this.form.floor = undefined
+      this.form.buildType = []
+      this.form.floor = []
       this.form.roomNum = []
       this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType) {
+      if (this.form.buildId && this.form.buildType.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
+          buildType: this.form.buildType.join(),
         }
         this.getBuildFloorList(params)
       }
     },
     // 选择主楼裙房
     handleChangeMain() {
-      this.form.floor = undefined
+      this.form.floor = []
       this.form.roomNum = []
       this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_FLOOR_LIST', [])
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType) {
+      if (this.form.buildId && this.form.buildType.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
+          buildType: this.form.buildType.join(),
         }
         this.getBuildFloorList(params)
       }
@@ -102,11 +102,11 @@ export default {
       this.form.roomNum = []
       this.form.workRoomArea = ''
       this.$store.commit('common/SET_BUILDING_ROOM_LIST', [])
-      if (this.form.buildId && this.form.buildType && this.form.floor) {
+      if (this.form.buildId && this.form.buildType.length && this.form.floor.length) {
         const params = {
           buildId: this.form.buildId,
-          buildType: this.form.buildType,
-          floor: this.form.floor,
+          buildType: this.form.buildType.join(),
+          floor: this.form.floor.join(),
         }
         this.getBuildRoomList(params)
       }

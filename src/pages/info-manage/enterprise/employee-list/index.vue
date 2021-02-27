@@ -46,7 +46,7 @@
 .title {
   border-left: 3px solid #1890ff;
   padding-left: 10px;
-  margin: 2px 0;
+  margin-bottom: 20px;
 }
 /deep/ .ant-form-item {
   display: flex;

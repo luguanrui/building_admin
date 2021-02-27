@@ -114,7 +114,14 @@ export function getCompanyOtherList(params) {
 export function companyMove(params) {
   return axios.post(`${baseApi}company/move`, params)
 }
-
+// 全部企业列表
+export function getCompanyAll() {
+  return axios.get(`${baseApi}company/all`)
+}
+// 员工列表搜索
+export function getEmployeeSearch(params) {
+  return axios.get(`${baseApi}employee/search`, { params })
+}
 // 员工列表
 export function getEmployeeList(params) {
   return axios.get(`${baseApi}employee/list`, { params })

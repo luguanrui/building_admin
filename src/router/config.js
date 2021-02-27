@@ -72,6 +72,11 @@ const options = {
               name: '综合查询',
               component: () => import('@/pages/info-manage/search/index.vue'),
             },
+            {
+              path: 'employee',
+              name: '员工信息',
+              component: () => import('@/pages/info-manage/employee-search/index.vue'),
+            },
           ],
         },
         {

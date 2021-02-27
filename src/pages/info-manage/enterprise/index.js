@@ -181,6 +181,10 @@ export default {
     handleExport() {
       this.exportCompanyList()
     },
+    // 员工列表
+    handleEmployeeList() {
+      this.$router.push({path: '/info-manage/employee'})
+    },
     // 列表
     async getCompanyList() {
       this.data = []

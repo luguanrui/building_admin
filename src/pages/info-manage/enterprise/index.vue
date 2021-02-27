@@ -34,8 +34,8 @@
     <div class="opreation-wrapper">
       <div>
         <a-button type="primary" @click="handleAdd" :disabled="!permissionList.includes('100022')">新增企业基础信息</a-button>
-        <!-- <a-button type="primary" @click="handleAddOther" :disabled="!permissionList.includes('100023')">新增企业其他信息</a-button> -->
         <a-button type="primary" @click="handleExport" :loading="downLoading" :disabled="!permissionList.includes('100025')">导出</a-button>
+        <a-button type="primary" @click="handleEmployeeList" :disabled="!permissionList.includes('100029')">员工列表</a-button>
       </div>
     </div>
     <div class="table-wrapper">

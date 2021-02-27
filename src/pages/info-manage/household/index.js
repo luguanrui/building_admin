@@ -10,11 +10,20 @@ export default {
   data() {
     return {
       form: {
-        contactName: '', // 房屋联系人
         buildId: undefined, // 楼宇名称
         buildType: undefined, // 主楼裙房
         floor: undefined, // 楼层
         roomNum: undefined, // 房号
+
+        houseUserName: '',
+        houseUserPhone: '',
+        houseUserSex: undefined,
+        age: '',
+        houseUserIdNum: '',
+        houseUserNation: undefined,
+        houseUserProvinceCityArea: [],
+        minAge: '',
+        maxAge: ''
       },
       downLoading: false,
       loading: false,
@@ -27,25 +36,41 @@ export default {
           customRender: (text, record, index) => index + 1,
         },
         {
-          title: '房产地址',
-          dataIndex: 'buildAddress',
-          scopedSlots: { customRender: 'buildAddress' },
+          title: '姓名',
+          dataIndex: 'houseName',
         },
         {
-          title: '楼宇名称',
-          dataIndex: 'buildName',
-        },
-        {
-          title: '住户联系人',
-          dataIndex: 'contactName',
-        },
-        {
-          title: '联系电话',
+          title: '电话',
           dataIndex: 'phone',
         },
         {
-          title: '居住人数',
-          dataIndex: 'userCount',
+          title: '性别',
+          dataIndex: 'sexName',
+        },
+        {
+          title: '年龄',
+          dataIndex: 'age',
+        },
+        {
+          title: '籍贯省市区',
+          dataIndex: 'userFromName',
+        },
+        {
+          title: '民族',
+          dataIndex: 'nationName',
+        },
+        {
+          title: '身份证',
+          dataIndex: 'cardNum',
+        },
+        {
+          title: '住户地址',
+          dataIndex: 'address',
+        },
+        {
+          title: '房产地址',
+          dataIndex: 'buildAddress',
+          scopedSlots: { customRender: 'buildAddress' },
         },
         // {
         //   title: '房屋性质',
@@ -65,19 +90,23 @@ export default {
     }
   },
   computed: {
-    ...mapState('common', ['permissionList', 'buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', ['permissionList', 'buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList','genderList','nationList','regionList']),
   },
   activated() {
     this.getBuildAllList()
+    this.getNationList()
+    this.getRegionList()
     this.getHouseList()
   },
   mounted() {
     this.getBuildAllList()
+    this.getNationList()
+    this.getRegionList()
     this.getHouseList()
   },
   methods: {
     dayjs,
-    ...mapActions('common', ['getBuildAllList', 'getBuildFloorList', 'getBuildRoomList']),
+    ...mapActions('common', ['getBuildAllList', 'getBuildFloorList', 'getBuildRoomList','getNationList','getRegionList']),
     // 选择地址
     handleChangeBuild() {
       this.form.buildType = undefined
@@ -168,6 +197,7 @@ export default {
           pageSize,
           pageNum,
           ...this.form,
+          houseUserProvinceCityArea: this.form.houseUserProvinceCityArea.join()
         }
         const { code, rs } = await getHouseList(params)
         if (code === 200) {
@@ -189,6 +219,7 @@ export default {
           pageSize,
           pageNum,
           ...this.form,
+          houseUserProvinceCityArea: this.form.houseUserProvinceCityArea.join()
         }
         let result = await exportHouseList(params)
         if (result) {

@@ -71,7 +71,7 @@
       </div>
     </div>
     <div class="table-wrapper">
-      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="pagination" :loading="loading">
+      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => record.houseUserId" @change="handleChange" :pagination="pagination" :loading="loading">
         <a slot="buildAddress" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100032')">修改</a-button>

@@ -24,7 +24,7 @@
           </a-select>
         </a-form-model-item>
         <a-form-model-item label="国籍">
-          <a-select ref="country" v-model="form.countryList" placeholder="请选择" allowClear mode="multiple" :maxTagCount="1" :show-search="true" style="width: 175px">
+          <a-select ref="country" v-model="form.countryList" placeholder="请选择" allowClear :maxTagCount="1" :show-search="true" style="width: 175px">
             <a-select-option v-for="item in countryList" :value="item.key" :key="item.key">
               {{ item.value }}
             </a-select-option>

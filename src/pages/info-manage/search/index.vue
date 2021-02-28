@@ -164,12 +164,12 @@
           </a-row>
           <a-row>
             <a-col :span="21">
-              <a-form-model-item label="是否有党员" prop="name">
-                <a-select v-model="form.dy" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+              <a-form-model-item label="党员人数" prop="name">
+                <!-- <a-select v-model="form.dy" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                   <a-select-option v-for="item in whetherList" :value="item.key" :key="item.key">
                     {{ item.value }}
                   </a-select-option>
-                </a-select>
+                </a-select> -->
               </a-form-model-item>
             </a-col>
             <a-col :span="3">

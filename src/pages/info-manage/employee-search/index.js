@@ -11,7 +11,7 @@ export default {
         companyIdList: [],
         buildId: undefined, // 楼宇名称
         abilityTypeList: [],
-        countryList: [],
+        countryList: undefined,
         dy: undefined,
         educationList: [],
         phone: undefined,
@@ -137,7 +137,7 @@ export default {
           ...this.form,
           companyIdList: this.form.companyIdList.join(),
           abilityTypeList: this.form.abilityTypeList.join(),
-          countryList: this.form.countryList.join(),
+          countryList: this.form.countryList,
           educationList: this.form.educationList.join(),
           pageSize,
           pageNum,

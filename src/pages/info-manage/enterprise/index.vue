@@ -25,6 +25,16 @@
             </a-select-option>
           </a-select>
         </a-form-model-item>
+        <a-form-model-item label="行业类别">
+          <a-cascader placeholder="请选择" allowClear v-model="form.industryType" :options="industryList" :field-names="{ label: 'name', value: 'id', children: 'childList' }" />
+        </a-form-model-item>
+        <a-form-model-item label="是否搬迁">
+          <a-select v-model="form.isLeave" placeholder="请选择" style="width: 175px" allowClear>
+            <a-select-option v-for="item in whetherList" :key="item.key" :value="item.key">
+              {{ item.value }}
+            </a-select-option>
+          </a-select>
+        </a-form-model-item>
         <a-form-model-item>
           <a-button type="primary" @click="handleSearch" icon="search">查询</a-button>
           <a-button style="margin-left: 10px;" @click="handleReset">重置</a-button>
@@ -40,14 +50,7 @@
     </div>
     <div class="table-wrapper">
       <!-- :row-selection="{ selectedRowKeys: selectedRowKeys,type: 'radio', onChange: onSelectChange }" -->
-      <a-table
-        :columns="columns"
-        :data-source="data"
-        :rowKey="(record, index) => record.id"
-        @change="handleChange"
-        :pagination="pagination"
-        :loading="loading"
-      >
+      <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => record.id" @change="handleChange" :pagination="pagination" :loading="loading">
         <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
         <template slot="operation" slot-scope="record">
           <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100022')">修改</a-button>
@@ -66,9 +69,9 @@
     <!-- 其他信息 -->
     <OtherInfo ref="otherInfo" @handleSuccess="handleSuccess" />
     <!--员工列表 -->
-    <EmployeeList ref="employeeList" @handleSuccess="handleSuccess"/>
+    <EmployeeList ref="employeeList" @handleSuccess="handleSuccess" />
     <!-- 搬迁 -->
-    <MoveOut ref="moveOut" @handleSuccess="handleSuccess"/>
+    <MoveOut ref="moveOut" @handleSuccess="handleSuccess" />
   </a-card>
 </template>
 

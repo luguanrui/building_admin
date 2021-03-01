@@ -1,12 +1,15 @@
 import pagination from '@/mixins/pagination'
 import { mapState, mapActions } from 'vuex'
-import { getEmployeeCountList, getBuildAggrList } from '@/api/index'
+import { getEmployeeCountList, getBuildAggrList, exportBuildAggrList } from '@/api/index'
+import AddUpdate from '@/pages/info-manage/enterprise/add-update/index.vue'
 
 export default {
+  components: { AddUpdate },
   mixins: [pagination],
   data() {
     return {
       loading: false,
+      downLoading: false,
       columns: [],
       data: [],
 
@@ -32,24 +35,14 @@ export default {
         maxTax: 0,
         minIncome: 0,
         maxIncome: 0,
-        human: undefined,
+        human: [],
       },
       labelCol: { span: 4 },
       wrapperCol: { span: 20 },
     }
   },
   computed: {
-    ...mapState('common', [
-      'buildTypeList',
-      'companyTypeList',
-      'buildingAllList',
-      'belongList',
-      'industryList',
-      'whetherList',
-      'abilityList',
-      'buildingFloorList',
-      'buildingRoomList',
-    ]),
+    ...mapState('common', ['buildTypeList', 'companyTypeList', 'buildingAllList', 'belongList', 'industryList', 'whetherList', 'abilityList', 'buildingFloorList', 'buildingRoomList']),
   },
   mounted() {
     // 企业性质列表
@@ -124,6 +117,73 @@ export default {
         this.getBuildRoomList(params)
       }
     },
+    // 企业详情
+    handleDetail(record) {
+      this.$refs.addUpdate.handleVisible(record.id, 'detail')
+    },
+    // 导出
+    handleExport() {
+      this.exportBuildAggrList()
+    },
+    async exportBuildAggrList() {
+      try {
+        this.downLoading = true
+        const queryValue = {}
+        this.checkValue.forEach(check => {
+          if (check === 'name') {
+            queryValue.companyName = this.form.companyName
+          } else if (check === 'address') {
+            queryValue.buildId = this.form.buildId
+            queryValue.buildType = this.form.buildType.join()
+            queryValue.floor = this.form.floor.join()
+            queryValue.roomNums = this.form.roomNums.join()
+          } else if (check === 'industryType') {
+            queryValue.industryType = this.form.industryType.length ? this.form.industryType[this.form.industryType.length - 1] : ''
+          } else if (check === 'employeeCount') {
+            queryValue.employeeCountType = this.form.employeeCountType
+          } else if (check === 'taxValue') {
+            queryValue.minTax = this.form.minTax
+            queryValue.maxTax = this.form.maxTax
+          } else if (check === 'incomeValue') {
+            queryValue.minIncome = this.form.minIncome
+            queryValue.maxIncome = this.form.maxIncome
+          } else if (check === 'human') {
+            queryValue.human = this.form.human.join()
+          } else {
+            queryValue[check] = this.form[check]
+          }
+        })
+        const params = {
+          queryColumn: this.checkValue.join(),
+          ...queryValue,
+        }
+        let result = await exportBuildAggrList(params)
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `${this.form.year}综合查询.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
+      }
+    },
     // 查询列
     async getBuildAggrList() {
       if (!this.checkValue.length) {
@@ -151,6 +211,8 @@ export default {
         } else if (check === 'incomeValue') {
           queryValue.minIncome = this.form.minIncome
           queryValue.maxIncome = this.form.maxIncome
+        } else if (check === 'human') {
+          queryValue.human = this.form.human.join()
         } else {
           queryValue[check] = this.form[check]
         }
@@ -170,13 +232,18 @@ export default {
                 title: col.label,
                 dataIndex: col.props,
                 ellipsis: true,
+                scopedSlots: col.props === 'name' ? { customRender: 'name' } : {},
               })
               obj[col.props] = col.value
+              if (col.props === 'name') {
+                obj['id'] = col.companyId
+              }
             })
             this.data.push(obj)
           })
+          console.log(this.data, 'this.data')
           this.visible = false
-        }else {
+        } else {
           this.$message.error('暂无数据')
         }
       }

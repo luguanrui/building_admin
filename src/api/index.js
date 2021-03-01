@@ -234,6 +234,10 @@ export function getBuildFloorOwnerList(params) {
 export function getBuildAggrList(params) {
   return axios.get(`${baseApi}build/aggr/list`, {params})
 }
+// 导出
+export function exportBuildAggrList(params) {
+  return axios.get(`${baseApi}build/aggr/list/export`, { params, responseType: 'blob' })
+}
 /***************************** 公告管理 *************************** */
 // 保存公告
 export function saveNotice(params) {

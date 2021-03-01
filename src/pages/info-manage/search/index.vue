@@ -1,14 +1,12 @@
 <template>
   <a-card>
     <div class="opreation-wrapper">
-      <a-button type="primary" @click="handleOpenSearch">综合查询</a-button>
+      <a-button type="primary" @click="handleOpenSearch" style="margin-right: 20px">综合查询</a-button>
+      <a-button type="primary" @click="handleExport" :loading="downLoading">导出</a-button>
     </div>
     <div class="table-wrapper">
       <a-table :columns="columns" :data-source="data" :rowKey="(record, index) => index" @change="handleChange" :pagination="false" :loading="loading">
-        <!-- <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
-        <template slot="operation" slot-scope="record">
-          <a-button type="primary" size="small" style="margin-right: 10px" @click="handleUpdate(record)" :disabled="!permissionList.includes('100042')">修改</a-button>
-        </template> -->
+        <a slot="name" slot-scope="text, record" @click="handleDetail(record)">{{ text }}</a>
       </a-table>
     </div>
     <a-modal v-model="visible" title="自定义查询" ok-text="搜索" cancel-text="取消" :width="700" @ok="handleSearch" :maskClosable="false">
@@ -215,7 +213,7 @@
           <a-row>
             <a-col :span="21">
               <a-form-model-item label="人才类别" prop="name">
-                <a-select v-model="form.human" placeholder="请选择" allowClear :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
+                <a-select v-model="form.human" placeholder="请选择" allowClear mode="multiple" :getPopupContainer="trigger => trigger.parentNode" :dropdownMatchSelectWidth="false">
                   <a-select-option v-for="item in abilityList" :value="item.key" :key="item.key">
                     {{ item.value }}
                   </a-select-option>
@@ -229,6 +227,7 @@
         </a-checkbox-group>
       </a-form-model>
     </a-modal>
+    <AddUpdate ref="addUpdate" />
   </a-card>
 </template>
 <script src="./index.js"></script>

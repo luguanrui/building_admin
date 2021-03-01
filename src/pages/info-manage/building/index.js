@@ -47,7 +47,7 @@ export default {
     async getBuildFloor(params) {
       const { code, rs } = await getBuildFloor(params)
       if (code === 200) {
-        return rs
+        return rs.sort((a,b)=> a.floor - b.floor)
       }
     },
   },

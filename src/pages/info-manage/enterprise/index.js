@@ -18,6 +18,8 @@ export default {
         buildType: undefined, // 主楼裙房
         floor: undefined, // 楼层
         roomNum: undefined, // 房号
+        isLeave: undefined,
+        industryType: []
       },
       downLoading: false,
       loading: false,
@@ -53,6 +55,10 @@ export default {
           customRender: (text, record) => dayjs(record.createAt).format('YYYY年MM月DD日'),
         },
         {
+          title: '搬迁',
+          dataIndex: 'leaveDesc',
+        },
+        {
           title: '操作',
           width: 310,
           scopedSlots: { customRender: 'operation' },
@@ -62,17 +68,19 @@ export default {
   },
   activated() {
     this.getBuildAllList()
+    this.getIndustryList()
     this.getCompanyList()
   },
   mounted() {
     this.getBuildAllList()
+    this.getIndustryList()
     this.getCompanyList()
   },
   computed: {
-    ...mapState('common', ['permissionList','buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', ['permissionList','buildingAllList', 'buildTypeList', 'buildingFloorList', 'buildingRoomList','whetherList','industryList']),
   },
   methods: {
-    ...mapActions('common', ['getBuildAllList', 'getBuildFloorList', 'getBuildRoomList']),
+    ...mapActions('common', ['getBuildAllList', 'getBuildFloorList', 'getBuildRoomList','getIndustryList']),
     // 选择地址
     handleChangeBuild() {
       this.form.buildType = undefined
@@ -191,7 +199,12 @@ export default {
       this.loading = true
       try {
         const { pageSize, current: pageNum } = this.pagination
-        const params = { ...this.form, pageSize, pageNum }
+        const params = { 
+            ...this.form,
+           pageSize, 
+           pageNum,
+           industryType: this.form.industryType.length ? this.form.industryType[this.form.industryType.length - 1] : ''
+        }
         const { code, rs } = await getCompanyList(params)
         if (code === 200) {
           this.data = rs.data

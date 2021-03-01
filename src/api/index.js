@@ -210,10 +210,15 @@ export function exportBuildList(params) {
 export function removeBuild(params) {
   return axios.post(`${baseApi}build/remove`, params)
 }
-// 楼宇主页
+// 楼宇主页详情
 export function getBuildHome(params) {
   return axios.get(`${baseApi}build/home`, { params })
 }
+// 楼宇主页列表
+export function getBuildHomeBuildList() {
+  return axios.get(`${baseApi}build/home/buildList`)
+}
+// 
 // 查询单个公告信息
 export function getBuildDetail(params) {
   return axios.get(`${baseApi}build/get`, { params })

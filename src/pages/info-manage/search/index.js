@@ -166,7 +166,7 @@ export default {
           type: 'application/vnd.ms-excel,charset=UTF-8',
         })
 
-        let fileName = `${this.form.year}综合查询.xlsx`
+        let fileName = `综合查询.xlsx`
         this.downFile(blob, fileName)
       } catch (err) {
         this.downLoading = false

@@ -11,7 +11,7 @@ export default {
       data: [],
 
       visible: false,
-      checkValue: [],
+      checkValue: ['name'],
       employeeCountList: [],
       form: {
         companyName: '',

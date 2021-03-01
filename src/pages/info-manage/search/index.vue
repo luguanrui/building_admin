@@ -21,7 +21,7 @@
               </a-form-model-item>
             </a-col>
             <a-col :span="3">
-              <a-checkbox value="name"></a-checkbox>
+              <a-checkbox value="name" disabled></a-checkbox>
             </a-col>
           </a-row>
           <a-row>

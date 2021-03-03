@@ -178,6 +178,7 @@
         zIndex: 1,
       }"
     >
+      <a-button @click="handleDownLoad" :loading="downLoading" style="margin-right: 20px">下载</a-button>
       <a-button @click="handlePrint" :loading="printDisabled" style="margin-right: 20px">打印</a-button>
       <a-button type="primary" @click="onClose">
         关闭

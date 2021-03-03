@@ -8,7 +8,7 @@
           </a-col>
           <a-col :span="span">
             <a-form-model-item label="房产地址" prop="buildId">
-              <span v-if="disabled">{{ findBuildingValue(buildingAllList, form.buildId) }})</span>
+              <span v-if="disabled">{{ findBuildingValue(buildingAllList, form.buildId) }}</span>
               <a-select v-else v-model="form.buildId" placeholder="请选择" allowClear @change="handleChangeBuild">
                 <a-select-option v-for="item in buildingAllList" :value="item.id" :key="item.id">
                   {{ item.name }}
@@ -268,6 +268,7 @@
         zIndex: 1,
       }"
     >
+      <a-button @click="handleDownLoad" :loading="downLoading" style="margin-right: 20px">下载</a-button>
       <a-button @click="handlePrint" :loading="printDisabled" style="margin-right: 20px">打印</a-button>
       <a-button type="primary" @click="onClose">
         关闭

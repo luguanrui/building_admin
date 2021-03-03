@@ -1,5 +1,5 @@
 import { mapState, mapActions } from 'vuex'
-import { saveOwner, getOwner, getBuildRoomCalc } from '@/api/index'
+import { saveOwner, getOwner, getBuildRoomCalc,exportOwner } from '@/api/index'
 import print from '@/mixins/print'
 
 export default {
@@ -43,6 +43,7 @@ export default {
         phone: [{ required: true, message: '必填', trigger: 'blur' }],
         cardNum: [{ required: true, message: '必填', trigger: 'blur' }],
       },
+      downLoading: false
     }
   },
 
@@ -250,6 +251,40 @@ export default {
         if (isCountry) {
           this.form.country = this.form.country * 1
         }
+      }
+    },
+    handleDownLoad() {
+      this.exportOwner()
+    },
+    // 导出
+    async exportOwner() {
+      try {
+        this.downLoading = true
+        let result = await exportOwner({id: this.form.id})
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `${this.form.ownerName}.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },

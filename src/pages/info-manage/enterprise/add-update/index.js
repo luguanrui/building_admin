@@ -1,6 +1,6 @@
 import { mapState, mapActions } from 'vuex'
 import dayjs from 'dayjs'
-import { saveCompany, getCompany, getBuildRoomCalc } from '@/api/index'
+import { saveCompany, getCompany, getBuildRoomCalc, exportCompany } from '@/api/index'
 import EmployeeAdd from '../employee-add/index.vue'
 import print from '@/mixins/print'
 
@@ -104,11 +104,22 @@ export default {
         //   scopedSlots: { customRender: 'operation' },
         // },
       ],
+      downLoading: false
     }
   },
 
   computed: {
-    ...mapState('common', ['permissionList', 'buildTypeList', 'buildingAllList', 'companyTypeList', 'belongList', 'industryList', 'roomTypeList', 'buildingFloorList', 'buildingRoomList']),
+    ...mapState('common', [
+      'permissionList',
+      'buildTypeList',
+      'buildingAllList',
+      'companyTypeList',
+      'belongList',
+      'industryList',
+      'roomTypeList',
+      'buildingFloorList',
+      'buildingRoomList',
+    ]),
     title() {
       switch (this.dialogStatus) {
         case 'add':
@@ -370,6 +381,40 @@ export default {
         this.loading = false
       } catch (error) {
         this.loading = false
+      }
+    },
+    handleDownLoad() {
+      this.exportCompany()
+    },
+    // 导出
+    async exportCompany() {
+      try {
+        this.downLoading = true
+        let result = await exportCompany({id: this.form.id})
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `${this.form.name}.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },

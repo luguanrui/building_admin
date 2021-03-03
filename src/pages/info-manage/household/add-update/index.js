@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { mapState, mapActions } from 'vuex'
-import { saveHouse, getHouse, getBuildRoomCalc } from '@/api/index'
+import { saveHouse, getHouse, getBuildRoomCalc,exportHouse } from '@/api/index'
 import print from '@/mixins/print'
 
 export default {
@@ -17,6 +17,7 @@ export default {
       isRequired: true,
       form: {
         id: '',
+        buildAddress: '',
         buildId: undefined, // 楼宇ID
         buildType: [], // 1-主楼；2-裙房
         floor: [], // 楼层
@@ -55,6 +56,7 @@ export default {
         roomNum: [{ required: true, message: '必填', trigger: 'change' }],
         totalArea: [{ required: true, message: '必填', trigger: 'blur' }],
       },
+      downLoading: false
     }
   },
 
@@ -299,7 +301,7 @@ export default {
     async getHouse() {
       const { code, rs } = await getHouse({ id: this.form.id })
       if (code === 200) {
-        const { id, buildId, buildType, floor, roomNum, totalArea, userList } = rs
+        const { id, buildId, buildType, floor, roomNum, totalArea, userList,buildAddress } = rs
         let userListCopy = []
         userList.forEach(user => {
           // 其他国籍
@@ -338,7 +340,42 @@ export default {
           roomNum: roomNum.split(','),
           totalArea,
           userList: userListCopy,
+          buildAddress
         })
+      }
+    },
+    handleDownLoad() {
+      this.exportHouse()
+    },
+    // 导出
+    async exportHouse() {
+      try {
+        this.downLoading = true
+        let result = await exportHouse({id: this.form.id})
+        if (result) {
+          this.downLoading = false
+        }
+
+        let blob = new Blob([result], {
+          type: 'application/vnd.ms-excel,charset=UTF-8',
+        })
+
+        let fileName = `${this.form.buildAddress}.xlsx`
+        this.downFile(blob, fileName)
+      } catch (err) {
+        this.downLoading = false
+      }
+    },
+    // 下载
+    downFile(blob, fileName) {
+      if (window.navigator.msSaveOrOpenBlob) {
+        navigator.msSaveBlob(blob, fileName)
+      } else {
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = fileName
+        link.click()
+        window.URL.revokeObjectURL(link.href)
       }
     },
   },
